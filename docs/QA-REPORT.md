@@ -101,6 +101,12 @@ The shop render is 4:3 while its hero panel is ~2.33:1, so `object-fit: cover` w
 
 Verified after the change: background is visible above the ears, no fur touches the panel edge, all six routes and images return 200, `npm run verify` 21/21.
 
+## 6d. Final art pass (home hero + shop motion)
+
+- **Home hero is now a 3D render** (`public/brand/home-hero.jpg`, Seedream 5 Pro, 30 credits) matching the six section treatments, so the whole site shares one art direction. The photographic film layer was removed from the hero — a live-action loop under a stylised render read as a mistake — and the film band lower down is retained as its own labelled feature.
+- The 4:3 render was cropped to 2.33:1 with 150 px of matched dark background composited above the subjects, then upscaled 1152→1920 with a light unsharp pass; heads are intact with headroom.
+- **Shop regained motion without touching its framing:** a travelling diagonal light sweep (`::after` gradient, `background-position` animation, screen blend) rather than a `scale()` — a transform would have cropped the edges again, which is exactly the bug fixed in 6c.
+
 ## 7. Known limitations (not bugs, decided)
 
 | Item | Status | Why |

@@ -13,7 +13,6 @@ import { useEffect, useRef } from 'react';
  */
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // depth parallax — decorative only, skipped for reduced motion / touch
   useEffect(() => {
@@ -40,24 +39,6 @@ export default function Hero() {
     };
   }, []);
 
-  // film loads after paint, never on save-data / 2G / reduced motion
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-    if (conn?.saveData || /2g/.test(conn?.effectiveType ?? '')) return;
-
-    v.src = '/brand/at-home.webm';
-    v.load();
-    const onReady = () => {
-      v.classList.remove('opacity-0');
-      v.play().catch(() => {});
-    };
-    v.addEventListener('canplay', onReady, { once: true });
-    return () => v.pause();
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -70,23 +51,12 @@ export default function Hero() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/brand/hero.jpg"
+          src="/brand/home-hero.jpg"
           alt=""
           fetchPriority="high"
           width={1920}
-          height={1080}
-          className="h-full w-full object-cover object-[70%_48%] saturate-[.96] contrast-[1.04]"
-        />
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster="/brand/hero.jpg"
-          aria-hidden="true"
-          tabIndex={-1}
-          className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000"
+          height={834}
+          className="h-full w-full object-cover object-[66%_42%] saturate-[1.02] contrast-[1.03] brightness-[.97]"
         />
       </div>
 

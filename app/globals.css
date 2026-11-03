@@ -441,3 +441,40 @@ body {
     inset: 0 -6%;
   }
 }
+
+/* ---------- shop: travelling light sweep (no scaling, so nothing can crop) ---------- */
+@keyframes shopSweep {
+  0% {
+    background-position: -40% 0;
+  }
+  100% {
+    background-position: 140% 0;
+  }
+}
+.cine[data-variant="shop"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  background-image: linear-gradient(
+    104deg,
+    transparent 38%,
+    rgba(255, 240, 222, 0.16) 47%,
+    rgba(255, 246, 232, 0.28) 50%,
+    rgba(255, 240, 222, 0.16) 53%,
+    transparent 62%
+  );
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  animation: shopSweep 16s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: background-position;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cine[data-variant="shop"]::after {
+    animation: none;
+    opacity: 0.25;
+  }
+}
