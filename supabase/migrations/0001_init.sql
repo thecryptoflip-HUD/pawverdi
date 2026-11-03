@@ -275,7 +275,11 @@ create table newsletter_subscribers (
   unsubscribed_at timestamptz,
   created_at timestamptz not null default now()
 );
-create unique index newsletter_email_unique on newsletter_subscribers (lower(email));
+-- PostgREST's `on_conflict=email` upsert needs a unique constraint ON the column,
+-- not a functional index on lower(email): a functional index makes the upsert fail
+-- with PGRST205 at runtime. Email is normalised to lowercase by the API before it
+-- reaches the database, so a plain unique constraint is sufficient.
+alter table newsletter_subscribers add constraint newsletter_email_unique unique (email);
 
 create table contact_messages (
   id bigserial primary key,
