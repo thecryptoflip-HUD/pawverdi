@@ -51,8 +51,13 @@ export async function GET(request: Request) {
 
   const tables: Record<string, { ok: boolean; count?: number; error?: string }> = {};
   for (const table of TABLES) {
-    const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
-    tables[table] = error ? { ok: false, error: error.message } : { ok: true, count: count ?? 0 };
+    // NOTE: `head: true` returns 200 even when the relation is absent, which made
+    // an earlier version of this probe report "schema ready" on an empty database.
+    // A real row fetch is the only trustworthy existence check.
+    const { data, error } = await supabase.from(table).select('*').limit(1);
+    tables[table] = error
+      ? { ok: false, error: error.message }
+      : { ok: true, count: data?.length ?? 0 };
   }
   const missing = TABLES.filter((t) => !tables[t].ok);
 
