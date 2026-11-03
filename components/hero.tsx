@@ -13,6 +13,7 @@ import { useEffect, useRef } from 'react';
  */
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const motionRef = useRef<HTMLVideoElement | null>(null);
 
   // depth parallax — decorative only, skipped for reduced motion / touch
   useEffect(() => {
@@ -39,6 +40,26 @@ export default function Hero() {
     };
   }, []);
 
+  // living hero: a 10s palindrome loop generated from the hero still.
+  // Loaded after paint, skipped on save-data/2G and under reduced motion, and
+  // removed entirely if it fails to decode — the still is always the fallback.
+  useEffect(() => {
+    const v = motionRef.current;
+    if (!v) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData || /2g/.test(conn?.effectiveType ?? '')) return;
+
+    v.load();
+    const onReady = () => {
+      v.classList.remove('opacity-0');
+      v.play().catch(() => {});
+    };
+    v.addEventListener('canplay', onReady, { once: true });
+    v.addEventListener('error', () => { v.remove(); }, { once: true });
+    return () => v.pause();
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -58,6 +79,20 @@ export default function Hero() {
           height={834}
           className="h-full w-full object-cover object-[66%_42%] saturate-[1.02] contrast-[1.03] brightness-[.97]"
         />
+        <video
+          ref={motionRef}
+          muted
+          loop
+          playsInline
+          preload="none"
+          poster="/brand/home-hero.jpg"
+          aria-hidden="true"
+          tabIndex={-1}
+          className="absolute inset-0 h-full w-full object-cover object-[66%_42%] opacity-0 transition-opacity duration-1000"
+        >
+          <source src="/brand/hero-loop.webm" type="video/webm" />
+          <source src="/brand/hero-loop.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div

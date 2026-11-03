@@ -107,6 +107,25 @@ Verified after the change: background is visible above the ears, no fur touches 
 - The 4:3 render was cropped to 2.33:1 with 150 px of matched dark background composited above the subjects, then upscaled 1152→1920 with a light unsharp pass; heads are intact with headroom.
 - **Shop regained motion without touching its framing:** a travelling diagonal light sweep (`::after` gradient, `background-position` animation, screen blend) rather than a `scale()` — a transform would have cropped the edges again, which is exactly the bug fixed in 6c.
 
+## 6e. Living hero (AI motion)
+
+Four image-to-video takes were generated from the 3D hero still and compared frame by frame:
+
+| Take | Model | Result |
+| --- | --- | --- |
+| 1 | kling-v3 | Clean, locked subject, slow push-in only — no animal movement |
+| 2 | seedance-2-5 | Real movement (cat head turn + blink) but the camera drifted into a close-up, breaking the hero framing |
+| 3 | kling-v3 | Locked framing and movement, but hallucinated a red ball into the dog's mouth mid-clip — rejected |
+| 4 | seedance-2-5 | **Used.** Locked framing, cat turns its head toward camera, nothing added, no morphing |
+
+Build: take 4 normalised to 1440×1080/25fps, then mirrored into a 10-second palindrome so the loop has no jump cut. Measured seam: first-vs-last frame PSNR **46.4 dB** (effectively identical). Delivery: `hero-loop.mp4` 526 KB (h264 crf 27, faststart) + `hero-loop.webm` 158 KB (VP9), both decode clean under `ffmpeg -f null`.
+
+Wiring: the still is the poster and the LCP; the video is requested only after paint, skipped on `save-data`/2G and under `prefers-reduced-motion`, fades in on `canplay`, and removes itself on decode error — so a failed video never leaves a black hero.
+
+**Verification limit:** this headless Chromium has no media pipeline (it reports `readyState 0` for both mp4 and webm, and did so for a known-good file earlier too), so playback could not be observed here. What *is* verified: both encodes decode without error, both are served 200 through the tunnel, the element is wired with `muted/loop/playsInline`, and the poster path resolves. **Playback must be confirmed on a real device.**
+
+Credits: 950 for four 5s takes (≈237 each). Balance after this pass: 10,265.
+
 ## 7. Known limitations (not bugs, decided)
 
 | Item | Status | Why |
