@@ -10,8 +10,11 @@
 --   4. Every write by staff is audited; corrections are append-only.
 -- =========================================================================
 
-create extension if not exists pgcrypto;
-create extension if not exists pg_trgm;
+-- Supabase: extensions live in the `extensions` schema and the postgres role is
+-- not superuser, so `create extension` without a schema fails with 42501 and
+-- aborts the whole migration in its implicit transaction.
+create extension if not exists pgcrypto with schema extensions;
+create extension if not exists pg_trgm with schema extensions;
 
 -- ---------------------------------------------------------------- enums
 create type app_role as enum ('reader', 'editor', 'reviewer', 'admin');
@@ -110,7 +113,7 @@ create table articles (
 );
 
 create index articles_published_idx on articles (published_at desc) where published_at is not null;
-create index articles_search_idx on articles using gin ((title || ' ' || summary) gin_trgm_ops);
+create index articles_search_idx on articles using gin ((title || ' ' || summary) extensions.gin_trgm_ops);
 
 -- Publish guard: the database refuses to publish an unreviewed article.
 create or replace function guard_article_publish()
