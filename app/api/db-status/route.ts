@@ -62,6 +62,13 @@ export async function GET(request: Request) {
   const missing = TABLES.filter((t) => !tables[t].ok);
 
   let write: Record<string, unknown> | undefined;
+  let plainInsert: Record<string, unknown> | undefined;
+  if (withWrite) {
+    const plainEmail = `plain-${Date.now()}@example.invalid`;
+    const pi = await supabase.from('newsletter_subscribers').insert({ email: plainEmail, source: 'diagnostic' }).select('id').single();
+    plainInsert = pi.error ? { ok: false, error: pi.error.message, code: pi.error.code, details: pi.error.details } : { ok: true, id: pi.data?.id };
+    if (!pi.error && pi.data?.id) await supabase.from('newsletter_subscribers').delete().eq('id', pi.data.id);
+  }
   if (withWrite) {
     const email = `diag-${Date.now()}@example.invalid`;
     const ins = await supabase.from('newsletter_subscribers').insert({ email, source: 'diagnostic' }).select('id').single();
@@ -80,6 +87,7 @@ export async function GET(request: Request) {
       missing,
       tables,
       ...(write ? { write } : {}),
+      ...(plainInsert ? { plainInsert } : {}),
     },
     { status: 200 },
   );
