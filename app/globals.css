@@ -1,0 +1,443 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   PawVerdi design system — "cinema"
+   Palette, type scale and motion primitives shared by every page.
+   Contrast: body 17.3:1 · muted 11.9:1 · captions 6.9:1 (WCAG AA at all sizes)
+   ========================================================================= */
+
+:root {
+  --void: #050807;
+  --forest: #081210;
+  --moss: #0e1b16;
+  --cream: #f5efe6;
+  --amber: #e3a575;
+  --gold: #f6d6ac;
+  --line: rgba(245, 239, 230, 0.14);
+  --line-soft: rgba(245, 239, 230, 0.07);
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--void);
+  color: var(--cream);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(227, 165, 117, 0.3);
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* film grain — decorative only, never intercepts input */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.36;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+}
+
+/* ---------- type ---------- */
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--amber);
+}
+.kicker::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.8;
+}
+
+.lede {
+  font-size: clamp(1.02rem, 1.4vw, 1.16rem);
+  line-height: 1.62;
+  color: rgba(245, 239, 230, 0.84);
+}
+
+.muted {
+  color: rgba(245, 239, 230, 0.62);
+}
+
+/* ---------- surfaces ---------- */
+.card {
+  background: var(--moss);
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: border-color 0.5s var(--ease), transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.card:hover {
+  border-color: rgba(227, 165, 117, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.95);
+}
+
+.hairline {
+  height: 1px;
+  background: var(--line-soft);
+  border: 0;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  transition: transform 0.5s var(--ease), background 0.45s var(--ease), color 0.45s var(--ease),
+    border-color 0.45s var(--ease);
+}
+.btn-solid {
+  background: var(--cream);
+  color: #0a0f0c;
+}
+.btn-solid:hover {
+  background: var(--gold);
+  transform: translateY(-3px);
+}
+.btn-ghost {
+  border-color: rgba(245, 239, 230, 0.32);
+  color: var(--cream);
+}
+.btn-ghost:hover {
+  border-color: var(--amber);
+  color: var(--gold);
+  transform: translateY(-3px);
+  background: rgba(227, 165, 117, 0.06);
+}
+
+/* ---------- reveal (progressive enhancement; visible without JS) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- labels for commercial content ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  color: rgba(245, 239, 230, 0.8);
+}
+.tag-ad {
+  border-color: rgba(227, 165, 117, 0.5);
+  color: var(--gold);
+}
+.tag-verified {
+  border-color: rgba(120, 200, 160, 0.45);
+  color: #9fe2c4;
+}
+
+/* ---------- admin tables ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.table th {
+  text-align: left;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 230, 0.55);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: rgba(245, 239, 230, 0.86);
+}
+.table tr:hover td {
+  background: rgba(245, 239, 230, 0.02);
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* editor typography for article bodies */
+.prose-paw h2 {
+  margin-top: 2.4rem;
+}
+.prose-paw p + p {
+  margin-top: 1rem;
+}
+
+/* ---------- hero entrance (CSS-first: visible if JS never runs) ---------- */
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+.js .hero-line > span {
+  display: block;
+  transform: translateY(112%);
+  animation: lineUp 1s cubic-bezier(0.19, 1, 0.22, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+.js .hero-fade {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.9s cubic-bezier(0.19, 1, 0.22, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes lineUp {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .hero-line > span,
+  .js .hero-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================================================================
+   Section cinematics — one treatment per primary section.
+   Declarative config lives in lib/cinematic.ts.
+   ========================================================================= */
+.cine {
+  position: relative;
+  min-height: 68svh;
+}
+.cine-plate {
+  position: absolute;
+  inset: 0; /* no bleed: the scale keyframes supply the overscan, so the top of the
+               artwork is never clipped by the section edge */
+  z-index: -3;
+  overflow: hidden;
+}
+.cine-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: 60% 45%;
+  will-change: transform;
+}
+.cine-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.cine-beam {
+  position: absolute;
+  z-index: -1;
+  right: -6%;
+  top: -18%;
+  width: 46vw;
+  height: 46vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 66%);
+  filter: blur(38px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.cine-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 55%, transparent), transparent);
+}
+.cine-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cine-kicker::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.9;
+}
+
+/* letterbox rules for the editorial variant */
+.cine-letterbox::before,
+.cine-letterbox::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(245, 239, 230, 0.18);
+}
+.cine-letterbox::before {
+  top: 22%;
+}
+.cine-letterbox::after {
+  bottom: 18%;
+}
+
+/* retail spotlight */
+.cine-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: conic-gradient(from 200deg at 68% 20%, transparent 0deg, rgba(255, 240, 220, 0.14) 22deg, transparent 46deg);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* community bokeh dots */
+.cine-bokeh {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 22% 30%, rgba(255, 210, 165, 0.22) 0 6px, transparent 7px),
+    radial-gradient(circle at 78% 22%, rgba(255, 200, 150, 0.18) 0 10px, transparent 11px),
+    radial-gradient(circle at 64% 68%, rgba(255, 220, 180, 0.14) 0 14px, transparent 15px),
+    radial-gradient(circle at 34% 76%, rgba(255, 205, 160, 0.16) 0 8px, transparent 9px);
+  filter: blur(2px);
+}
+
+/* ---------- motion ---------- */
+@keyframes cineKenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.4%, -1%, 0);
+  }
+}
+@keyframes cinePan {
+  from {
+    transform: scale(1.08) translate3d(-1.6%, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(1.6%, 0, 0);
+  }
+}
+@keyframes cineDrift {
+  from {
+    transform: scale(1.06) translate3d(0, -1.2%, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(0, 1.2%, 0);
+  }
+}
+@keyframes cineSweep {
+  0% {
+    transform: scale(1.04) translate3d(-0.8%, 0, 0);
+    filter: brightness(0.86);
+  }
+  50% {
+    transform: scale(1.06) translate3d(0.8%, 0, 0);
+    filter: brightness(0.98);
+  }
+  100% {
+    transform: scale(1.04) translate3d(-0.8%, 0, 0);
+    filter: brightness(0.86);
+  }
+}
+@keyframes cineFloat {
+  0%,
+  100% {
+    transform: scale(1.01) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.02) translate3d(0, -0.8%, 0);
+  }
+}
+
+.cine-kenburns {
+  animation: cineKenburns 22s ease-in-out infinite alternate;
+}
+.cine-pan {
+  animation: cinePan 26s ease-in-out infinite alternate;
+}
+.cine-drift {
+  animation: cineDrift 30s ease-in-out infinite alternate;
+}
+.cine-sweep {
+  animation: cineSweep 18s ease-in-out infinite alternate;
+}
+.cine-float {
+  animation: cineFloat 20s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cine-img {
+    animation: none !important;
+  }
+}
+@media (max-width: 640px) {
+  .cine {
+    min-height: 56svh;
+  }
+  .cine-plate {
+    inset: 0 -6%;
+  }
+}

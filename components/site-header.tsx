@@ -1,0 +1,97 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { navigation, site } from '@/lib/site';
+
+export default function SiteHeader() {
+  const [stuck, setStuck] = useState(false);
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setStuck(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+        stuck || open ? 'border-b border-white/[0.07] bg-[#050807]/80 backdrop-blur-xl' : ''
+      }`}
+    >
+      <div className="mx-auto flex h-[76px] max-w-wrap items-center justify-between px-5 sm:px-8">
+        <Link href="/" className="flex items-center gap-2.5" aria-label={`${site.name} home`}>
+          <PawMark />
+          <span className="font-serif text-[1.3rem] font-bold tracking-tight text-cream">{site.name}</span>
+        </Link>
+
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`rounded-full px-3.5 py-2 text-[0.78rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                pathname === item.href ? 'text-cream' : 'text-cream/75 hover:text-cream'
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 md:hidden"
+        >
+          <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
+          <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true" className="fill-cream">
+            {open ? (
+              <path d="M1.4 0.6 8 7.2 14.6.6 16 2 8 10 0 2z" />
+            ) : (
+              <>
+                <rect y="0" width="16" height="1.6" rx=".8" />
+                <rect y="5.2" width="16" height="1.6" rx=".8" />
+                <rect y="10.4" width="16" height="1.6" rx=".8" />
+              </>
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {open && (
+        <nav id="mobile-nav" aria-label="Mobile" className="border-t border-white/[0.07] px-5 pb-6 pt-2 md:hidden">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="block border-b border-white/[0.06] py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-cream/85"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+    </header>
+  );
+}
+
+function PawMark() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-amber">
+      <ellipse cx="6" cy="9" rx="2.4" ry="3" />
+      <ellipse cx="18" cy="9" rx="2.4" ry="3" />
+      <ellipse cx="10" cy="4.6" rx="2.2" ry="2.8" />
+      <ellipse cx="14.6" cy="4.6" rx="2.2" ry="2.8" />
+      <path d="M12 10.4c3.1 0 5.6 2.3 5.6 4.9 0 2-1.6 3.3-3.6 3.3-1 0-1.6-.5-2-.5s-1 .5-2 .5c-2 0-3.6-1.3-3.6-3.3 0-2.6 2.5-4.9 5.6-4.9z" />
+    </svg>
+  );
+}
