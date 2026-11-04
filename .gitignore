@@ -20,3 +20,6 @@ next-env.d.ts
 npm-debug.log*
 yarn-error.log*
 tsconfig.tsbuildinfo
+
+# core dumps from killed local server processes
+core
