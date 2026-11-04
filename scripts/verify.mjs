@@ -109,6 +109,20 @@ async function checkSecurityHeaders() {
   record('security headers', missing.length === 0, missing.length ? `missing: ${missing.join(', ')}` : 'present');
 }
 
+async function checkCsp() {
+  const res = await fetch(`${BASE}/`);
+  const csp = res.headers.get('content-security-policy') || '';
+  const required = ["default-src 'self'", "object-src 'none'", "frame-ancestors 'none'", "base-uri 'self'"];
+  const missing = required.filter((needle) => !csp.includes(needle));
+  record('content-security-policy', missing.length === 0, missing.length ? `missing: ${missing.join(', ')}` : `${csp.split(';').length} directives`);
+}
+
+async function checkDiagnosticsGuard() {
+  // An unauthenticated caller must not be able to trigger a write or delete.
+  const res = await fetch(`${BASE}/api/db-status?purge=1`);
+  record('diagnostics mutations blocked', res.status === 403, `http=${res.status}`);
+}
+
 async function checkNoKeyMaterial() {
   try {
     const res = await fetch(`${BASE}/api/db-status`);
@@ -128,6 +142,8 @@ async function checkNoKeyMaterial() {
   await checkApi();
   await checkSecurityHeaders();
   await checkNoKeyMaterial();
+  await checkCsp();
+  await checkDiagnosticsGuard();
 
   for (const row of rows) {
     console.log(`${row.ok ? 'PASS' : 'FAIL'}  ${row.name.padEnd(46)} ${row.detail}`);

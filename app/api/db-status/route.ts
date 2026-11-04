@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { timingSafeEqual } from 'node:crypto';
 import { isLive } from '@/lib/supabase';
 import { adminClient, serviceKeySource } from '@/lib/supabase-admin';
 
@@ -6,6 +7,12 @@ export const dynamic = 'force-dynamic';
 
 /**
  * Deployment diagnostic (no secrets exposed).
+ *
+ * Reads are public: project host, key shapes, table reachability and row counts
+ * contain no credentials and no rows. Anything that *writes* — ?write, ?roundtrip,
+ * ?purge — requires `Authorization: Bearer $DIAGNOSTICS_TOKEN`, because an
+ * unauthenticated endpoint that deletes rows is a liability, not a feature.
+ * With no token configured, mutations are refused outright.
  *
  * Reports the project the deployed app is actually talking to, which key role is
  * loaded (anon vs service_role — decoded from the JWT payload only, never the
@@ -46,6 +53,19 @@ function keyKind(key: string | undefined): string | null {
   return 'unrecognised format';
 }
 
+function authorised(request: Request): boolean {
+  const expected = process.env.DIAGNOSTICS_TOKEN;
+  if (!expected) return false; // fail closed: no token configured, no mutations
+  const header = request.headers.get('authorization') ?? '';
+  const provided = header.startsWith('Bearer ') ? header.slice(7).trim() : '';
+  if (!provided || provided.length !== expected.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(provided), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
 export async function GET(request: Request) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : null;
@@ -55,6 +75,13 @@ export async function GET(request: Request) {
   const withWrite = params.get('write') === '1';
   const withRoundTrip = params.get('roundtrip') === '1';
   const withPurge = params.get('purge') === '1';
+
+  if ((withWrite || withRoundTrip || withPurge) && !authorised(request)) {
+    return NextResponse.json(
+      { ok: false, error: 'Diagnostics mutations require a bearer token.' },
+      { status: 403 },
+    );
+  }
 
   const base = {
     mode: isLive() ? 'live' : 'demo',
