@@ -41,7 +41,11 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from('seller_applications')
-    .insert({ ...parsed.data, status: 'received', gate: 'identity' })
+    // `status` must be a moderation_state value: 'new' | 'triaged' | 'closed'.
+    // The earlier 'received' value and a non-existent `gate` column both failed
+    // only once a real database was connected, which is why the demo-mode suite
+    // never caught them.
+    .insert({ ...parsed.data, status: 'new' })
     .select('id')
     .single();
 
