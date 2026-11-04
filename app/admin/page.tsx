@@ -55,6 +55,8 @@ export default async function AdminPage() {
         </p>
       </div>
 
+      <p className="mb-8"><Link href="/admin/articles" className="rounded border border-gold px-5 py-3">Articles</Link></p>
+
       <section aria-label="Key metrics" className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] lg:grid-cols-4">
         {[
           { label: 'Articles', value: articles.length, note: `${vetReviewed} vet-reviewed` },

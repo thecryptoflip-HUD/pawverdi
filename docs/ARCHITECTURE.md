@@ -49,7 +49,7 @@ A UI can be bypassed by an API call, a forgotten code path, or a future admin pa
 
 ## Rendering and performance
 
-- Home, dogs, cats, shop, marketplace, advertise, community, trust, contact, admin: **statically prerendered**.
+- Home, dogs, cats, shop, marketplace, advertise, community, trust, contact: **statically prerendered**.
 - Article pages: **SSG** via `generateStaticParams` (24 paths today).
 - Knowledge index: server-rendered on demand because it reads search params; filters are plain links, so they work with JS disabled and are crawlable.
 - No client-side data fetching on first paint. The heaviest client island is the guide rail (~4 KB gzipped plus the shared 113 KB framework chunk).
@@ -72,3 +72,11 @@ A UI can be bypassed by an API call, a forgotten code path, or a future admin pa
 | Slow connection | hero film skipped on save-data/2G; still image is the LCP |
 | Reduced motion | all animation disabled, including the film |
 | Missing price feed | shop shows "not yet captured" instead of a stale number |
+
+## Admin article CRUD
+
+Article management lives behind `/admin/articles`, with staff checks on every page and server action. `lib/articles-db.ts` uses the user-scoped `serverSupabase()` client; RLS policy `articles_staff_write` provides the second enforcement layer. The review gate is enforced in both the UI and `setPublished`: publication requires vet-reviewed status and a named reviewer. Publish and unpublish actions also attempt an audit entry without failing the completed action if auditing is unavailable.
+
+The list, new and edit pages use server components and plain forms. Mutations revalidate `/admin/articles` and `/admin`; these authenticated routes render dynamically while `/` remains static. Seed import selects existing slugs first, then upserts only missing articles, preserving existing review, body and publication data. Imported seeds honestly record unreviewed status with no reviewer and retain their seed publication and update dates. Database errors are reported without claiming a successful save.
+
+Compatibility note: the original `0001_init.sql` publish trigger rejects unreviewed rows with a publication date and overwrites `updated_at`. The specified seed import sends unreviewed rows with their original dates; a database still using that trigger will reject the import, and the UI reports the failure. No trigger bypass or invented reviewer is used.
