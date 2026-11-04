@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { adminClient, isLive } from '@/lib/supabase';
+import { isLive } from '@/lib/supabase';
+import { adminClient, serviceKeySource } from '@/lib/supabase-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,16 +17,33 @@ const TABLES = [
   'newsletter_subscribers', 'contact_messages', 'corrections', 'audit_log',
 ];
 
-function jwtRole(key: string | undefined): string | null {
-  if (!key) return null;
+function jwtRole(key: string): string | null {
   const parts = key.split('.');
-  if (parts.length < 2) return null;
+  if (parts.length < 3) return null;
   try {
     const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'));
     return typeof payload.role === 'string' ? payload.role : null;
   } catch {
     return null;
   }
+}
+
+/**
+ * Classify a key by its shape only. Supabase now issues two kinds of key:
+ * legacy JWTs (`eyJ...`) and short opaque keys (`sb_publishable_...`,
+ * `sb_secret_...`). Neither the value nor any fragment of it is returned here —
+ * only a label — so this endpoint stays safe to leave reachable in production.
+ */
+function keyKind(key: string | undefined): string | null {
+  if (!key) return null;
+  if (key.startsWith('sb_secret_')) return 'secret key (new format) → service_role';
+  if (key.startsWith('sb_publishable_')) return 'publishable key (new format) → anon';
+  if (key.startsWith('sbp_')) return 'personal access token — not an API key';
+  if (key.startsWith('eyJ')) {
+    const role = jwtRole(key);
+    return role ? `legacy JWT → ${role}` : 'legacy JWT (payload unreadable)';
+  }
+  return 'unrecognised format';
 }
 
 export async function GET(request: Request) {
@@ -39,10 +57,11 @@ export async function GET(request: Request) {
     mode: isLive() ? 'live' : 'demo',
     host,
     ref,
-    keyRoles: {
-      anon: jwtRole(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-      service: jwtRole(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    keyKinds: {
+      anon: keyKind(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+      service: keyKind(process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_KEY),
     },
+    serviceKeySource: serviceKeySource(),
   };
 
   if (!isLive() || !supabase) {

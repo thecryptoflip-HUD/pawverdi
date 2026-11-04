@@ -14,7 +14,6 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export function isLive(): boolean {
   return Boolean(url && anonKey);
@@ -28,12 +27,9 @@ export function publicClient(): SupabaseClient | null {
   });
 }
 
-/**
- * Server-only client that bypasses RLS. Import it inside server code paths only
- * (route handlers, server actions). It returns null in demo mode rather than
- * pretending a write succeeded.
+/*
+ * The privileged client lives in lib/supabase-admin.ts, which imports
+ * `server-only`. It is deliberately absent from this module: this file is
+ * imported by a server component (SiteFooter) and could plausibly be pulled
+ * into a client bundle later, so it must never touch the service key.
  */
-export function adminClient(): SupabaseClient | null {
-  if (!url || !serviceKey) return null;
-  return createClient(url, serviceKey, { auth: { persistSession: false } });
-}

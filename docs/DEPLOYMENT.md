@@ -34,12 +34,19 @@ Nothing here deploys automatically, and nothing should be published until the ch
 
    ```
    NEXT_PUBLIC_SUPABASE_URL=
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=
-   SUPABASE_SERVICE_ROLE_KEY=
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=        # legacy anon JWT (eyJ…) or publishable key (sb_publishable_…)
+   SUPABASE_SERVICE_ROLE_KEY=            # legacy service_role JWT (eyJ…)
+   # or, instead of the line above:
+   SUPABASE_SECRET_KEY=                  # new secret key (sb_secret_…)
    NEXT_PUBLIC_SITE_URL=https://pawverdi.com
    ```
 
-   `SUPABASE_SERVICE_ROLE_KEY` must be marked as a **server** variable (no `NEXT_PUBLIC_` prefix).
+   The privileged key must be a **server** variable (no `NEXT_PUBLIC_` prefix), and
+   must not be marked *Sensitive* on Vercel if the public pair needs it at build time.
+   `lib/supabase-admin.ts` accepts either name and resolves them in this order:
+   `SUPABASE_SERVICE_ROLE_KEY` → `SUPABASE_SECRET_KEY` → `SUPABASE_SERVICE_KEY`.
+   Both key generations map to the `service_role` Postgres role and bypass RLS, so no
+   application code changes when you migrate from one to the other.
 4. Deploy. Build command `npm run build`, output is handled automatically.
 
 ### Any Node host / Docker

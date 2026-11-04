@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { adminClient, isLive } from '@/lib/supabase';
+import { isLive } from '@/lib/supabase';
+import { adminClient } from '@/lib/supabase-admin';
 
 const schema = z.object({
   trading_name: z.string().min(2).max(140),

@@ -109,11 +109,25 @@ async function checkSecurityHeaders() {
   record('security headers', missing.length === 0, missing.length ? `missing: ${missing.join(', ')}` : 'present');
 }
 
+async function checkNoKeyMaterial() {
+  try {
+    const res = await fetch(`${BASE}/api/db-status`);
+    const body = await res.text();
+    // Key material must never appear in a diagnostics response. These needles
+    // cover both legacy JWTs and the new opaque keys.
+    const leaks = ['sb_secret_', 'sb_publishable_', 'eyJhbGciOiJ'].filter((needle) => body.includes(needle));
+    record('no key material in /api/db-status', leaks.length === 0, leaks.length ? `leaked: ${leaks.join(', ')}` : 'clean');
+  } catch (error) {
+    record('no key material in /api/db-status', false, error.message);
+  }
+}
+
 (async () => {
   console.log(`\nPawVerdi smoke test → ${BASE}\n${'-'.repeat(64)}`);
   for (const [path, needles] of pages) await checkPage(path, needles);
   await checkApi();
   await checkSecurityHeaders();
+  await checkNoKeyMaterial();
 
   for (const row of rows) {
     console.log(`${row.ok ? 'PASS' : 'FAIL'}  ${row.name.padEnd(46)} ${row.detail}`);

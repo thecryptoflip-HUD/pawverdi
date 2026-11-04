@@ -35,7 +35,7 @@ export default function AdminPage() {
         <p className="mt-2 text-[0.9rem] leading-relaxed text-cream/80">
           {live
             ? 'Reads and writes hit Supabase Postgres under row-level security. Publishing requires an authenticated editor session.'
-            : 'No Supabase credentials are set, so this dashboard is read-only over seed content. Writes return a clear "not stored" response instead of appearing to succeed. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY and SUPABASE_SERVICE_ROLE_KEY to switch modes.'}
+            : 'No Supabase credentials are set, so this dashboard is read-only over seed content. Writes return a clear "not stored" response instead of appearing to succeed. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY and either SUPABASE_SERVICE_ROLE_KEY (legacy JWT) or SUPABASE_SECRET_KEY (sb_secret_…) to switch modes.'}
         </p>
       </div>
 
