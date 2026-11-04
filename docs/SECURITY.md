@@ -6,7 +6,11 @@ Without a session an attacker can reach public pages, the four intake forms (new
 
 ## 2. Authentication
 
-Supabase Auth validates email and password and stores the session in cookies through the SSR client. Server components and route handlers validate the user with Auth and read their role from `public.profiles`; missing profiles default to reader. No public sign-up or password reset flow is provided. Administrators provision accounts. There is no middleware: public pages retain static rendering and CDN caching. Only the publishable key reaches the browser; privileged clients import `server-only`.
+Supabase Auth validates email and password and stores the session in cookies through the SSR client. Server components and route handlers validate the user with Auth and read their role from `public.profiles`; missing profiles default to reader. No public sign-up or password reset flow is provided. Administrators provision accounts. Middleware matches only `/admin/:path*` and `/api/admin/:path*`. It validates sessions with `getUser()` and persists refreshed cookies, while authoritative role checks remain in `lib/auth.ts`. Admin responses carry `Cache-Control: private, no-store, max-age=0`, `Vary: Cookie`, and `Pragma: no-cache`. Unauthenticated admin API requests receive JSON 401 responses without redirects. The login page still refreshes cookies without middleware redirects. Public pages retain static rendering and CDN caching. Privileged clients import `server-only`.
+
+The login page uses a plain HTML POST to `/api/auth/signin`; it ships no Supabase browser client. Sign-in and sign-out responses are private and not stored. Failed sign-ins use the generic message “Email or password is incorrect.”; throttled attempts use “Too many attempts. Try again in a few minutes.” Neither reveals whether an account exists.
+
+Login protection uses the existing `public.audit_log` table through the service client, with no migration. A rolling 15-minute window permits up to 5 failures per normalized account hash and 20 per IP hash before blocking subsequent attempts. Email and IP are SHA-256 hashed; audit details contain only `email_hash` and `ip_hash`, with entity `auth` and action `auth.login_failed` or `auth.login_success`. IP comes from the first `x-forwarded-for` value, then `x-real-ip`, then `unknown`; the hosting proxy must supply trustworthy forwarding headers. Blocked attempts redirect with 303 to `?error=rate` and include `Retry-After` until the blocking failures expire. Store errors fail open to credential verification and log no sensitive details; they never bypass the password check.
 
 ## 3. Roles
 
@@ -50,3 +54,15 @@ Per-request nonces can replace unsafe-inline: generate a cryptographic nonce, pr
 ## 7. API guard rule
 
 Every new `/api/admin/*` handler must call `requireUser()` and check `isAdmin` or `isStaff` for the operation. `/api/admin/whoami` is the authentication-only proof of guard and exposes only role and display name. Return generic 401/403 responses before reading protected data. The guard test lives in `scripts/verify.mjs`. Never return or log credentials, cookies, passwords or tokens.
+
+
+## 8. Manual reader authorization check
+
+An administrator must manually provision a separate test account in Supabase Authentication and confirm its `public.profiles.role` is `reader`. Do not create users or change roles through the verification script. In a separate browser session, sign in as that reader:
+
+1. Open `/admin`: expect the access notice, without staff dashboard access.
+2. Request `/api/admin/whoami` using the reader session: expect HTTP 200 with `role: reader`.
+3. Request `/api/db-status` using the reader session and no diagnostics bearer token: expect HTTP 403 without protected database details.
+4. Sign out and repeat the API requests: expect HTTP 401. `scripts/verify.mjs` also checks unauthenticated access, the absence of `host` in diagnostics, forged session rejection, and the admin cache policy.
+
+For login throttling, use a dedicated test address: submit five incorrect passwords, then confirm the sixth attempt redirects to `/admin/login?error=rate` with `Retry-After`. A valid unblocked account must still sign in; a blocked account must wait for its failures to leave the 15-minute window. Do not use a production administrator account for failure testing.

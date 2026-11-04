@@ -129,10 +129,36 @@ async function checkDiagnosticsGuard() {
       const res = await fetch(`${BASE}${path}`);
       const body = await res.json();
       const forbidden = ['host', 'ref', 'keyKinds', 'serviceKeySource', 'schemaReady', 'tables', 'missing'];
-      record(`${path} unauthenticated`, res.status === 401 && body.ok === false && body.error === 'Authentication required.' && forbidden.every((key) => !(key in body)), `http=${res.status}`);
+      record(`${path} unauthenticated`, res.status === 401 && body.ok === false && body.error === 'Authentication required.' && forbidden.every((key) => !(key in body)) && !JSON.stringify(body).toLowerCase().includes('host'), `http=${res.status}`);
     } catch (error) {
       record(`${path} unauthenticated`, false, error.message);
     }
+  }
+}
+
+async function checkForgedSession() {
+  const encode = (value) => Buffer.from(JSON.stringify(value)).toString('base64url');
+  const jwt = `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode({ sub: 'x', role: 'authenticated' })}.forged`;
+  const project = process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname.split('.')[0] : 'forged';
+  const session = `base64-${Buffer.from(JSON.stringify({ access_token: jwt, refresh_token: 'forged', token_type: 'bearer' })).toString('base64url')}`;
+  for (const path of ['/admin', '/api/admin/whoami', '/api/db-status']) {
+    try {
+      const res = await fetch(`${BASE}${path}`, {
+        redirect: 'manual', headers: { cookie: `sb-${project}-auth-token=${session}` },
+      });
+      record(`${path} forged session`, [401, 307].includes(res.status), `http=${res.status}`);
+    } catch (error) {
+      record(`${path} forged session`, false, error.message);
+    }
+  }
+  try {
+    const res = await fetch(`${BASE}/admin`, { redirect: 'manual' });
+    const cache = res.headers.get('cache-control') || '';
+    record('admin private cache policy', cache.includes('private') && cache.includes('no-store')
+      && /(?:^|,\s*)cookie(?:,|$)/i.test(res.headers.get('vary') || ''), `http=${res.status}`);
+  } catch (error) {
+    record('admin private cache policy', false, error.message);
   }
 }
 
@@ -157,6 +183,7 @@ async function checkNoKeyMaterial() {
   await checkNoKeyMaterial();
   await checkCsp();
   await checkDiagnosticsGuard();
+  await checkForgedSession();
 
   for (const row of rows) {
     console.log(`${row.ok ? 'PASS' : 'FAIL'}  ${row.name.padEnd(46)} ${row.detail}`);
