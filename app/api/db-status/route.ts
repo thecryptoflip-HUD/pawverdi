@@ -137,7 +137,14 @@ export async function GET(request: Request) {
   if (withPurge) {
     purged = {};
     for (const table of INTAKE) {
-      const { data, error } = await supabase.from(table).delete().like('email', '%@example.invalid').select('id');
+      // Both example.com and example.invalid are reserved for documentation and
+      // testing (RFC 2606), so anything addressed there is test data by
+      // definition — including the addresses the smoke suite submits.
+      const { data, error } = await supabase
+        .from(table)
+        .delete()
+        .or('email.like.*@example.com,email.like.*@example.invalid')
+        .select('id');
       purged[table] = error ? `error: ${error.message}` : (data?.length ?? 0);
     }
   }
