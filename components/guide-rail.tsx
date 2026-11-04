@@ -67,7 +67,7 @@ export default function GuideRail({ items }: { items: RailItem[] }) {
   };
 
   return (
-    <div>
+    <div className="relative overflow-x-clip">
       <div
         ref={stageRef}
         tabIndex={0}
@@ -113,9 +113,12 @@ export default function GuideRail({ items }: { items: RailItem[] }) {
                 key={item.slug}
                 data-card
                 aria-hidden={!active}
-                className="absolute left-1/2 top-0 h-full w-[min(78vw,320px)] -translate-x-1/2 transition-[opacity,filter] duration-700 sm:w-[clamp(250px,27vw,330px)]"
+                className="absolute left-1/2 top-0 h-full w-[min(78vw,320px)] transition-[opacity,filter] duration-700 sm:w-[clamp(250px,27vw,330px)]"
                 style={{
-                  transform: `rotateY(${i * step}deg) translateZ(${radius}px)`,
+                  // The inline transform replaces any class-based transform, so the
+                  // centring translate has to live here too — otherwise each card's
+                  // left edge sits on the centre line and the whole deck shifts right.
+                  transform: `translateX(-50%) rotateY(${i * step}deg) translateZ(${radius}px)`,
                   transformStyle: 'preserve-3d',
                   opacity: active ? 1 : dist === 1 ? 0.55 : 0.28,
                   filter: active ? 'none' : `blur(${dist === 1 ? 1.4 : 2.6}px)`,

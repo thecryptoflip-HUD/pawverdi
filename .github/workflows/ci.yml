@@ -1,0 +1,61 @@
+name: ci
+
+# Runs on every pull request and on demand. Deliberately no secrets: the suite
+# runs in demo mode, so nothing here needs Supabase or Vercel credentials.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npx next build
+
+      - name: Smoke test
+        run: |
+          npx next start -p 3000 > /tmp/next.log 2>&1 &
+          SERVER_PID=$!
+          ready=0
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:3000/api/health > /dev/null; then ready=1; break; fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "server did not start"; tail -50 /tmp/next.log; kill "$SERVER_PID" 2>/dev/null || true; exit 1
+          fi
+          BASE=http://127.0.0.1:3000 npm run verify
+          status=$?
+          kill "$SERVER_PID" 2>/dev/null || true
+          exit $status
+
+      - name: Server log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-server-log
+          path: /tmp/next.log
+          if-no-files-found: ignore
