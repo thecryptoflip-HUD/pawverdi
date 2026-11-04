@@ -134,6 +134,18 @@ export async function GET(request: Request) {
     counts[table] = error ? 'Diagnostic probe failed.' : (count ?? 0);
   }
 
+  // Aggregate role counts — no user ids, emails or names. This is how an operator
+  // confirms that a newly provisioned account actually received `admin` without
+  // asking anyone to paste a session or a password.
+  const roles: Record<string, number> = { admin: 0, editor: 0, reviewer: 0, reader: 0 };
+  const { data: roleRows, error: roleError } = await supabase.from('profiles').select('role');
+  if (!roleError) {
+    for (const row of roleRows ?? []) {
+      const role = String((row as { role?: unknown }).role ?? '');
+      if (role in roles) roles[role] += 1;
+    }
+  }
+
   // Removes only test rows this diagnostic created (example.invalid addresses).
   let purged: Record<string, number | string> | undefined;
   if (withPurge) {
@@ -151,12 +163,13 @@ export async function GET(request: Request) {
     }
   }
 
-  if (!admin) return NextResponse.json({ ok: true, service: 'diagnostics', counts, ...(roundTrip ? { roundTrip } : {}), ...(purged ? { purged } : {}) });
+  if (!admin) return NextResponse.json({ ok: true, service: 'diagnostics', counts, roles, ...(roundTrip ? { roundTrip } : {}), ...(purged ? { purged } : {}) });
 
   return NextResponse.json(
     {
       ...base,
       counts,
+      roles,
       ...(roundTrip ? { roundTrip } : {}),
       ...(purged ? { purged } : {}),
       schemaReady: missing.length === 0,
