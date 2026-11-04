@@ -1,23 +1,12 @@
 import { NextResponse } from 'next/server';
-import { timingSafeEqual } from 'node:crypto';
+import 'server-only';
+import { requireUser, isAdmin, hasDiagnosticsToken } from '@/lib/auth';
 import { isLive } from '@/lib/supabase';
 import { adminClient, serviceKeySource } from '@/lib/supabase-admin';
 
 export const dynamic = 'force-dynamic';
 
-/**
- * Deployment diagnostic (no secrets exposed).
- *
- * Reads are public: project host, key shapes, table reachability and row counts
- * contain no credentials and no rows. Anything that *writes* — ?write, ?roundtrip,
- * ?purge — requires `Authorization: Bearer $DIAGNOSTICS_TOKEN`, because an
- * unauthenticated endpoint that deletes rows is a liability, not a feature.
- * With no token configured, mutations are refused outright.
- *
- * Reports the project the deployed app is actually talking to, which key role is
- * loaded (anon vs service_role — decoded from the JWT payload only, never the
- * signature), per-table reachability and a real write test.
- */
+/** Restricted deployment diagnostics; probes retain their existing scope. */
 const TABLES = [
   'profiles', 'breeds', 'articles', 'article_sources', 'products',
   'seller_applications', 'sellers', 'listings', 'ads', 'ad_enquiries',
@@ -53,20 +42,13 @@ function keyKind(key: string | undefined): string | null {
   return 'unrecognised format';
 }
 
-function authorised(request: Request): boolean {
-  const expected = process.env.DIAGNOSTICS_TOKEN;
-  if (!expected) return false; // fail closed: no token configured, no mutations
-  const header = request.headers.get('authorization') ?? '';
-  const provided = header.startsWith('Bearer ') ? header.slice(7).trim() : '';
-  if (!provided || provided.length !== expected.length) return false;
-  try {
-    return timingSafeEqual(Buffer.from(provided), Buffer.from(expected));
-  } catch {
-    return false;
-  }
-}
-
 export async function GET(request: Request) {
+  const machine = hasDiagnosticsToken(request);
+  const session = await requireUser();
+  const admin = session && isAdmin(session.role);
+  if (!admin && !machine) {
+    return NextResponse.json({ ok: false, error: session ? 'Administrator access required.' : 'Authentication required.' }, { status: session ? 403 : 401 });
+  }
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : null;
   const ref = host ? host.split('.')[0] : null;
@@ -75,13 +57,6 @@ export async function GET(request: Request) {
   const withWrite = params.get('write') === '1';
   const withRoundTrip = params.get('roundtrip') === '1';
   const withPurge = params.get('purge') === '1';
-
-  if ((withWrite || withRoundTrip || withPurge) && !authorised(request)) {
-    return NextResponse.json(
-      { ok: false, error: 'Diagnostics mutations require a bearer token.' },
-      { status: 403 },
-    );
-  }
 
   const base = {
     mode: isLive() ? 'live' : 'demo',
@@ -95,7 +70,7 @@ export async function GET(request: Request) {
   };
 
   if (!isLive() || !supabase) {
-    return NextResponse.json({ ...base, schemaReady: false, missing: TABLES }, { status: 200 });
+    return NextResponse.json(admin ? { ...base, schemaReady: false, missing: TABLES } : { ok: true, service: 'diagnostics', counts: {} });
   }
 
   const tables: Record<string, { ok: boolean; count?: number; error?: string }> = {};
@@ -105,7 +80,7 @@ export async function GET(request: Request) {
     // A real row fetch is the only trustworthy existence check.
     const { data, error } = await supabase.from(table).select('*').limit(1);
     tables[table] = error
-      ? { ok: false, error: error.message }
+      ? { ok: false, error: 'Diagnostic probe failed.' }
       : { ok: true, count: data?.length ?? 0 };
   }
   const missing = TABLES.filter((t) => !tables[t].ok);
@@ -115,13 +90,13 @@ export async function GET(request: Request) {
   if (withWrite) {
     const plainEmail = `plain-${Date.now()}@example.invalid`;
     const pi = await supabase.from('newsletter_subscribers').insert({ email: plainEmail, source: 'diagnostic' }).select('id').single();
-    plainInsert = pi.error ? { ok: false, error: pi.error.message, code: pi.error.code, details: pi.error.details } : { ok: true, id: pi.data?.id };
+    plainInsert = pi.error ? { ok: false, error: 'Diagnostic probe failed.', code: pi.error.code } : { ok: true, id: pi.data?.id };
     if (!pi.error && pi.data?.id) await supabase.from('newsletter_subscribers').delete().eq('id', pi.data.id);
   }
   if (withWrite) {
     const email = `diag-${Date.now()}@example.invalid`;
     const ins = await supabase.from('newsletter_subscribers').insert({ email, source: 'diagnostic' }).select('id').single();
-    write = ins.error ? { ok: false, error: ins.error.message, code: ins.error.code } : { ok: true, id: ins.data?.id };
+    write = ins.error ? { ok: false, error: 'Diagnostic probe failed.', code: ins.error.code } : { ok: true, id: ins.data?.id };
     if (!ins.error && ins.data?.id) {
       await supabase.from('newsletter_subscribers').delete().eq('id', ins.data.id);
       write.cleanedUp = true;
@@ -136,16 +111,16 @@ export async function GET(request: Request) {
     const email = `roundtrip-${Date.now()}@example.invalid`;
     const ins = await supabase.from('newsletter_subscribers').insert({ email, source: 'roundtrip' }).select('id').single();
     if (ins.error) {
-      roundTrip = { insert: { ok: false, error: ins.error.message, code: ins.error.code } };
+      roundTrip = { insert: { ok: false, error: 'Diagnostic probe failed.', code: ins.error.code } };
     } else {
       const read = await supabase.from('newsletter_subscribers').select('id, email, source').eq('email', email).maybeSingle();
       const del = await supabase.from('newsletter_subscribers').delete().eq('email', email).select('id');
       roundTrip = {
         insert: { ok: true, id: ins.data?.id },
         read: read.error
-          ? { ok: false, error: read.error.message }
+          ? { ok: false, error: 'Diagnostic probe failed.' }
           : { ok: Boolean(read.data), found: read.data ? { id: read.data.id, source: read.data.source } : null },
-        delete: del.error ? { ok: false, error: del.error.message } : { ok: true, deleted: del.data?.length ?? 0 },
+        delete: del.error ? { ok: false, error: 'Diagnostic probe failed.' } : { ok: true, deleted: del.data?.length ?? 0 },
       };
     }
   }
@@ -156,7 +131,7 @@ export async function GET(request: Request) {
   const counts: Record<string, number | string> = {};
   for (const table of INTAKE) {
     const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
-    counts[table] = error ? `error: ${error.message}` : (count ?? 0);
+    counts[table] = error ? 'Diagnostic probe failed.' : (count ?? 0);
   }
 
   // Removes only test rows this diagnostic created (example.invalid addresses).
@@ -172,9 +147,11 @@ export async function GET(request: Request) {
         .delete()
         .or('email.like.*@example.com,email.like.*@example.invalid')
         .select('id');
-      purged[table] = error ? `error: ${error.message}` : (data?.length ?? 0);
+      purged[table] = error ? 'Diagnostic probe failed.' : (data?.length ?? 0);
     }
   }
+
+  if (!admin) return NextResponse.json({ ok: true, service: 'diagnostics', counts, ...(roundTrip ? { roundTrip } : {}), ...(purged ? { purged } : {}) });
 
   return NextResponse.json(
     {

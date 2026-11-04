@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { getSession, isStaff, isAdmin } from '@/lib/auth';
 import { articles, products, reviewLabel } from '@/lib/content';
 import { isLive } from '@/lib/supabase';
 
@@ -9,13 +11,27 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminPage() {
+function SignOut() {
+  return <form action="/api/auth/signout" method="post"><button className="rounded border border-gold px-4 py-2" type="submit">Sign out</button></form>;
+}
+
+export default async function AdminPage() {
+  const session = await getSession();
+  if (!session) redirect('/admin/login');
+  if (!isStaff(session.role)) return <div className="mx-auto max-w-wrap px-5 pb-20 pt-[calc(76px+48px)]">
+    <p className="mb-4">This account has no administrative access.</p><SignOut />
+  </div>;
   const live = isLive();
   const vetReviewed = articles.filter((a) => a.review.status === 'vet-reviewed').length;
   const recent = [...articles].sort((a, b) => (a.updated < b.updated ? 1 : -1)).slice(0, 8);
 
   return (
     <div className="mx-auto max-w-wrap px-5 pb-20 pt-[calc(76px+48px)] sm:px-8">
+      <section aria-label="Account" className="mb-8 rounded border border-white/15 p-5">
+        <p>{session.displayName ?? 'Staff'} · {session.email ?? 'No email'} · {session.role}</p>
+        <p className="my-3">Capabilities: view admin UI, edit content{isAdmin(session.role) ? ', run diagnostics, manage roles' : ''}.</p>
+        <SignOut />
+      </section>
       <header className="mb-9">
         <p className="kicker mb-4">Operations</p>
         <h1 className="display text-[clamp(1.9rem,3.4vw,2.8rem)] text-[#fcf8f1]">Admin dashboard</h1>
@@ -35,7 +51,7 @@ export default function AdminPage() {
         <p className="mt-2 text-[0.9rem] leading-relaxed text-cream/80">
           {live
             ? 'Reads and writes hit Supabase Postgres under row-level security. Publishing requires an authenticated editor session.'
-            : 'No Supabase credentials are set, so this dashboard is read-only over seed content. Writes return a clear "not stored" response instead of appearing to succeed. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY and either SUPABASE_SERVICE_ROLE_KEY (legacy JWT) or SUPABASE_SECRET_KEY (sb_secret_…) to switch modes.'}
+            : 'No Supabase credentials are set, so this dashboard is read-only over seed content. Writes return a clear "not stored" response instead of appearing to succeed. Configure the server environment to switch modes.'}
         </p>
       </div>
 

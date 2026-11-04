@@ -11,6 +11,7 @@
     "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.45.4",
     "next": "^15.5.29",
     "react": "^19.1.10",

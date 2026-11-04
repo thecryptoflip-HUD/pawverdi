@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 /**
- * Content-Security-Policy.
+ * Content-Security-Policy. See docs/SECURITY.md section 6 for the nonce proposal.
  *
  * `script-src` keeps 'unsafe-inline' because the App Router emits an inline
  * bootstrap script into otherwise static pages; a nonce would force every page
@@ -47,6 +47,9 @@ const config: NextConfig = {
       {
         source: '/(.*)',
         headers: [
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+          { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+          { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-Frame-Options', value: 'DENY' },

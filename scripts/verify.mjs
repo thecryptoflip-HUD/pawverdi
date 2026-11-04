@@ -22,7 +22,7 @@ const pages = [
   ['/community', ['One email a month']],
   ['/trust', ['Affiliate disclosure', 'Seller and listing standards']],
   ['/contact', ['PawVerdi@hotmail.com']],
-  ['/admin', ['Content mode', 'Admin dashboard']],
+  ['/admin/login', ['Sign in']],
   ['/sitemap.xml', ['<urlset']],
   ['/robots.txt', ['Sitemap:']],
   ['/knowledge?species=cat&section=health', ['Showing']],
@@ -58,7 +58,7 @@ async function checkApi() {
   try {
     const res = await fetch(`${BASE}/api/health`);
     const body = await res.json();
-    record('/api/health', res.status === 200 && body.ok === true, `mode=${body.mode} articles=${body.content?.articles}`);
+    record('/api/health', res.status === 200 && body.ok === true && !JSON.stringify(body).includes('mode') && !JSON.stringify(body).includes('articles'), `http=${res.status}`);
   } catch (error) {
     record('/api/health', false, error.message);
   }
@@ -104,7 +104,7 @@ async function checkApi() {
 
 async function checkSecurityHeaders() {
   const res = await fetch(`${BASE}/`);
-  const expected = ['x-content-type-options', 'referrer-policy', 'x-frame-options'];
+  const expected = ['x-content-type-options', 'referrer-policy', 'x-frame-options', 'cross-origin-opener-policy', 'cross-origin-resource-policy', 'x-permitted-cross-domain-policies'];
   const missing = expected.filter((h) => !res.headers.get(h));
   record('security headers', missing.length === 0, missing.length ? `missing: ${missing.join(', ')}` : 'present');
 }
@@ -118,9 +118,22 @@ async function checkCsp() {
 }
 
 async function checkDiagnosticsGuard() {
-  // An unauthenticated caller must not be able to trigger a write or delete.
-  const res = await fetch(`${BASE}/api/db-status?purge=1`);
-  record('diagnostics mutations blocked', res.status === 403, `http=${res.status}`);
+  try {
+    const res = await fetch(`${BASE}/admin`, { redirect: 'manual' });
+    record('/admin redirects to login', [307, 308].includes(res.status) && (res.headers.get('location') || '').includes('/admin/login'), `http=${res.status}`);
+  } catch (error) {
+    record('/admin redirects to login', false, error.message);
+  }
+  for (const path of ['/api/db-status', '/api/db-status?purge=1', '/api/admin/whoami']) {
+    try {
+      const res = await fetch(`${BASE}${path}`);
+      const body = await res.json();
+      const forbidden = ['host', 'ref', 'keyKinds', 'serviceKeySource', 'schemaReady', 'tables', 'missing'];
+      record(`${path} unauthenticated`, res.status === 401 && body.ok === false && body.error === 'Authentication required.' && forbidden.every((key) => !(key in body)), `http=${res.status}`);
+    } catch (error) {
+      record(`${path} unauthenticated`, false, error.message);
+    }
+  }
 }
 
 async function checkNoKeyMaterial() {
