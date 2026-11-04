@@ -51,7 +51,10 @@ export async function GET(request: Request) {
   const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : null;
   const ref = host ? host.split('.')[0] : null;
   const supabase = adminClient();
-  const withWrite = new URL(request.url).searchParams.get('write') === '1';
+  const params = new URL(request.url).searchParams;
+  const withWrite = params.get('write') === '1';
+  const withRoundTrip = params.get('roundtrip') === '1';
+  const withPurge = params.get('purge') === '1';
 
   const base = {
     mode: isLive() ? 'live' : 'demo',
@@ -98,9 +101,53 @@ export async function GET(request: Request) {
     }
   }
 
+  // Insert → read-back → delete, through the same credential path the forms use.
+  // An insert that returns an id only proves PostgREST accepted the write; the
+  // read-back is what proves the row is actually queryable.
+  let roundTrip: Record<string, unknown> | undefined;
+  if (withRoundTrip) {
+    const email = `roundtrip-${Date.now()}@example.invalid`;
+    const ins = await supabase.from('newsletter_subscribers').insert({ email, source: 'roundtrip' }).select('id').single();
+    if (ins.error) {
+      roundTrip = { insert: { ok: false, error: ins.error.message, code: ins.error.code } };
+    } else {
+      const read = await supabase.from('newsletter_subscribers').select('id, email, source').eq('email', email).maybeSingle();
+      const del = await supabase.from('newsletter_subscribers').delete().eq('email', email).select('id');
+      roundTrip = {
+        insert: { ok: true, id: ins.data?.id },
+        read: read.error
+          ? { ok: false, error: read.error.message }
+          : { ok: Boolean(read.data), found: read.data ? { id: read.data.id, source: read.data.source } : null },
+        delete: del.error ? { ok: false, error: del.error.message } : { ok: true, deleted: del.data?.length ?? 0 },
+      };
+    }
+  }
+
+  // Row counts for the four intake tables, so a form test can prove the row landed
+  // without the caller ever holding a database credential.
+  const INTAKE = ['newsletter_subscribers', 'contact_messages', 'seller_applications', 'ad_enquiries'] as const;
+  const counts: Record<string, number | string> = {};
+  for (const table of INTAKE) {
+    const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
+    counts[table] = error ? `error: ${error.message}` : (count ?? 0);
+  }
+
+  // Removes only test rows this diagnostic created (example.invalid addresses).
+  let purged: Record<string, number | string> | undefined;
+  if (withPurge) {
+    purged = {};
+    for (const table of INTAKE) {
+      const { data, error } = await supabase.from(table).delete().like('email', '%@example.invalid').select('id');
+      purged[table] = error ? `error: ${error.message}` : (data?.length ?? 0);
+    }
+  }
+
   return NextResponse.json(
     {
       ...base,
+      counts,
+      ...(roundTrip ? { roundTrip } : {}),
+      ...(purged ? { purged } : {}),
       schemaReady: missing.length === 0,
       tableCount: TABLES.length - missing.length,
       missing,
