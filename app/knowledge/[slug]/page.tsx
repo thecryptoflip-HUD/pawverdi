@@ -29,15 +29,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const reviewed = article.review.status === 'vet-reviewed' && Boolean(article.review.reviewer);
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: article.summary,
-    dateModified: article.updated,
-    author: { '@type': 'Organization', name: site.name },
-    publisher: { '@type': 'Organization', name: site.name },
-    mainEntityOfPage: `${site.url}/knowledge/${article.slug}`,
-    isAccessibleForFree: true,
-    ...(reviewed ? { reviewedBy: { '@type': 'Person', name: article.review.reviewer } } : {}),
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: article.title,
+        description: article.summary,
+        dateModified: article.updated,
+        author: { '@type': 'Organization', name: site.name },
+        publisher: { '@type': 'Organization', name: site.name },
+        mainEntityOfPage: `${site.url}/knowledge/${article.slug}`,
+        isAccessibleForFree: true,
+        ...(reviewed ? { reviewedBy: { '@type': 'Person', name: article.review.reviewer } } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+          { '@type': 'ListItem', position: 2, name: 'Knowledge', item: `${site.url}/knowledge` },
+          { '@type': 'ListItem', position: 3, name: article.title, item: `${site.url}/knowledge/${article.slug}` },
+        ],
+      },
+    ],
   };
 
   return (
