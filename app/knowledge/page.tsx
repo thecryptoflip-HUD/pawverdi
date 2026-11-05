@@ -15,10 +15,12 @@ export const metadata: Metadata = {
 const sectionOptions = ['all', 'costs', 'health', 'nutrition', 'training', 'setup', 'safety', 'behaviour', 'tech'] as const;
 const speciesOptions = ['all', 'dog', 'cat'] as const;
 
-type Search = { species?: string; section?: string };
+type Search = { species?: string; section?: string; q?: string };
 
 export default async function KnowledgePage({ searchParams }: { searchParams: Promise<Search> }) {
   const params = await searchParams;
+  const q = params.q ?? '';
+  const query = q.trim().toLowerCase();
   const species = speciesOptions.includes((params.species ?? 'all') as (typeof speciesOptions)[number])
     ? (params.species ?? 'all')
     : 'all';
@@ -29,7 +31,8 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
   const filtered = completeArticles.filter((a) => {
     const speciesOk = species === 'all' || a.species === species || a.species === 'both';
     const sectionOk = section === 'all' || a.section === section;
-    return speciesOk && sectionOk;
+    const searchOk = [a.title, a.summary, a.section].some((value) => value.toLowerCase().includes(query));
+    return speciesOk && sectionOk && searchOk;
   });
 
   const reviewedCount = completeArticles.filter((a) => a.review.status === 'vet-reviewed' && a.review.reviewer).length;
@@ -45,6 +48,21 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
 
       <section className="py-[clamp(40px,6vw,72px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
+          <form action="/knowledge" method="get" className="mb-8">
+            <label htmlFor="knowledge-search" className="mb-2 block text-[0.82rem] text-cream/70">Search guides</label>
+            <div className="flex flex-wrap gap-3">
+              <input
+                id="knowledge-search"
+                type="search"
+                name="q"
+                defaultValue={q}
+                className="min-w-0 flex-1 rounded-xl border border-white/15 bg-moss/60 px-4 py-3 text-cream"
+              />
+              <button type="submit" className="btn btn-ghost">Search</button>
+            </div>
+            <input type="hidden" name="species" value={species} />
+            <input type="hidden" name="section" value={section} />
+          </form>
           {/* filters are plain links: they work with JS off and are crawlable */}
           <nav aria-label="Filter articles" className="mb-10 space-y-4">
             <div className="flex flex-wrap items-center gap-2">
@@ -52,7 +70,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               {speciesOptions.map((option) => (
                 <Link
                   key={option}
-                  href={`/knowledge?species=${option}${section !== 'all' ? `&section=${section}` : ''}`}
+                  href={`/knowledge?species=${option}${section !== 'all' ? `&section=${section}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
                   aria-current={species === option ? 'page' : undefined}
                   className={`rounded-full border px-3.5 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] transition-colors ${
                     species === option ? 'border-amber text-gold' : 'border-white/15 text-cream/70 hover:border-white/30 hover:text-cream'
@@ -67,7 +85,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               {sectionOptions.map((option) => (
                 <Link
                   key={option}
-                  href={`/knowledge?section=${option}${species !== 'all' ? `&species=${species}` : ''}`}
+                  href={`/knowledge?section=${option}${species !== 'all' ? `&species=${species}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
                   aria-current={section === option ? 'page' : undefined}
                   className={`rounded-full border px-3.5 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] transition-colors ${
                     section === option ? 'border-amber text-gold' : 'border-white/15 text-cream/70 hover:border-white/30 hover:text-cream'
@@ -89,11 +107,10 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
             <div className="rounded-2xl border border-white/[0.08] bg-moss/60 p-10 text-center">
               <h2 className="font-serif text-2xl text-cream">Nothing published under that filter yet.</h2>
               <p className="mx-auto mt-3 max-w-[46ch] text-[0.94rem] text-cream/70">
-                We would rather show an empty shelf than pad the count with thin content. The next guides on this topic
-                are still in preparation.
+                {q ? "No guide matches that search. Try a different term, or clear a filter." : "Change the species or topic filter to see other guides."}
               </p>
-              <Link href="/knowledge" className="btn btn-ghost mx-auto mt-6">
-                Clear filters
+              <Link href={q ? `/knowledge?species=${species}&section=${section}` : '/knowledge'} className="btn btn-ghost mx-auto mt-6">
+                {q ? 'Reset search' : 'Clear filters'}
               </Link>
             </div>
           ) : (
