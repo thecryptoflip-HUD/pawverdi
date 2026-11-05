@@ -36,6 +36,7 @@ export default function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={pathname === item.href ? 'page' : undefined}
               className={`rounded-full px-3.5 py-2 text-[0.78rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
                 pathname === item.href ? 'text-cream' : 'text-cream/75 hover:text-cream'
               }`}
@@ -73,6 +74,7 @@ export default function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={pathname === item.href ? 'page' : undefined}
               className="block border-b border-white/[0.06] py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-cream/85"
             >
               {item.label}
