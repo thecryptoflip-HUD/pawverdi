@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const articleRoutes = articles.map((article) => ({
+  const articleRoutes = articles.filter((article) => article.guide).map((article) => ({
     url: `${site.url}/knowledge/${article.slug}`,
     lastModified: new Date(article.updated),
     changeFrequency: 'monthly' as const,

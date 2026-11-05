@@ -1,0 +1,53 @@
+[
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1Count": 1,
+    "route": "/",
+    "javascript": true
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1Count": 1,
+    "route": "/knowledge",
+    "javascript": true
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1Count": 1,
+    "route": "/knowledge/new-puppy-checklist",
+    "javascript": true
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1Count": 1,
+    "route": "/knowledge/new-kitten-checklist",
+    "javascript": true
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "h1Count": 1,
+    "route": "/shop",
+    "javascript": true
+  },
+  {
+    "h1": "New puppy checklist: what to buy before day one",
+    "body": true,
+    "display": "block",
+    "words": 1237,
+    "route": "/knowledge/new-puppy-checklist",
+    "javascript": false
+  },
+  {
+    "h1": "New kitten checklist: a safe first week at home",
+    "body": true,
+    "display": "block",
+    "words": 1356,
+    "route": "/knowledge/new-kitten-checklist",
+    "javascript": false
+  }
+]

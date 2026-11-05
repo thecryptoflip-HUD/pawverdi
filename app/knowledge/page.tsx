@@ -3,12 +3,12 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import ArticleCard from '@/components/article-card';
 import Reveal from '@/components/reveal';
-import { articles, reviewLabel } from '@/lib/content';
+import { articles, completeArticles, reviewLabel } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Knowledge Center — fact-checked guides and pet care news',
+  title: 'Knowledge Center — practical dog and cat care guides',
   description:
-    'Every PawVerdi guide states its review status, sources and last-checked date. Filter by species or topic; nothing is published without an editorial pass.',
+    'Source-linked puppy and kitten checklists, with clear review status. Browse complete guides and see which dog and cat topics are still in preparation.',
   alternates: { canonical: '/knowledge' },
 };
 
@@ -26,20 +26,21 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
     ? (params.section ?? 'all')
     : 'all';
 
-  const filtered = articles.filter((a) => {
+  const filtered = completeArticles.filter((a) => {
     const speciesOk = species === 'all' || a.species === species || a.species === 'both';
     const sectionOk = section === 'all' || a.section === section;
     return speciesOk && sectionOk;
   });
 
-  const reviewedCount = articles.filter((a) => a.review.status === 'vet-reviewed').length;
+  const reviewedCount = completeArticles.filter((a) => a.review.status === 'vet-reviewed' && a.review.reviewer).length;
+  const upcoming = articles.filter((article) => !article.guide);
 
   return (
     <>
       <CinematicHero variant="knowledge"
         kicker="Knowledge Center"
         title={<>The reading list, with its paperwork attached.</>}
-        intro={`${articles.length} published guides. ${reviewedCount} have completed veterinary review; the rest carry an editorial badge and say so. Prices are re-checked on a schedule and every entry shows its last update.`}
+        intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
       />
 
       <section className="py-[clamp(40px,6vw,72px)]">
@@ -79,7 +80,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
           </nav>
 
           <p className="mb-7 text-[0.82rem] text-cream/55" role="status">
-            Showing <strong className="text-cream">{filtered.length}</strong> of {articles.length} guides
+            Showing <strong className="text-cream">{filtered.length}</strong> of {completeArticles.length} full guides
             {species !== 'all' && ` · species: ${species}`}
             {section !== 'all' && ` · topic: ${section}`}
           </p>
@@ -89,7 +90,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               <h2 className="font-serif text-2xl text-cream">Nothing published under that filter yet.</h2>
               <p className="mx-auto mt-3 max-w-[46ch] text-[0.94rem] text-cream/70">
                 We would rather show an empty shelf than pad the count with thin content. The next guides on this topic
-                are in editorial.
+                are still in preparation.
               </p>
               <Link href="/knowledge" className="btn btn-ghost mx-auto mt-6">
                 Clear filters
@@ -109,6 +110,18 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="border-t border-white/[0.07] py-10">
+        <div className="mx-auto max-w-wrap px-5 sm:px-8">
+          <details className="rounded-2xl border border-white/10 bg-moss/50 p-6">
+            <summary className="cursor-pointer font-serif text-xl text-cream">{upcoming.length} topics in preparation</summary>
+            <p className="mt-3 text-[0.9rem] text-cream/75">These are planned topics, not finished guides. They are excluded from the complete-guide count and sitemap.</p>
+            <ul className="mt-4 grid list-disc gap-x-10 gap-y-3 pl-5 text-[0.88rem] text-cream/75 sm:grid-cols-2">
+              {upcoming.map((article) => <li key={article.slug}>{article.title}</li>)}
+            </ul>
+          </details>
         </div>
       </section>
 
@@ -132,9 +145,9 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
             </p>
             <dl className="mt-6 grid gap-4 border-t border-white/[0.07] pt-5 text-[0.86rem] sm:grid-cols-3">
               {[
-                ['Editorial reviews completed this month', String(articles.filter((a) => a.review.status !== 'unreviewed').length)],
+                ['Complete guides with sources', String(completeArticles.filter((a) => a.sources.length > 0).length)],
                 ['Vet reviews completed', String(reviewedCount)],
-                ['Corrections issued', '0'],
+                ['Topics in preparation', String(upcoming.length)],
               ].map(([k, v]) => (
                 <div key={k}>
                   <dt className="text-cream/55">{k}</dt>
@@ -153,7 +166,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
             <ol className="grid gap-4 text-[0.92rem] text-cream/80 sm:grid-cols-3">
               {[
                 ['Draft', 'Written from primary sources: veterinary literature, regulator guidance, breed-club data. Claims without a source are cut.'],
-                ['Editorial pass', 'A second editor checks sourcing, prices and internal links. The article publishes with an editorial badge.'],
+                ['Independent editorial pass', 'An independent editor should check the sources, safety wording and links. Source-linked checklists do not claim this review has happened.'],
                 ['Veterinary review', 'A licensed veterinarian reviews clinical claims. Only then does the vet-reviewed badge appear, with the reviewer named.'],
               ].map(([title, body], i) => (
                 <li key={title} className="rounded-xl border border-white/[0.07] bg-void/40 p-5">

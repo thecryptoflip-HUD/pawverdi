@@ -1,0 +1,84 @@
+[
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": [
+      "What your petactually needs.And what it costs."
+    ],
+    "guideBody": false,
+    "bodyVisible": null,
+    "sourceLinks": [],
+    "brokenImages": [],
+    "route": "/"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": [
+      "The reading list, with its paperwork attached."
+    ],
+    "guideBody": false,
+    "bodyVisible": null,
+    "sourceLinks": [],
+    "brokenImages": [],
+    "route": "/knowledge"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": [
+      "New puppy checklist: what to buy before day one"
+    ],
+    "guideBody": true,
+    "bodyVisible": "visible",
+    "sourceLinks": [
+      {
+        "text": "[1] PDSA: New puppy guide",
+        "url": "https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/new-puppy-checklist"
+      },
+      {
+        "text": "[2] PDSA: Your first day and night with a new puppy",
+        "url": "https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/first-day-and-night-with-puppy"
+      },
+      {
+        "text": "[3] Blue Cross: Bringing your new puppy home",
+        "url": "https://www.bluecross.org.uk/advice/dog/wellbeing-and-care/bringing-your-new-puppy-home"
+      }
+    ],
+    "brokenImages": [],
+    "route": "/knowledge/new-puppy-checklist"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": [
+      "New kitten checklist: a safe first week at home"
+    ],
+    "guideBody": true,
+    "bodyVisible": "visible",
+    "sourceLinks": [
+      {
+        "text": "[4] Cats Protection: Bringing a new kitten home",
+        "url": "https://www.cats.org.uk/help-and-advice/getting-a-cat/bringing-a-new-kitten-home"
+      },
+      {
+        "text": "[5] Cats Protection: Preparing for a cat",
+        "url": "https://www.cats.org.uk/help-and-advice/getting-a-cat/preparing-for-a-cat"
+      }
+    ],
+    "brokenImages": [],
+    "route": "/knowledge/new-kitten-checklist"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "h1": [
+      "Browse pet gear by type."
+    ],
+    "guideBody": false,
+    "bodyVisible": null,
+    "sourceLinks": [],
+    "brokenImages": [],
+    "route": "/shop"
+  }
+]

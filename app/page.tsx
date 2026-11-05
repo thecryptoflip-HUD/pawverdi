@@ -4,13 +4,13 @@ import Reveal from '@/components/reveal';
 import GuideRail, { type RailItem } from '@/components/guide-rail';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
-import { articles, featuredArticles, sections } from '@/lib/content';
+import { articles, completeArticles, featuredArticles, sections } from '@/lib/content';
 
 const railImages = ['/brand/carrier.jpg', '/brand/bed.jpg', '/brand/gear.jpg', '/brand/hero.jpg'];
 
 export default function HomePage() {
   const featured = featuredArticles(3);
-  const rail: RailItem[] = articles.slice(0, 8).map((a, i) => ({
+  const rail: RailItem[] = completeArticles.slice(0, 8).map((a, i) => ({
     slug: a.slug,
     title: a.title,
     section: a.section,
@@ -77,8 +77,8 @@ export default function HomePage() {
           <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
             <Reveal>
               <p className="kicker mb-4">The index</p>
-              <h2 className="display text-[clamp(1.9rem,3.4vw,2.9rem)] text-[#fcf8f1]">
-                {articles.length} guides.
+              <h2 data-guide-count={completeArticles.length} className="display text-[clamp(1.9rem,3.4vw,2.9rem)] text-[#fcf8f1]">
+                {completeArticles.length} full guides.
                 <br />
                 Drag through them.
               </h2>
@@ -151,10 +151,10 @@ export default function HomePage() {
           </Reveal>
           <Reveal className="grid grid-cols-2 gap-px overflow-hidden rounded-[18px] border border-white/[0.07] bg-white/[0.06] lg:grid-cols-4">
             {[
-              { n: String(articles.length), l: 'Published guides' },
-              { n: '0', l: 'Paid rankings' },
-              { n: '0', l: 'Unverified sellers' },
-              { n: '100%', l: 'Paid links labelled' },
+              { n: String(completeArticles.length), l: 'Complete guides' },
+              { n: String(articles.length - completeArticles.length), l: 'Topics in preparation' },
+              { n: String(new Set(completeArticles.flatMap((a) => a.sources.map((s) => s.url))).size), l: 'Linked source pages' },
+              { n: String(completeArticles.filter((a) => a.review.status === 'vet-reviewed' && a.review.reviewer).length), l: 'Veterinary reviews' },
             ].map((stat) => (
               <div key={stat.l} className="bg-forest px-7 py-8">
                 <div className="font-serif text-[clamp(2rem,3.4vw,2.7rem)] leading-none text-gold">{stat.n}</div>
