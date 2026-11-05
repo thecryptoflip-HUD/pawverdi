@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs && node --test scripts/test-guides.mjs scripts/test-publication.mjs && node scripts/test-shop.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

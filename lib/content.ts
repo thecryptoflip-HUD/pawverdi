@@ -1,3 +1,5 @@
+import { guideBySlug, guideReadingMinutes, guideSources, type Guide } from './guides';
+
 /**
  * PawVerdi content layer.
  *
@@ -24,24 +26,12 @@ export interface Article {
   updated: string; // ISO date
   readingMinutes: number;
   review: { status: ReviewStatus; reviewer?: string };
-  sources: { label: string; url: string }[];
+  sources: { id: number; label: string; url: string }[];
+  guide?: Guide;
 }
 
-export interface Product {
-  id: string;
-  name: string;
-  category: 'beds' | 'carriers' | 'harnesses' | 'crates' | 'litter' | 'feeding' | 'tech';
-  species: PetSpecies | 'both';
-  merchant: string;
-  priceUsd: number | null;
-  priceChecked: string;
-  affiliate: boolean;
-  /**
-   * Deliberately empty until a product has been tested by a named reviewer.
-   * The UI renders "not yet reviewed" rather than a fabricated star rating.
-   */
-  rating: null | { score: number; reviewer: string; testedOn: string };
-}
+export { products } from './shop';
+export type { Product } from './shop';
 
 export interface BreedEntry {
   slug: string;
@@ -58,7 +48,7 @@ export interface BreedEntry {
 
 /* ------------------------------------------------------------------ articles */
 
-export const articles: Article[] = [
+const articleRecords: Article[] = [
   {
     slug: 'cat-cost-per-year',
     title: 'What a cat actually costs per year',
@@ -325,6 +315,20 @@ export const articles: Article[] = [
   },
 ];
 
+export const articles: Article[] = articleRecords.map((record) => {
+  const guide = guideBySlug[record.slug];
+  return guide ? {
+    ...record,
+    title: guide.title,
+    guide,
+    updated: guide.updated,
+    readingMinutes: guideReadingMinutes(guide),
+    sources: guideSources.filter((source) => guide.sourceIds.includes(source.id)),
+  } : { ...record, review: { status: 'unreviewed' } };
+});
+
+export const completeArticles = articles.filter((article) => article.guide);
+
 /* ------------------------------------------------------------------ breeds */
 
 export const breeds: BreedEntry[] = [
@@ -402,72 +406,23 @@ export const breeds: BreedEntry[] = [
   },
 ];
 
-/* ---------------------------------------------------------------- products */
-
-export const products: Product[] = [
-  {
-    id: 'pdp-bed-ortho-boucle',
-    name: 'Orthopedic bouclé dog bed (large)',
-    category: 'beds',
-    species: 'dog',
-    merchant: 'Amazon',
-    priceUsd: null,
-    priceChecked: '2026-10-30',
-    affiliate: true,
-    rating: null,
-  },
-  {
-    id: 'pdp-carrier-topload',
-    name: 'Top-loading hard-shell cat carrier',
-    category: 'carriers',
-    species: 'cat',
-    merchant: 'Chewy',
-    priceUsd: null,
-    priceChecked: '2026-10-27',
-    affiliate: true,
-    rating: null,
-  },
-  {
-    id: 'pdp-harness-frontclip',
-    name: 'Front-clip padded harness',
-    category: 'harnesses',
-    species: 'dog',
-    merchant: 'Amazon',
-    priceUsd: null,
-    priceChecked: '2026-10-25',
-    affiliate: true,
-    rating: null,
-  },
-  {
-    id: 'pdp-litter-highside',
-    name: 'High-sided litter box, XL',
-    category: 'litter',
-    species: 'cat',
-    merchant: 'Chewy',
-    priceUsd: null,
-    priceChecked: '2026-10-06',
-    affiliate: true,
-    rating: null,
-  },
-];
-
 /* ----------------------------------------------------------------- helpers */
 
 export const sections = [
   { href: '/dogs', label: 'Dog Center', blurb: 'Breeds, health, nutrition, training, grooming, puppies.' },
   { href: '/cats', label: 'Cat Center', blurb: 'Breeds, health, nutrition, behaviour, grooming, kittens.' },
-  { href: '/knowledge', label: 'Knowledge Center', blurb: 'Fact-checked articles and pet care news.' },
+  { href: '/knowledge', label: 'Knowledge Center', blurb: 'Source-linked checklists and clearly marked upcoming topics.' },
   { href: '/marketplace', label: 'Marketplace', blurb: 'Verified sellers, health disclosures, adoption.' },
-  { href: '/shop', label: 'Product Shop', blurb: 'Tested recommendations and honest comparisons.' },
+  { href: '/shop', label: 'Product Shop', blurb: 'Gear categories, buying priorities and clearly labelled merchant links.' },
   { href: '/community', label: 'Community', blurb: 'Owner stories, newsletters, future forums.' },
 ] as const;
 
 export function featuredArticles(limit = 3): Article[] {
-  return [...articles].sort((a, b) => (a.updated < b.updated ? 1 : -1)).slice(0, limit);
+  return [...completeArticles].sort((a, b) => (a.updated < b.updated ? 1 : -1)).slice(0, limit);
 }
 
 export function articlesBySpecies(species: PetSpecies | 'both'): Article[] {
-  return articles.filter((a) => a.species === species || a.species === 'both');
+  return completeArticles.filter((a) => a.species === species || a.species === 'both');
 }
 
 export function articleBySlug(slug: string): Article | undefined {
@@ -480,7 +435,7 @@ export function breedsBySpecies(species: PetSpecies): BreedEntry[] {
 
 /** Honest label for the review badge in the UI. */
 export function reviewLabel(a: Article): string {
-  if (a.review.status === 'vet-reviewed') return `Vet-reviewed${a.review.reviewer ? ` · ${a.review.reviewer}` : ''}`;
-  if (a.review.status === 'editorial') return 'Editorial review';
-  return 'Not yet reviewed';
+  if (a.review.status === 'vet-reviewed' && a.review.reviewer) return `Vet-reviewed · ${a.review.reviewer}`;
+  if (a.guide) return 'Research-based guide';
+  return 'In preparation';
 }

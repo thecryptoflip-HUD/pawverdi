@@ -14,10 +14,10 @@ const blocks = [
     id: 'editorial',
     title: 'Editorial policy',
     points: [
-      'Every factual claim in a guide is traceable to a primary source: peer-reviewed literature, regulator guidance, breed-club health schemes or a named manufacturer specification. A claim without a source is cut, not softened.',
-      'Articles carry one of three review states — unreviewed, editorial, vet-reviewed. The badge shown publicly is generated from the record, never typed by hand.',
+      'Research-based guides link to published welfare guidance or primary evidence. Buying priorities are PawVerdi recommendations and are distinguished from the guidance of the cited organisations. A source link is not independent veterinary review.',
+      'Complete source-linked checklists carry a Research-based guide label and state that they are not vet-reviewed. Unfinished topics say In preparation. A Vet-reviewed badge requires a named veterinary reviewer; labels come from the content record.',
       'Corrections are append-only and dated. When we change a recommendation, the change and its reason stay on the record.',
-      'Prices are re-checked on a schedule and each row shows the date it was last verified. Stale prices are removed rather than left to age.',
+      'No price-check date is shown until a price has actually been observed. Our current shop is a category shortlist without captured prices; check the retailer for current prices and availability.',
     ],
   },
   {
@@ -34,7 +34,7 @@ const blocks = [
     id: 'disclosure',
     title: 'Affiliate disclosure',
     points: [
-      'PawVerdi earns a commission when you buy through a marked link. The price you pay is the same as buying directly.',
+      'PawVerdi may earn a commission from qualifying purchases through marked affiliate links, at no extra cost to you. Ordinary retailer links are labelled separately and do not imply affiliate tracking.',
       'Every paid link carries rel="sponsored" and an inline marker. The disclosure block on each commercial page is rendered by the component itself and cannot be dropped by an editor.',
       'Commission rates never determine placement. When the cheaper product is the better one, we say so, including when it pays us nothing.',
       'No brand reviews copy before publication, and no brand has paid for a mention, a ranking, or a position in any comparison table.',
