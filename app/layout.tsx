@@ -27,8 +27,9 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
     url: '/',
+    images: [{ url: '/brand/home-hero.jpg', width: 1920, height: 834, alt: 'A dog and a cat in warm window light' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: ['/brand/home-hero.jpg'] },
   robots: { index: true, follow: true },
   icons: { icon: [{ url: '/brand/favicon.svg', type: 'image/svg+xml' }] },
 };
