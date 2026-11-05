@@ -75,6 +75,7 @@ export default function Hero() {
           src="/brand/home-hero.jpg"
           alt=""
           fetchPriority="high"
+          decoding="async"
           width={1920}
           height={834}
           className="h-full w-full object-cover object-[66%_42%] saturate-[1.02] contrast-[1.03] brightness-[.97]"
