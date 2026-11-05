@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import GuideBody from '@/components/guide-body';
-import { articleBySlug, articles, reviewLabel } from '@/lib/content';
+import { articleBySlug, articles, completeArticles, reviewLabel } from '@/lib/content';
 import { site } from '@/lib/site';
 
 export function generateStaticParams() {
@@ -80,6 +80,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 Prepared with AI assistance from the published welfare guidance cited below. No independent veterinary review or hands-on product testing is claimed. Buying priorities are PawVerdi’s recommendations, not endorsements by the cited organisations.
               </aside>
               <GuideBody guide={article.guide} />
+              <nav aria-label="Related guides" className="mt-8 border-t border-white/10 pt-6">
+                <h2 className="mb-3 font-serif text-xl text-cream">Related guides</h2>
+                <ul className="space-y-2 text-[0.9rem]">
+                  {completeArticles.filter((guide) => guide.slug !== article.slug).map((guide) => (
+                    <li key={guide.slug}><Link href={`/knowledge/${guide.slug}`} className="text-gold underline underline-offset-4">{guide.title}</Link></li>
+                  ))}
+                  <li><Link href="/knowledge" className="text-gold underline underline-offset-4">All guides</Link></li>
+                </ul>
+              </nav>
               <section aria-labelledby="sources-heading" className="mt-12 border-t border-white/10 pt-8">
                 <h2 id="sources-heading" className="font-serif text-2xl text-cream">Sources</h2>
                 <p className="mt-3 text-[0.85rem] text-cream/70">UK-based welfare guidance, read on {article.guide.updated}. Care arrangements and legal requirements can vary by location.</p>
