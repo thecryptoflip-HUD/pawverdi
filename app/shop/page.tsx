@@ -12,7 +12,15 @@ export const metadata: Metadata = {
   alternates: { canonical: '/shop' },
 };
 
-export default function ShopPage() {
+export default async function ShopPage({ searchParams }: { searchParams: Promise<{ species?: string | string[]; category?: string | string[] }> }) {
+  const params = await searchParams;
+  const species = params.species === 'dog' || params.species === 'cat' ? params.species : 'all';
+  const category = typeof params.category === 'string' && ['beds', 'carriers', 'harnesses', 'litter'].includes(params.category) ? params.category : 'all';
+  const filteredProducts = products.filter((product) =>
+    (species === 'all' || product.species === species || product.species === 'both')
+    && (category === 'all' || product.category === category)
+  );
+
   return (
     <>
       <CinematicHero variant="shop"
@@ -55,6 +63,27 @@ export default function ShopPage() {
             </p>
           </Reveal>
 
+          <nav aria-label="Filter by species" className="mb-4 flex flex-wrap gap-4">
+            {['all', 'dog', 'cat'].map((value) => (
+              <Link key={value} href={`?species=${value}&category=${category}`} aria-current={species === value ? 'page' : undefined} className="capitalize text-gold underline underline-offset-4">
+                {value}
+              </Link>
+            ))}
+          </nav>
+          <nav aria-label="Filter by category" className="mb-4 flex flex-wrap gap-4">
+            {['all', 'beds', 'carriers', 'harnesses', 'litter'].map((value) => (
+              <Link key={value} href={`?species=${species}&category=${value}`} aria-current={category === value ? 'page' : undefined} className="capitalize text-gold underline underline-offset-4">
+                {value}
+              </Link>
+            ))}
+          </nav>
+          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of 4 gear types</p>
+
+          {filteredProducts.length === 0 ? (
+            <p className="text-cream/70">
+              No gear types match these filters. <Link href="?species=all&category=all" className="text-gold underline underline-offset-4">Reset filters</Link>
+            </p>
+          ) : (
           <div className="overflow-x-auto">
             <table className="table min-w-[760px]" aria-describedby="shop-disclosure">
               <caption className="sr-only">Pet gear category/type shortlist with retailer links, price check dates and review status</caption>
@@ -69,7 +98,7 @@ export default function ShopPage() {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <tr key={product.id}>
                     <th scope="row" className="text-left font-serif text-base font-normal text-cream">
                       {product.name}
@@ -113,6 +142,7 @@ export default function ShopPage() {
               </tbody>
             </table>
           </div>
+          )}
 
           <div className="mt-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
             <h3 className="font-serif text-xl text-cream">Why the price column is empty</h3>
