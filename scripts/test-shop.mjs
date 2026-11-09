@@ -128,7 +128,7 @@ try {
   const tbody = main.match(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/i)?.[1];
   assert.ok(tbody, 'Shop must render a category shortlist table');
   const rows = [...tbody.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map((match) => match[1]);
-  assert.equal(rows.length, 4, 'Expected the four existing category/type shortlist rows');
+  assert.equal(rows.length, 6, 'Expected four existing and two eBay category/type rows');
   console.log(`PawVerdi shop checks → ${base}/shop`);
 
   await check('unobserved prices have no check timestamps', () => {
@@ -147,6 +147,8 @@ try {
       ['www.chewy.com', '/b/carriers-106726', null, 'Chewy'],
       ['www.amazon.com', '/s', 'front clip dog harnesses', 'Amazon'],
       ['www.chewy.com', '/b/litter-boxes-413', null, 'Chewy'],
+      ['www.ebay.com', '/sch/i.html', null, 'eBay'],
+      ['www.ebay.com', '/sch/i.html', null, 'eBay'],
     ];
     rows.forEach((row, index) => {
       const anchors = links(row);
@@ -158,6 +160,7 @@ try {
       assert.equal(destination.hostname, hostname, 'Use the correct retailer, not a redirect service');
       assert.equal(destination.pathname, pathname, 'Link to a category, not an invented product or ASIN');
       assert.equal(destination.searchParams.get('k'), query);
+      if (merchant === 'eBay') assert.ok(destination.searchParams.get('_nkw'), 'eBay category link requires a search term');
       assert.ok(!destination.username && !destination.password && !destination.hash);
       assert.match(label, new RegExp(`Browse .*${merchant}`), 'Link text must describe the retailer browse action');
       assert.equal(attrs.target, '_blank');
@@ -188,6 +191,16 @@ try {
     }
   });
 
+  await check('eBay category links cannot masquerade as EPN affiliate links', () => {
+    for (const index of [4, 5]) {
+      const { attrs } = links(rows[index])[0];
+      assert.equal(attrs['data-track'], 'UNTRACKED');
+      assert.match(text(rows[index]), /Retailer link\s*[·—-]?\s*untracked/i);
+      assert.ok(!new URL(attrs.href).searchParams.has('campid'));
+      assert.ok(!new URL(attrs.href).searchParams.has('mkevt'));
+    }
+  });
+
   await check('readers see the Amazon Associate disclosure before shopping', () => {
     const disclosure = main.match(/<aside\b[^>]*id="shop-disclosure"[^>]*>([\s\S]*?)<\/aside>/i);
     assert.ok(disclosure, 'Put a reader-facing shop disclosure on this page');
@@ -195,7 +208,7 @@ try {
     const copy = text(disclosure[1]);
     assert.ok(copy.includes('As an Amazon Associate I earn from qualifying purchases.'), 'Use the Amazon Associate disclosure wording');
     assert.match(copy, /may earn a commission at no extra cost to you/i);
-    assert.match(copy, /Chewy links are ordinary retailer links without affiliate tracking/i);
+    assert.match(copy, /Chewy and eBay links are ordinary retailer links without affiliate tracking/i);
     assert.ok(links(main).some(({ attrs }) => attrs.href === '#shop-disclosure'), 'Make the shop disclosure reachable from the hero');
     assert.doesNotMatch(text(main), /(?:affiliate account|earnings|commissions?)\s+(?:is |are |have been )?(?:verified|confirmed|guaranteed)/i);
   });
@@ -208,7 +221,7 @@ try {
     assert.match(caption, /category\/type shortlist/i);
     assert.match(text(main), /No products in this shortlist have been tested or rated by PawVerdi\./);
     const names = rows.map((row) => text(row.match(/<th\b[^>]*>([\s\S]*?)<\/th>/i)?.[1] || ''));
-    assert.deepEqual(names, ['Orthopedic dog beds', 'Top-loading cat carriers', 'Front-clip dog harnesses', 'High-sided litter boxes']);
+    assert.deepEqual(names, ['Orthopedic dog beds', 'Top-loading cat carriers', 'Front-clip dog harnesses', 'High-sided litter boxes', 'Dog beds on eBay', 'Cat carriers on eBay']);
     for (const row of rows) {
       assert.match(text(row), /Not yet reviewed/);
       assert.doesNotMatch(text(row), /\d+(?:\.\d+)?\s*\/\s*(?:5|10)|[★☆]/, 'No invented scores or stars');
