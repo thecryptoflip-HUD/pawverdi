@@ -81,4 +81,28 @@ export const products: Product[] = [
     affiliate: false, // Source config: approved=false, no tracking ID.
     rating: null,
   },
+  {
+    id: 'pdp-ebay-dog-bed',
+    name: 'Dog beds on eBay',
+    category: 'beds',
+    species: 'dog',
+    merchant: 'eBay',
+    href: 'https://www.ebay.com/sch/i.html?_nkw=dog+beds',
+    priceUsd: null,
+    priceChecked: null,
+    affiliate: false, // Ordinary category link; no verified EPN campaign or tracking URL.
+    rating: null,
+  },
+  {
+    id: 'pdp-ebay-cat-carrier',
+    name: 'Cat carriers on eBay',
+    category: 'carriers',
+    species: 'cat',
+    merchant: 'eBay',
+    href: 'https://www.ebay.com/sch/i.html?_nkw=cat+carriers',
+    priceUsd: null,
+    priceChecked: null,
+    affiliate: false, // Ordinary category link; no verified EPN campaign or tracking URL.
+    rating: null,
+  },
 ];

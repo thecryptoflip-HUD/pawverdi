@@ -45,7 +45,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
             <p className="mt-2 max-w-[70ch] text-[0.92rem] leading-relaxed text-cream/70">
               As an Amazon Associate I earn from qualifying purchases. Labelled Amazon links contain our configured
               tracking tag. If you buy through one, PawVerdi may earn a commission at no extra cost to you.
-              Chewy links are ordinary retailer links without affiliate tracking.
+              Chewy and eBay links are ordinary retailer links without affiliate tracking. eBay Partner Network links will be enabled only after tracking has been verified.
             </p>
             <Link href="/trust#disclosure" className="mt-3 inline-block text-sm text-gold underline underline-offset-4">
               Read our full disclosure
@@ -77,7 +77,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
               </Link>
             ))}
           </nav>
-          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of 4 gear types</p>
+          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of {products.length} gear types</p>
 
           {filteredProducts.length === 0 ? (
             <p className="text-cream/70">
@@ -143,6 +143,10 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
             </table>
           </div>
           )}
+
+          <div className="mt-8 flex flex-wrap gap-4 text-sm">
+            <Link className="text-gold underline underline-offset-4" href="/shop/buying-guide">How to compare pet gear before purchasing</Link>
+          </div>
 
           <div className="mt-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
             <h3 className="font-serif text-xl text-cream">Why the price column is empty</h3>
