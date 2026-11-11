@@ -27,11 +27,11 @@ export default function DogsPage() {
   const breeds = breedsBySpecies('dog');
 
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="dog"
         kicker="Dog Center"
-        title={<>Everything a dog actually needs — and the cost of getting it wrong.</>}
-        intro="Breed references, feeding amounts, training tool evidence and puppy setup, written so you can decide in one read. Educational content is not a substitute for a veterinary examination."
+        title={<>Make every day a good dog day.</>}
+        intro="Discover puppy routines, walks, nutrition, and everyday care. Each guide states its review status; educational content is not veterinary advice."
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/knowledge?species=dog" className="btn btn-solid">
@@ -140,6 +140,6 @@ export default function DogsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -20,7 +20,7 @@ export default function HomePage() {
   }));
 
   return (
-    <>
+    <div className="vibrant-page">
       <Hero />
 
       <WelcomePaths
@@ -108,7 +108,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-11 max-w-[640px]">
             <p className="kicker mb-4">Recently published</p>
-            <h2 className="display text-[clamp(1.9rem,3.4vw,2.8rem)] text-[#fcf8f1]">Start where it hurts.</h2>
+            <h2 className="display text-[clamp(1.9rem,3.4vw,2.8rem)] text-[#fcf8f1]">Good things for pets and their people.</h2>
           </Reveal>
           <div className="grid gap-5 md:grid-cols-3">
             {featured.map((article, i) => (
@@ -280,6 +280,6 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }

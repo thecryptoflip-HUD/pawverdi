@@ -41,10 +41,10 @@ const verificationSteps = [
 
 export default function MarketplacePage() {
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="marketplace"
         kicker="Marketplace"
-        title={<>A listing here has to survive five checks before a stranger sees it.</>}
+        title={<>A safer way to connect with responsible pet sellers.</>}
         intro="PawVerdi is an education platform that also hosts listings — not a classifieds board with a logo. Sellers are verified by a person, animals are never shipped as cargo, and adoption is presented alongside purchase at the same level of detail."
       >
         <div className="flex flex-wrap gap-3">
@@ -219,6 +219,6 @@ export default function MarketplacePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

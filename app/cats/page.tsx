@@ -27,11 +27,11 @@ export default function CatsPage() {
   const breeds = breedsBySpecies('cat');
 
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="cat"
         kicker="Cat Center"
-        title={<>Cats hide illness early. The reading list should not.</>}
-        intro="Appetite, litter habits, weight and dental health are the four channels cats use to tell you something is wrong. These guides cover what each signal means and when it becomes urgent."
+        title={<>Create a calmer, happier cat home.</>}
+        intro="Explore kitten essentials, enrichment, behaviour, and everyday health. Every guide states its review status and cannot replace veterinary care."
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/knowledge?species=cat" className="btn btn-solid">
@@ -140,6 +140,6 @@ export default function CatsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -23,10 +23,10 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   );
 
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="shop"
         kicker="Product shop"
-        title={<>Browse pet gear by type.</>}
+        title={<>Find the right fit for everyday pet life.</>}
         intro="These gear types are a starting point for your own comparison, not tested recommendations. No products in this shortlist have been tested or rated by PawVerdi. Links open retailer category or search pages, not individual product picks."
       >
         <div className="flex flex-wrap gap-3">
@@ -76,19 +76,19 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
           <nav aria-label="Filter by species" className="mb-4 flex flex-wrap gap-4">
             {['all', 'dog', 'cat'].map((value) => (
-              <Link key={value} href={`?species=${value}&category=${category}`} aria-current={species === value ? 'page' : undefined} className="capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${value}&category=${category}`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
           </nav>
           <nav aria-label="Filter by category" className="mb-4 flex flex-wrap gap-4">
             {['all', 'beds', 'carriers', 'harnesses', 'litter'].map((value) => (
-              <Link key={value} href={`?species=${species}&category=${value}`} aria-current={category === value ? 'page' : undefined} className="capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${species}&category=${value}`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
           </nav>
-          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of 4 gear types</p>
+          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of {products.length} gear types</p>
 
           {filteredProducts.length === 0 ? (
             <p className="text-cream/70">
@@ -196,6 +196,6 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
