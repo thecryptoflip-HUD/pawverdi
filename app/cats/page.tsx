@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
+import WelcomePaths from '@/components/welcome-paths';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -42,6 +43,16 @@ export default function CatsPage() {
         </div>
       </CinematicHero>
 
+      <WelcomePaths
+        kicker="For the cat-curious"
+        heading="Little comforts, big purrs."
+        intro="From a kitten's first room to a favourite resting spot, discover everyday ways to make home feel welcoming."
+        items={[
+          { eyebrow: 'New kitten', title: 'A gentle start together', description: 'Set up a safe room, food, water and a comfortable place to settle.', href: '/knowledge/new-kitten-checklist', image: '/brand/sections/cats.jpg', action: 'Kitten checklist' },
+          { eyebrow: 'Understanding cats', title: 'Get to know their world', description: 'Explore wellbeing, behaviour and practical home routines.', href: '/knowledge?species=cat', image: '/brand/carrier.jpg', action: 'Cat care guides' },
+          { eyebrow: 'Thoughtful gear', title: 'Choose comfort with care', description: 'Browse litter trays and carriers while checking size and seller details yourself.', href: '/shop?species=cat', image: '/brand/sections/shop.jpg', action: 'Browse cat gear' },
+        ]}
+      />
       <section className="py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-9">

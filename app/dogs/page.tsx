@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
+import WelcomePaths from '@/components/welcome-paths';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -42,6 +43,16 @@ export default function DogsPage() {
         </div>
       </CinematicHero>
 
+      <WelcomePaths
+        kicker="Your dog, your journey"
+        heading="Make room for more tail wags."
+        intro="New puppy or longtime companion? Choose a starting point that feels right for your day."
+        items={[
+          { eyebrow: 'Getting started', title: 'Welcome home, puppy', description: 'Use a simple first-week checklist to prepare a safe, calm home.', href: '/knowledge/new-puppy-checklist', image: '/brand/sections/dogs.jpg', action: 'Puppy checklist' },
+          { eyebrow: 'Everyday care', title: 'Answers for the daily routine', description: 'Explore practical topics from nutrition to grooming, with clear review labels.', href: '/knowledge?species=dog', image: '/brand/bed.jpg', action: 'Dog care guides' },
+          { eyebrow: 'Thoughtful gear', title: 'Make walks more comfortable', description: 'Compare harnesses and beds by fit, care and retailer terms—not invented ratings.', href: '/shop?species=dog', image: '/brand/gear.jpg', action: 'Browse dog gear' },
+        ]}
+      />
       <section className="py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-9">
