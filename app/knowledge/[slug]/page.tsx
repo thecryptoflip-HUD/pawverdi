@@ -53,7 +53,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   };
 
   return (
-    <>
+    <div className="vibrant-page">
       <article className="pb-[clamp(56px,8vw,96px)]">
         <header className="border-b border-white/[0.07] bg-gradient-to-b from-forest to-void pb-12 pt-[calc(76px+56px)]">
           <div className="mx-auto max-w-[820px] px-5 sm:px-8">
@@ -122,6 +122,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </div>
       </article>
       {article.guide && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />}
-    </>
+    </div>
   );
 }
