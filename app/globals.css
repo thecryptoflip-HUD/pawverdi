@@ -501,7 +501,7 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
 .vibrant-page section:not(.hero):not(.cine) .card:hover { border-color:#ffb367; box-shadow:0 24px 44px -26px rgba(2,74,46,.28); }
 .vibrant-page section:not(.hero):not(.cine) :is(input,textarea,select) { background:#fff !important; border:1px solid #a8d7c3 !important; color:#153f31 !important; }
 .vibrant-page section:not(.hero):not(.cine) :is(input,textarea)::placeholder { color:#536f61; }
-.vibrant-page section:not(.hero):not(.cine) .btn-solid { background:#ff6b5d; border-color:#ff6b5d; color:#173d2d !important; }
+.vibrant-page section:not(.hero):not(.cine) .btn-solid { background:#ff6b5d; border-color:#ff6b5d; color:#092a20 !important; }
 .vibrant-page section:not(.hero):not(.cine) .btn-ghost { background:#e2f5eb; border-color:#abd9c5; color:#07543d !important; }
 .vibrant-page section:not(.hero):not(.cine) .btn:hover { transform:translateY(-2px); }
 .vibrant-page .vibrant-card-0 { background:#d8f7ec; }
