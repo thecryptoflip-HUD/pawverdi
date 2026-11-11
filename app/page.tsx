@@ -4,6 +4,7 @@ import Reveal from '@/components/reveal';
 import GuideRail, { type RailItem } from '@/components/guide-rail';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
+import WelcomePaths from '@/components/welcome-paths';
 import { articles, completeArticles, featuredArticles, sections } from '@/lib/content';
 
 const railImages = ['/brand/carrier.jpg', '/brand/bed.jpg', '/brand/gear.jpg', '/brand/hero.jpg'];
@@ -21,6 +22,17 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+
+      <WelcomePaths
+        kicker="A happy place to begin"
+        heading="A little more joy. A lot more confidence."
+        intro="Every pet has a story. Find the practical help, thoughtful gear and everyday ideas that fit yours."
+        items={[
+          { eyebrow: 'For dog people', title: 'Make every day a good dog day', description: 'From new-puppy routines to walking and care, start with a helpful guide.', href: '/dogs', image: '/brand/sections/dogs.jpg', action: 'Explore dog care' },
+          { eyebrow: 'For cat people', title: 'A happier home for your cat', description: 'Explore kitten essentials, comfort, behaviour and care in one place.', href: '/cats', image: '/brand/sections/cats.jpg', action: 'Explore cat care' },
+          { eyebrow: 'Shop thoughtfully', title: 'Find gear that fits real life', description: 'Compare beds, carriers and harnesses before deciding what to buy.', href: '/shop', image: '/brand/sections/shop.jpg', action: 'Browse pet gear' },
+        ]}
+      />
 
       {/* ---------- ticker ---------- */}
       <div className="overflow-hidden border-y border-white/[0.07] bg-forest py-3.5" aria-hidden="true">
@@ -44,11 +56,11 @@ export default function HomePage() {
           <Reveal className="max-w-[680px]">
             <p className="kicker mb-5">The platform</p>
             <h2 className="display text-[clamp(2rem,3.7vw,3.2rem)] text-[#fcf8f1]">
-              Six rooms, one standard: evidence first, disclosure always.
+              Something for every kind of pet parent.
             </h2>
             <p className="lede mt-5 max-w-[56ch]">
-              Education, marketplace and shop sit under the same editorial rules. If a claim cannot be sourced, it does
-              not ship. If a slot is paid, it says so before you read it.
+              From useful guides to practical shopping, explore PawVerdi at your own pace. We label commercial links
+              clearly and keep unreviewed content distinct from verified advice.
             </p>
           </Reveal>
 

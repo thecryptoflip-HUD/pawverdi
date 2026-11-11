@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
+import WelcomePaths from '@/components/welcome-paths';
 import { products } from '@/lib/shop';
 
 export const metadata: Metadata = {
@@ -38,6 +39,16 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </CinematicHero>
 
+      <WelcomePaths
+        kicker="Shop with confidence"
+        heading="Find the right fit, not just a pretty picture."
+        intro="Start with your pet's needs. Our links lead to retailer categories, not PawVerdi-tested product recommendations."
+        items={[
+          { eyebrow: 'For cozy days', title: 'A bed for their favourite spot', description: 'Compare sleeping space, washable covers and return terms before you buy.', href: '/shop?species=dog&category=beds', image: '/brand/bed.jpg', action: 'Explore dog beds' },
+          { eyebrow: 'On the move', title: 'Ready for the next adventure', description: 'Look for secure fastenings, ventilation and useful dimensions.', href: '/shop?species=cat&category=carriers', image: '/brand/carrier.jpg', action: 'Explore cat carriers' },
+          { eyebrow: 'Daily essentials', title: 'Useful gear for life together', description: 'Start with fit and function, then check current prices at the retailer.', href: '/shop?species=dog&category=harnesses', image: '/brand/gear.jpg', action: 'Explore dog harnesses' },
+        ]}
+      />
       <section className="py-[clamp(48px,7vw,88px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="mb-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
