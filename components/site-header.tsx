@@ -25,19 +25,19 @@ export default function SiteHeader() {
         stuck || open ? 'shadow-[0_8px_30px_-18px_rgba(6,66,44,.28)]' : ''
       }`}
     >
-      <div className="mx-auto flex h-[76px] max-w-wrap items-center justify-between px-5 sm:px-8">
+      <div className="mx-auto flex h-[76px] max-w-wrap items-center justify-between gap-3 px-5 sm:px-8">
         <Link href="/" className="flex items-center gap-2.5" aria-label={`${site.name} home`}>
           <PawMark />
-          <span className="font-serif text-[1.3rem] font-bold tracking-tight text-[#07543d]">{site.name}</span>
+          <span className="font-serif text-[1.55rem] font-bold tracking-tight text-[#07543d]">{site.name}</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
           {navigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={pathname === item.href ? 'page' : undefined}
-              className={`rounded-full px-3.5 py-2 text-[0.78rem] font-semibold uppercase tracking-[0.1em] transition-colors ${
+              className={`rounded-full px-3.5 py-2 text-[0.78rem] font-bold tracking-normal transition-colors ${
                 pathname === item.href ? 'bg-[#c6f3df] text-[#07543d]' : 'text-[#24553f] hover:bg-[#e6f7ed] hover:text-[#07543d]'
               }`}
             >
@@ -51,7 +51,7 @@ export default function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#badccb] md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#badccb] lg:hidden"
         >
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
           <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true" className="fill-[#07543d]">
@@ -66,6 +66,15 @@ export default function SiteHeader() {
             )}
           </svg>
         </button>
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link href="/knowledge" aria-label="Search pet guides" className="pv-header-icon" title="Search pet guides">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="19" height="19" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+          </Link>
+          <Link href="/shop" aria-label="Explore pet gear" className="pv-header-icon" title="Explore pet gear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="19" height="19" aria-hidden="true"><path d="M3 4h2l2.2 11H19l2-8H6" /><circle cx="9" cy="20" r="1.1" /><circle cx="18" cy="20" r="1.1" /></svg>
+          </Link>
+          <Link href="/community" className="pv-header-join">Join PawVerdi</Link>
+        </div>
       </div>
 
       {open && (
