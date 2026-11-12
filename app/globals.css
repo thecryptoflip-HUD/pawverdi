@@ -627,3 +627,20 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
 @media(min-width:900px) { .pv-home-hero-inner { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
 @media(max-width:899px) { .pv-home-hero-copy { max-width:700px; } .pv-home-hero-art { max-width:700px; width:100%; margin:auto; } }
 @media(prefers-reduced-motion:reduce) { .pv-picture-motion { display:none !important; } .pv-editorial-tile,.pv-tile-image img,.pv-action { transition:none !important; transform:none !important; } }
+
+
+/* PawVerdi navigation and footer aligned to approved reference */
+.pv-header-icon { width:35px; height:35px; display:inline-flex; justify-content:center; align-items:center; color:#07543d; border-radius:50%; }
+.pv-header-icon:hover { background:#e1f7eb; }
+.pv-header-join { background:#ff6659; color:#fff; border-radius:99px; padding:.7rem 1rem; font-weight:800; font-size:.75rem; white-space:nowrap; }
+.pv-header-join:hover { background:#e94e42; }
+.pv-reference-footer { background:#004d37; }
+.vibrant-page.pv-dog-reference section.pv-dog-trust { background:#d5f7e9; }
+.vibrant-page.pv-dog-reference section.pv-dog-subscribe { background:#ff6863; }
+.vibrant-page.pv-dog-reference section.pv-dog-cover { background:#254e31; }
+.vibrant-page.pv-dog-reference section.pv-dog-breed-reference { background:#e9f7ee; }
+.vibrant-page.pv-dog-reference section.pv-dog-trust :is(h2,p),
+.vibrant-page.pv-dog-reference section.pv-dog-breed-reference :is(h2,p) { color:#07543d; }
+.vibrant-page.pv-dog-reference section.pv-dog-subscribe :is(h2,p) { color:#fff; }
+.vibrant-page.pv-dog-reference section.pv-dog-cover :is(h1,p) { color:#fff9ed; }
+.vibrant-page.pv-dog-reference section.pv-dog-cover h1 em { color:#ffd22d; }

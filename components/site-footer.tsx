@@ -4,12 +4,12 @@ import { isLive } from '@/lib/supabase';
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-white/[0.07] bg-void pb-11 pt-16">
+    <footer className="pv-reference-footer border-t border-white/[0.07] bg-[#004d37] pb-11 pt-16">
       <div className="mx-auto max-w-wrap px-5 sm:px-8">
         <div className="mb-11 flex flex-wrap justify-between gap-11">
           <div className="max-w-[370px]">
             <Link href="/" className="mb-4 flex items-center gap-2.5">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-amber">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-[#ff7050]">
                 <ellipse cx="6" cy="9" rx="2.4" ry="3" />
                 <ellipse cx="18" cy="9" rx="2.4" ry="3" />
                 <ellipse cx="10" cy="4.6" rx="2.2" ry="2.8" />

@@ -12,7 +12,7 @@ const BASE = process.env.BASE || 'http://127.0.0.1:3000';
 
 const pages = [
   ['/', ['More joy, color', 'PawVerdi', 'pv-home-hero', 'pv-picture-frame', 'pv-invitation']],
-  ['/dogs', ['Dog Center', 'Breed reference']],
+  ['/dogs', ['Make every day', 'Popular Dog Care Topics', 'Featured Dog Guides', 'Breed reference', 'pv-dog-path', 'pv-dog-topic', 'pv-dog-subscribe']],
   ['/cats', ['Cat Center', 'Breed reference']],
   ['/knowledge', ['Knowledge Center', 'guides', 'pv-editorial-tile']],
   ['/knowledge/cat-cost-per-year', ['What this guide covers', 'Medical disclaimer']],
