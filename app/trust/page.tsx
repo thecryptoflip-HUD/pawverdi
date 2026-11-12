@@ -65,7 +65,7 @@ const blocks = [
 
 export default function TrustPage() {
   return (
-    <>
+    <div className="vibrant-page">
       <PageHeader
         kicker="Trust & safety"
         title={<>The rules we publish are the rules we run on.</>}
@@ -111,6 +111,6 @@ export default function TrustPage() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

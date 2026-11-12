@@ -18,10 +18,10 @@ const routes = [
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="vibrant-page">
       <PageHeader
         kicker="Contact"
-        title={<>Reach the right desk, not a contact form black hole.</>}
+        title={<>We would love to hear from you.</>}
         intro="Every route below has an owner and a stated response window. Corrections involving animal safety jump the queue."
       />
 
@@ -94,6 +94,6 @@ export default function ContactPage() {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

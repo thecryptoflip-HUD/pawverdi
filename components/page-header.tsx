@@ -12,7 +12,7 @@ export default function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="relative overflow-hidden border-b border-white/[0.07] bg-gradient-to-b from-forest to-void pb-14 pt-[calc(76px+64px)]">
+    <header className="vibrant-static-header relative overflow-hidden border-b border-[#d4eadc] bg-gradient-to-b from-[#e0f5e8] to-[#fffaf2] pb-14 pt-[calc(76px+64px)]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-[10%] -top-[30%] h-[560px] w-[560px] rounded-full blur-[90px]"
@@ -20,7 +20,7 @@ export default function PageHeader({
       />
       <div className="relative mx-auto max-w-wrap px-5 sm:px-8">
         <p className="kicker mb-5">{kicker}</p>
-        <h1 className="display max-w-[20ch] text-[clamp(2.2rem,4.6vw,3.9rem)] text-[#fcf8f1]">{title}</h1>
+        <h1 className="display max-w-[20ch] text-[clamp(2.2rem,4.6vw,3.9rem)] text-[#07543d]">{title}</h1>
         {intro && <p className="lede mt-6 max-w-[58ch]">{intro}</p>}
         {children && <div className="mt-8">{children}</div>}
       </div>

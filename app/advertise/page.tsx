@@ -44,10 +44,10 @@ const refused = [
 
 export default function AdvertisePage() {
   return (
-    <>
+    <div className="vibrant-page">
       <PageHeader
         kicker="Advertising"
-        title={<>The label is not negotiable. The ranking is not for sale.</>}
+        title={<>Partner with a pet-first community.</>}
         intro="PawVerdi runs on labelled advertising and affiliate commissions. Both are capped by editorial independence: an advertiser cannot buy a place in a comparison table, cannot review copy before publication, and cannot remove the sponsored label."
       />
 
@@ -138,6 +138,6 @@ export default function AdvertisePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

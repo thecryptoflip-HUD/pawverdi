@@ -11,14 +11,14 @@
 const BASE = process.env.BASE || 'http://127.0.0.1:3000';
 
 const pages = [
-  ['/', ['What your pet', 'PawVerdi', 'Verify']],
+  ['/', ['What your pet', 'PawVerdi', 'Browse pet gear']],
   ['/dogs', ['Dog Center', 'Breed reference']],
   ['/cats', ['Cat Center', 'Breed reference']],
   ['/knowledge', ['Knowledge Center', 'guides']],
   ['/knowledge/cat-cost-per-year', ['What this guide covers', 'Medical disclaimer']],
   ['/marketplace', ['0 listings published', 'Verification']],
   ['/shop', ['Not yet reviewed', 'Method']],
-  ['/advertise', ['Sponsored', 'not negotiable']],
+  ['/advertise', ['Sponsored', 'cannot remove the sponsored label']],
   ['/community', ['One email a month']],
   ['/trust', ['Affiliate disclosure', 'Seller and listing standards']],
   ['/contact', ['PawVerdi@hotmail.com']],

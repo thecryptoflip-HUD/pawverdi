@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 
 export default function CommunityPage() {
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="community"
         kicker="Community"
-        title={<>A place for owners who read before they buy.</>}
+        title={<>A welcoming place for pet people.</>}
         intro="Reader stories, corrections and the monthly digest. Comment threads and forums are deliberately not switched on yet — a community needs moderation before it needs a text box."
       />
 
@@ -120,6 +120,6 @@ export default function CommunityPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

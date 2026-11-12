@@ -39,10 +39,10 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
   const upcoming = articles.filter((article) => !article.guide);
 
   return (
-    <>
+    <div className="vibrant-page">
       <CinematicHero variant="knowledge"
         kicker="Knowledge Center"
-        title={<>The reading list, with its paperwork attached.</>}
+        title={<>Trusted pet knowledge for everyday life.</>}
         intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
       />
 
@@ -199,6 +199,6 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

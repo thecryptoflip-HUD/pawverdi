@@ -134,21 +134,20 @@ export default function Hero() {
               </span>
             </span>
             <span className="hero-line" style={{ ['--d' as string]: '180ms' }}>
-              <span>And what it costs.</span>
+              <span>With more joy, every day.</span>
             </span>
           </h1>
 
           <p className="lede hero-fade mt-8 max-w-[50ch]" style={{ ['--d' as string]: '420ms' }}>
-            A knowledge platform for dog and cat owners — costs, health, nutrition, training and gear, plus a marketplace
-            where every seller is verified before a single listing goes live.
+            Practical dog and cat guides, thoughtful shopping comparisons, and a welcoming place to explore. Marketplace listings appear only after sellers pass our verification process.
           </p>
 
           <div className="hero-fade mt-10 flex flex-wrap gap-3.5" style={{ ['--d' as string]: '520ms' }}>
             <Link href="/knowledge" className="btn btn-solid">
-              Explore the knowledge center <span aria-hidden="true">→</span>
+              Explore pet guides <span aria-hidden="true">→</span>
             </Link>
-            <Link href="/marketplace" className="btn btn-ghost">
-              How we verify sellers
+            <Link href="/shop" className="btn btn-ghost">
+              Browse pet gear
             </Link>
           </div>
 
