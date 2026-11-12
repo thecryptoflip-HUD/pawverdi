@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
+import EditorialPaths from '@/components/editorial-paths';
 
 export const metadata: Metadata = {
   title: 'Marketplace — verified sellers, health disclosures and adoption',
@@ -57,6 +58,16 @@ export default function MarketplacePage() {
         </div>
       </CinematicHero>
 
+      <EditorialPaths
+        kicker="Explore the marketplace standards"
+        heading="A thoughtful start for every pet."
+        intro="Listings are not open yet. These paths explain how PawVerdi plans to protect buyers, sellers and animals."
+        items={[
+          { label: 'Before a listing', title: 'Know the standards', text: 'Read our seller screening and welfare policy.', href: '/trust#sellers', image: '/brand/sections/marketplace.jpg' },
+          { label: 'Adoption matters', title: 'Plan responsibly', text: 'Learn why responsible rehoming puts animal wellbeing first.', href: '#adoption', image: '/brand/sections/cats.jpg' },
+          { label: 'Prepare to connect', title: 'Seller requirements', text: 'Understand what a listing must disclose before publication.', href: '#sellers', image: '/brand/sections/dogs.jpg' },
+        ]}
+      />
       <section className="py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-10 max-w-[640px]">

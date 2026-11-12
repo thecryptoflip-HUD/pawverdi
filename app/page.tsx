@@ -5,6 +5,8 @@ import GuideRail, { type RailItem } from '@/components/guide-rail';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
 import WelcomePaths from '@/components/welcome-paths';
+import FriendlyTrustStrip from '@/components/friendly-trust-strip';
+import CommunityInvitation from '@/components/community-invitation';
 import { articles, completeArticles, featuredArticles, sections } from '@/lib/content';
 
 const railImages = ['/brand/carrier.jpg', '/brand/bed.jpg', '/brand/gear.jpg', '/brand/hero.jpg'];
@@ -33,6 +35,8 @@ export default function HomePage() {
           { eyebrow: 'Shop thoughtfully', title: 'Find gear that fits real life', description: 'Compare beds, carriers and harnesses before deciding what to buy.', href: '/shop', image: '/brand/sections/shop.jpg', action: 'Browse pet gear' },
         ]}
       />
+
+      <FriendlyTrustStrip />
 
       {/* ---------- ticker ---------- */}
       <div className="overflow-hidden border-y border-white/[0.07] bg-forest py-3.5" aria-hidden="true">
@@ -243,43 +247,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- newsletter ---------- */}
-      <section className="border-t border-white/[0.07] bg-forest py-[clamp(64px,9vw,110px)]">
-        <div className="mx-auto grid max-w-wrap gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-          <Reveal>
-            <p className="kicker mb-4">Community</p>
-            <h2 className="display text-[clamp(1.9rem,3.3vw,2.7rem)] text-[#fcf8f1]">
-              One email a month. What changed, and why.
-            </h2>
-            <p className="lede mt-5 max-w-[52ch]">
-              New guides, price changes we re-checked, marketplace policy updates and corrections we issued. No
-              affiliate blasts, no daily drip.
-            </p>
-          </Reveal>
-          <Reveal delay={100}>
-            <form action="/api/newsletter" method="post" className="rounded-[18px] border border-white/[0.08] bg-moss/70 p-7">
-              <label htmlFor="email" className="block text-[0.7rem] uppercase tracking-[0.2em] text-cream/60">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder="you@example.com"
-                className="mt-3 w-full rounded-xl border border-white/15 bg-void/60 px-4 py-3.5 text-cream placeholder:text-cream/35 focus:border-amber focus:outline-none"
-              />
-              <button type="submit" className="btn btn-solid mt-4 w-full justify-center">
-                Subscribe
-              </button>
-              <p className="mt-3 text-[0.72rem] leading-relaxed text-cream/50">
-                Double opt-in. Stored only for the newsletter; never sold or used for affiliate targeting.
-              </p>
-            </form>
-          </Reveal>
-        </div>
-      </section>
+      <CommunityInvitation />
     </div>
   );
 }

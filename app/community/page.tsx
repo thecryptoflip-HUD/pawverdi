@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
+import EditorialPaths from '@/components/editorial-paths';
 
 export const metadata: Metadata = {
   title: 'Community — owner stories, newsletters and what comes next',
@@ -19,6 +20,16 @@ export default function CommunityPage() {
         intro="Reader stories, corrections and the monthly digest. Comment threads and forums are deliberately not switched on yet — a community needs moderation before it needs a text box."
       />
 
+      <EditorialPaths
+        kicker="A welcoming corner"
+        heading="Good stories start with good care."
+        intro="Our forums are not launched yet. Share your experience, read helpful guides, or subscribe to updates."
+        items={[
+          { label: 'Share your experience', title: 'Your pet has a story', text: 'Submit a real owner experience for editorial consideration.', href: '/contact', image: '/brand/sections/community.jpg' },
+          { label: 'Learn together', title: 'Practical pet guides', text: 'Explore source-linked dog and cat checklists.', href: '/knowledge', image: '/brand/sections/knowledge.jpg' },
+          { label: 'Everyday discoveries', title: 'Browse pet gear', text: 'See clearly labeled retailer categories without invented reviews.', href: '/shop', image: '/brand/sections/shop.jpg' },
+        ]}
+      />
       <section className="py-[clamp(48px,7vw,88px)]">
         <div className="mx-auto grid max-w-wrap gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_.9fr]">
           <Reveal>
