@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import ArticleCard from '@/components/article-card';
 import Reveal from '@/components/reveal';
 import EditorialPaths from '@/components/editorial-paths';
+import ReferenceHighlights from '@/components/reference-highlights';
 import { articles, completeArticles, reviewLabel } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -45,6 +46,17 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
         kicker="Knowledge Center"
         title={<>Trusted pet knowledge for everyday life.</>}
         intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
+      />
+
+      <ReferenceHighlights
+        eyebrow="Find your next read"
+        heading="Helpful Guides for Every Pet Parent"
+        subtitle="Browse real research-backed topics, with review status visible on each published guide."
+        items={[
+          {eyebrow:'Dog care',title:'Happy dogs, healthier routines',body:'Practical knowledge for dog owners.',href:'/knowledge?species=dog',image:'/brand/sections/dogs.jpg',action:'Browse dog care'},
+          {eyebrow:'Cat care',title:'Comfortable cats, curious minds',body:'Guidance for feline health and wellbeing.',href:'/knowledge?species=cat',image:'/brand/sections/cats.jpg',action:'Browse cat care'},
+          {eyebrow:'Care costs',title:'Plan for everyday costs',body:'Check actual source-linked cost guides.',href:'/knowledge?section=costs',image:'/brand/sections/knowledge.jpg',action:'Explore costs'},
+        ]}
       />
 
       <EditorialPaths

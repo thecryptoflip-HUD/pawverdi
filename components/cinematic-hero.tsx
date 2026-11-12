@@ -1,37 +1,33 @@
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { treatments, type CinematicVariant } from '@/lib/cinematic';
 
-const animalLabel: Record<CinematicVariant, string> = {
-  dog: 'Dog care', cat: 'Cat care', knowledge: 'Knowledge and care', marketplace: 'Responsible pet connections',
-  shop: 'Shop thoughtfully', community: 'For pet people',
+const words: Record<CinematicVariant, {label:string;href:string;action:string}> = {
+ dog: {label:'Explore every good dog day',href:'/knowledge?species=dog',action:'Explore dog guides'},
+ cat: {label:'For curious cats and their people',href:'/knowledge?species=cat',action:'Explore cat guides'},
+ knowledge: {label:'Pet care made clearer',href:'/knowledge?species=dog',action:'Browse dog guides'},
+ marketplace: {label:'Thoughtful connections first',href:'/trust#sellers',action:'Our seller standards'},
+ shop: {label:'Gear for everyday adventures',href:'/shop?species=dog',action:'Browse dog gear'},
+ community: {label:'A community worth caring for',href:'/contact',action:'Share your story'},
 };
-export default function CinematicHero({
-  variant, kicker, title, intro, children,
-}: {
-  variant: CinematicVariant;
-  kicker: string;
-  title: ReactNode;
-  intro?: string;
-  children?: ReactNode;
+export default function CinematicHero({variant,kicker,title,intro,children}:{
+ variant:CinematicVariant;kicker:string;title:ReactNode;intro?:string;children?:ReactNode;
 }) {
-  const t = treatments[variant];
-  return (
-    <section className={`pv-section-hero cine pv-hero-${variant}`} data-variant={variant} aria-label={kicker}>
-      <div className="mx-auto grid max-w-wrap items-center gap-7 px-5 pb-12 pt-[calc(76px+48px)] sm:px-8 lg:grid-cols-[.95fr_1.05fr] lg:gap-14 lg:pb-20 lg:pt-[calc(76px+72px)]">
-        <div className="pv-section-hero-copy">
-          <span className="pv-eyebrow"><span aria-hidden="true">✦</span> {kicker}</span>
-          <h1 className="pv-display mt-5">{title}</h1>
-          {intro && <p className="pv-hero-description mt-6">{intro}</p>}
-          {children && <div className="pv-hero-actions mt-8">{children}</div>}
-          <p className="pv-mini-note mt-7">Practical information. Thoughtful choices. Clear disclosures.</p>
-        </div>
-        <div className="pv-section-hero-art">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={t.image} alt={`PawVerdi ${animalLabel[variant]} artwork`} width={1920} height={1280} className="pv-section-hero-photo" fetchPriority="high" style={{ objectPosition: t.position }} />
-          <span className="pv-art-spark pv-art-spark-one" aria-hidden="true">✦</span>
-          <span className="pv-art-spark pv-art-spark-two" aria-hidden="true">♥</span>
-        </div>
-      </div>
-    </section>
-  );
+ const t=treatments[variant], item=words[variant];
+ return (
+   <section className={`pv-reference-sectionhero pv-ref-${variant}`} aria-labelledby={`pv-ref-title-${variant}`}>
+     <div className="pv-reference-section-photo" aria-hidden="true" style={{backgroundImage:`url("${t.image}")`,backgroundPosition:t.position}} />
+     <div className="pv-reference-section-shade" aria-hidden="true" />
+     <div className="relative mx-auto flex min-h-[395px] max-w-wrap items-center px-5 pb-20 pt-[calc(76px+58px)] sm:px-8 lg:min-h-[485px]">
+       <div className="pv-reference-section-copy">
+         <span className="pv-reference-overline">✦ {kicker} · {item.label}</span>
+         <h1 id={`pv-ref-title-${variant}`}>{title}</h1>
+         {intro && <p>{intro}</p>}
+         {children ? <div className="pv-reference-section-actions">{children}</div> :
+           <Link href={item.href} className="pv-reference-hero-button pv-reference-hero-coral">{item.action} <span aria-hidden="true">→</span></Link>}
+       </div>
+     </div>
+     <span aria-hidden="true" className="pv-reference-section-spark">✦</span>
+   </section>
+ );
 }

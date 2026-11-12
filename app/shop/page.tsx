@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import WelcomePaths from '@/components/welcome-paths';
+import ReferenceHighlights from '@/components/reference-highlights';
 import { products } from '@/lib/shop';
 
 export const metadata: Metadata = {
@@ -38,6 +39,17 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           </Link>
         </div>
       </CinematicHero>
+
+      <ReferenceHighlights
+        eyebrow="Shop with purpose"
+        heading="Good Gear for Real Pet Life"
+        subtitle="Browse gear categories by usefulness and fit. No invented product tests or star ratings."
+        items={[
+          {eyebrow:'For dogs',title:'Walks & daily adventures',body:'Explore beds, harnesses, and practical gear.',href:'/shop?species=dog',image:'/brand/sections/shop.jpg',action:'Dog gear'},
+          {eyebrow:'For cats',title:'Cozy homes & carriers',body:'Compare everyday essentials for cats.',href:'/shop?species=cat',image:'/brand/carrier.jpg',action:'Cat gear'},
+          {eyebrow:'How we choose',title:'Clear criteria, no hype',body:'Read how PawVerdi describes and discloses retail links.',href:'/trust#disclosure',image:'/brand/gear.jpg',action:'Our approach'},
+        ]}
+      />
 
       <WelcomePaths
         kicker="Shop with confidence"

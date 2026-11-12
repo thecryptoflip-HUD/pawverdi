@@ -5,6 +5,7 @@ import Reveal from '@/components/reveal';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
 import WelcomePaths from '@/components/welcome-paths';
+import ReferenceHighlights from '@/components/reference-highlights';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -42,6 +43,17 @@ export default function CatsPage() {
           </Link>
         </div>
       </CinematicHero>
+
+      <ReferenceHighlights
+        eyebrow="Explore cat care"
+        heading="Popular Cat Care Topics"
+        subtitle="Explore research and clear guidance for everyday life with cats."
+        items={[
+          { eyebrow:'Health', title:'Wellness & prevention', body:'Know what to watch for and when to call a vet.', href:'/knowledge?species=cat&section=health', image:'/brand/sections/cats.jpg', action:'Cat health guides' },
+          { eyebrow:'Nutrition', title:'Food & feeding', body:'Learn about feeding routines and nutrition basics.', href:'/knowledge?species=cat&section=nutrition', image:'/brand/carrier.jpg', action:'Nutrition topics' },
+          { eyebrow:'Kitten care', title:'A happy new start', body:'Prepare a comfortable home and essentials.', href:'/knowledge?species=cat&section=setup', image:'/brand/sections/knowledge.jpg', action:'Kitten checklists' },
+        ]}
+      />
 
       <WelcomePaths
         kicker="For the cat-curious"

@@ -11,15 +11,15 @@
 const BASE = process.env.BASE || 'http://127.0.0.1:3000';
 
 const pages = [
-  ['/', ['More joy, color', 'PawVerdi', 'pv-home-hero', 'pv-picture-frame', 'pv-invitation']],
+  ['/', ['Make every day', 'good pet day', 'PawVerdi', 'pv-reference-homehero', 'pv-invitation']],
   ['/dogs', ['Make every day', 'Popular Dog Care Topics', 'Featured Dog Guides', 'Breed reference', 'pv-dog-path', 'pv-dog-topic', 'pv-dog-subscribe']],
-  ['/cats', ['Cat Center', 'Breed reference']],
-  ['/knowledge', ['Knowledge Center', 'guides', 'pv-editorial-tile']],
+  ['/cats', ['Cat Center', 'Breed reference', 'Popular Cat Care Topics', 'pv-reference-highlight-card']],
+  ['/knowledge', ['Knowledge Center', 'guides', 'pv-editorial-tile', 'Helpful Guides for Every Pet Parent']],
   ['/knowledge/cat-cost-per-year', ['What this guide covers', 'Medical disclaimer']],
-  ['/marketplace', ['0 listings published', 'Verification', 'pv-editorial-tile']],
-  ['/shop', ['Not yet reviewed', 'Method']],
+  ['/marketplace', ['0 listings published', 'Verification', 'pv-editorial-tile', 'Care Before Every Listing']],
+  ['/shop', ['Not yet reviewed', 'Method', 'Good Gear for Real Pet Life']],
   ['/advertise', ['Sponsored', 'cannot remove the sponsored label']],
-  ['/community', ['One email a month', 'pv-editorial-tile']],
+  ['/community', ['One email a month', 'pv-editorial-tile', 'A Little More Joy, Together']],
   ['/trust', ['Affiliate disclosure', 'Seller and listing standards']],
   ['/contact', ['PawVerdi@hotmail.com']],
   ['/admin/login', ['Sign in']],

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import EditorialPaths from '@/components/editorial-paths';
+import ReferenceHighlights from '@/components/reference-highlights';
 
 export const metadata: Metadata = {
   title: 'Community — owner stories, newsletters and what comes next',
@@ -18,6 +19,17 @@ export default function CommunityPage() {
         kicker="Community"
         title={<>A welcoming place for pet people.</>}
         intro="Reader stories, corrections and the monthly digest. Comment threads and forums are deliberately not switched on yet — a community needs moderation before it needs a text box."
+      />
+
+      <ReferenceHighlights
+        eyebrow="For pet people"
+        heading="A Little More Joy, Together"
+        subtitle="Real stories and useful updates, without invented membership numbers."
+        items={[
+          {eyebrow:'Your story',title:'Share life with your pet',body:'Submit real experiences for editorial review.',href:'/contact',image:'/brand/sections/community.jpg',action:'Tell us your story'},
+          {eyebrow:'Stay informed',title:'One update a month',body:'Learn about new guides and corrections.',href:'#newsletter',image:'/brand/at-home-poster.jpg',action:'Newsletter details'},
+          {eyebrow:'Discover',title:'Care that helps',body:'Explore guides for dogs and cats.',href:'/knowledge',image:'/brand/sections/knowledge.jpg',action:'Browse guides'},
+        ]}
       />
 
       <EditorialPaths

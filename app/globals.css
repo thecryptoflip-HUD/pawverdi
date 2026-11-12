@@ -644,3 +644,89 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
 .vibrant-page.pv-dog-reference section.pv-dog-subscribe :is(h2,p) { color:#fff; }
 .vibrant-page.pv-dog-reference section.pv-dog-cover :is(h1,p) { color:#fff9ed; }
 .vibrant-page.pv-dog-reference section.pv-dog-cover h1 em { color:#ffd22d; }
+
+
+/* PawVerdi approved pet-life photographic design, iteration 2026-11-12.
+   These selectors are deliberately stronger than the legacy cinema styles
+   to prevent the old dark theme from bleeding into the public redesign. */
+.vibrant-page { background:#fffaf2; color:#143c2d; }
+.vibrant-page .pv-reference-homehero,
+.vibrant-page .pv-reference-sectionhero {
+  isolation:isolate; display:block; position:relative; overflow:hidden;
+  color:#fff; background:#16432e !important; border-bottom:0 !important;
+}
+.pv-reference-homehero-image,.pv-reference-section-photo { position:absolute; z-index:-3; inset:0; background-repeat:no-repeat; background-size:cover; background-position:67% 46%; }
+.pv-reference-homehero-image { background-image:url('/brand/sections/dogs.jpg'); }
+.pv-reference-homehero-overlay,.pv-reference-section-shade { position:absolute; z-index:-2; inset:0; background:linear-gradient(90deg,rgba(4,35,23,.96) 0%,rgba(4,37,22,.84) 35%,rgba(8,45,27,.18) 72%,rgba(6,43,28,.2) 100%); }
+.pv-reference-homehero::after,.pv-reference-sectionhero::after { content:""; pointer-events:none; position:absolute; height:50px; width:104%; left:-2%; bottom:-25px; background:#fffaf2; border-radius:50% 50% 0 0; }
+.pv-reference-homehero-copy,.pv-reference-section-copy { position:relative; max-width:595px; z-index:2; }
+.vibrant-page .pv-reference-homehero h1,.vibrant-page .pv-reference-sectionhero h1 { color:#fff9e6; font:800 clamp(2.6rem,5vw,5.05rem)/1.04 var(--font-display),Georgia,serif; letter-spacing:-.045em; text-wrap:balance; text-shadow:0 3px 16px rgba(0,0,0,.18); }
+.vibrant-page .pv-reference-homehero h1 em { color:#ffd22c; font-style:normal; }
+.pv-reference-overline { display:block; margin-bottom:1rem; color:#d7f4d9; font-weight:800; letter-spacing:.12em; font-size:.71rem; text-transform:uppercase; }
+.vibrant-page .pv-reference-homehero-copy > p,.vibrant-page .pv-reference-section-copy>p { font-size:clamp(1rem,1.45vw,1.16rem); max-width:50ch; line-height:1.62; margin:1.35rem 0 1.5rem; color:#fffef2; text-shadow:0 2px 9px rgba(0,0,0,.35); }
+.pv-reference-hero-links,.pv-reference-section-actions { display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; }
+.pv-reference-hero-button { text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:.6rem; border-radius:99px; padding:.83rem 1.25rem; font-size:.89rem; line-height:1.25; font-weight:800; transition:transform .2s ease; }
+.pv-reference-hero-button:hover { transform:translateY(-2px); }
+.pv-reference-hero-coral,.vibrant-page .pv-reference-sectionhero .btn-solid { background:#ff6559 !important; color:#fff !important; border:2px solid #ff6559 !important; }
+.pv-reference-hero-cream,.vibrant-page .pv-reference-sectionhero .btn-ghost { background:#fff9e8 !important; color:#07543d !important; border:2px solid #fff9e8 !important; }
+.vibrant-page .pv-reference-sectionhero .btn { display:inline-flex; min-height:48px; border-radius:99px; font-size:.87rem; font-weight:800; padding:.8rem 1.2rem; text-decoration:none; }
+.vibrant-page .pv-reference-section-actions >div { display:flex; flex-wrap:wrap; gap:.8rem; }
+.pv-reference-homehero-facts { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.7rem; }
+.pv-reference-homehero-facts span { border:1px solid rgba(255,255,255,.4); border-radius:99px; color:#fff; background:rgba(2,43,29,.46); padding:.4rem .65rem; font-size:.71rem; font-weight:700; }
+.pv-reference-star,.pv-reference-heart,.pv-reference-section-spark { position:absolute; pointer-events:none; font-size:4rem; color:#ffd242; font-family:Georgia,serif; }
+.pv-reference-star { left:43%; top:25%; } .pv-reference-heart { right:9%; top:24%; color:#fff; font-size:6rem; transform:rotate(-17deg); }
+.pv-reference-section-spark { right:10%; top:23%; }
+.vibrant-page .pv-reference-highlights { display:block; background:#fffaf2 !important; }
+.pv-reference-section-heading { display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:1rem; margin-bottom:1.4rem; }
+.pv-reference-section-heading>div>p { color:#006b49; text-transform:uppercase; font-weight:900; letter-spacing:.13em; font-size:.71rem; }
+.pv-reference-section-heading h2 { color:#112e25; font:800 clamp(1.8rem,3.2vw,2.8rem)/1.06 var(--font-display),Georgia,serif; letter-spacing:-.04em; margin-top:.25rem; }
+.pv-reference-section-heading>span { color:#315d4b; max-width:36ch; font-size:.91rem; line-height:1.5; }
+.pv-reference-highlight-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.pv-reference-highlight-card { position:relative; overflow:hidden; display:grid; grid-template-columns:44% 56%; min-height:225px; border-radius:24px; border:2px solid #fff9f2; box-shadow:0 18px 31px -23px #2f694c; transition:transform .2s ease; }
+.pv-reference-highlight-card:hover { transform:translateY(-4px); }
+.pv-ref-hi-0 { background:#ccf3e3; } .pv-ref-hi-1 { background:#ffe1e1; } .pv-ref-hi-2 { background:#fff1b6; }
+.pv-reference-highlight-picture { min-height:100%; overflow:hidden; }
+.pv-reference-highlight-picture img { height:100%; width:100%; object-fit:cover; object-position:center; }
+.pv-reference-highlight-content { padding:1.2rem .85rem 1.2rem .55rem; display:flex; flex-direction:column; align-items:flex-start; }
+.pv-reference-smalltag { font-size:.62rem; color:#036547; text-transform:uppercase; letter-spacing:.08em; font-weight:900; }
+.pv-reference-highlight-content h3 { font:800 clamp(1.2rem,2vw,1.8rem)/1.06 var(--font-display),Georgia,serif; color:#0b3d2d; margin:.2rem 0 .6rem; }
+.pv-reference-highlight-content p { font-size:.79rem; line-height:1.44; color:#275244; flex:1; }
+.pv-reference-highlight-link { font-size:.72rem; display:inline-flex; margin-top:1rem; color:#fff; padding:.63rem .7rem; border-radius:99px; background:#006247; font-weight:800; }
+.vibrant-page section.pv-reference-highlights .pv-reference-highlight-link { color:white !important; }
+/* Existing discovery and featured cards now match the selected rounded/pastel reference */
+.vibrant-page .welcome-paths { background:#fffaf2 !important; border:none !important; padding-top:2rem !important; padding-bottom:3rem !important; }
+.vibrant-page .vibrant-discovery-card { border-radius:24px; box-shadow:0 18px 34px -21px #286045; }
+.vibrant-page .welcome-paths .vibrant-discovery-card>div:first-child { height:210px; }
+.vibrant-page .welcome-paths .vibrant-discovery-card>div:last-child { padding:1.3rem; }
+.vibrant-page .welcome-paths .vibrant-discovery-card h3 { font-weight:800; }
+.vibrant-page section:not(.pv-reference-homehero):not(.pv-reference-sectionhero) { scroll-margin-top:90px; }
+.vibrant-page section:not(.pv-reference-homehero):not(.pv-reference-sectionhero) .card { border-radius:20px; }
+/* Helpful brand-style highlight colors while keeping critical form contrast. */
+.vibrant-page .pv-invitation { background:#ff6b64 !important; }
+.vibrant-page .pv-invitation :is(h2,p,.pv-eyebrow) { color:#fff !important; }
+.vibrant-page .pv-invitation .pv-invite-form input { color:#0e3d30 !important; background:#fff !important; }
+.vibrant-page .pv-invitation .pv-invite-form button { color:#fff; background:#005b43; }
+.vibrant-page .pv-trust-strip { background:#d5f5e7 !important; }
+.vibrant-page .pv-trust-strip :is(h2,p) { color:#064e38 !important; }
+.vibrant-page .pv-trust-strip a { color:#064e38 !important; }
+.vibrant-page .pv-editorial-paths { background:#fffaf2 !important; }
+.vibrant-page .pv-editorial-paths .pv-tile-body h3 { color:#0d3d2e !important; }
+.vibrant-page .pv-editorial-paths .pv-tile-body p { color:#285748 !important; }
+.vibrant-page .pv-editorial-paths .pv-tile-button { color:#fff !important; background:#005b42; }
+/* The source site used pale text in dark cards; ensure the selected light theme
+   retains legible headings, metadata and inline evidence tables. */
+.vibrant-page section:not(.pv-reference-homehero):not(.pv-reference-sectionhero) .lede,
+.vibrant-page section:not(.pv-reference-homehero):not(.pv-reference-sectionhero) .muted { color:#315d4a; }
+@media(max-width:1050px) {
+ .pv-reference-highlight-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .pv-reference-highlight-card:last-child:nth-child(odd) { grid-column:span 2; }
+}
+@media(max-width:650px) {
+ .pv-reference-homehero-image,.pv-reference-section-photo { background-position:62% center !important; }
+ .pv-reference-homehero-overlay,.pv-reference-section-shade { background:linear-gradient(90deg,rgba(3,36,24,.94),rgba(3,36,24,.69) 70%,rgba(4,34,23,.48)); }
+ .pv-reference-star,.pv-reference-heart,.pv-reference-section-spark { display:none; }
+ .pv-reference-highlight-grid { grid-template-columns:1fr; }
+ .pv-reference-highlight-card:last-child:nth-child(odd) { grid-column:auto; }
+ .pv-reference-highlight-card { min-height:200px; }
+}
+@media(prefers-reduced-motion:reduce) { .pv-reference-hero-button,.pv-reference-highlight-card { transition:none; } }

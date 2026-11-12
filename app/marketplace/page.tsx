@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import EditorialPaths from '@/components/editorial-paths';
+import ReferenceHighlights from '@/components/reference-highlights';
 
 export const metadata: Metadata = {
   title: 'Marketplace — verified sellers, health disclosures and adoption',
@@ -57,6 +58,17 @@ export default function MarketplacePage() {
           </Link>
         </div>
       </CinematicHero>
+
+      <ReferenceHighlights
+        eyebrow="Responsible connections"
+        heading="Care Before Every Listing"
+        subtitle="Our marketplace starts empty until sellers and disclosures complete review."
+        items={[
+          {eyebrow:'Welfare first',title:'Our seller standards',body:'Understand the checks required before any listing appears.',href:'/trust#sellers',image:'/brand/sections/marketplace.jpg',action:'Review standards'},
+          {eyebrow:'Adoption',title:'Make an informed choice',body:'Read how adoption and responsible placement are approached.',href:'#adoption',image:'/brand/sections/cats.jpg',action:'Learn more'},
+          {eyebrow:'Preparing',title:'A safer first connection',body:'See the information required of prospective sellers.',href:'#sellers',image:'/brand/sections/dogs.jpg',action:'Seller requirements'},
+        ]}
+      />
 
       <EditorialPaths
         kicker="Explore the marketplace standards"
