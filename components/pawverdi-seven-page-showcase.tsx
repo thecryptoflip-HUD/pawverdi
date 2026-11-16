@@ -69,7 +69,7 @@ const data:Record<Variant,VariantData> = {
     eyebrow:'Shop with care',heading:'Find the right fit.',summary:'Start with needs and dimensions before choosing a retailer.',
     cards:[
       {title:'Dog Gear',eyebrow:'For the everyday walk',description:'Look at harnesses and useful essentials.',href:'/shop?species=dog#gear-types',image:common.harness,action:'Browse dog gear'},
-      {title:'Cat Gear',eyebrow:'For curious cats',description:'Browse carriers, litter gear, and comfort.',href:'/shop?species=cat#gear-types',image:common.carrier,action:'Browse cat gear'},
+      {title:'Cat Gear',eyebrow:'For curious cats',description:'Browse carriers, litter gear, and comfort.',href:'/shop?species=cat#gear-types',image:common.cat,action:'Browse cat gear'},
       {title:'Home Essentials',eyebrow:'Comfort first',description:'Compare practical beds and accessories.',href:'/shop?category=beds#gear-types',image:common.bed,action:'Explore beds'},
     ],
     topicEyebrow:'Explore our shop',topicsHeading:'Popular Shopping Topics',topics:[
