@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { footerGroups, site } from '@/lib/site';
-import { isLive } from '@/lib/supabase';
 
 export default function SiteFooter() {
   return (
@@ -19,8 +18,7 @@ export default function SiteFooter() {
               <span className="font-serif text-lg font-bold text-cream">{site.name}</span>
             </Link>
             <p className="text-[0.88rem] leading-relaxed text-cream/60">
-              Independent research on pet costs, health and gear. Written for people who would rather buy the right thing
-              once — and who will not buy an animal from a stranger without paperwork.
+              Practical dog and cat care guides, thoughtful gear research, and everyday ideas for a happier life together.
             </p>
           </div>
 
@@ -47,7 +45,7 @@ export default function SiteFooter() {
             .
           </p>
           <p>
-            © {new Date().getFullYear()} {site.name} · <span className="text-cream/45">content mode: {isLive() ? 'live' : 'demo'}</span>
+            © {new Date().getFullYear()} {site.name} · Happy pets. Thoughtful choices.
           </p>
         </div>
       </div>

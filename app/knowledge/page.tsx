@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import ArticleCard from '@/components/article-card';
 import Reveal from '@/components/reveal';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
+import ReferenceDetails from '@/components/reference-details';
 import { articles, completeArticles, reviewLabel } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/knowledge' },
 };
 
-const sectionOptions = ['all', 'costs', 'health', 'nutrition', 'training', 'setup', 'safety', 'behaviour', 'tech'] as const;
+const sectionOptions = ['all', 'costs', 'health', 'nutrition', 'training', 'grooming', 'setup', 'safety', 'behaviour', 'tech'] as const;
 const speciesOptions = ['all', 'dog', 'cat'] as const;
 
 type Search = { species?: string; section?: string; q?: string };
@@ -43,18 +44,14 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
     <div className="vibrant-page">
       <CinematicHero variant="knowledge"
         kicker="Knowledge Center"
-        title={<>Knowledge for happier pets.</>}
+        title={<>Knowledge for<br /><em>happier pets.</em></>}
         intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
       />
 
-      <PawVerdiShowcase variant="knowledge" />
-
-      
-
-      
-      <section className="py-[clamp(40px,6vw,72px)]">
+      <PawVerdiShowcase variant="knowledge" featuredContent={<>
+<section id="guide-search" className="pv-knowledge-results">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
-          <form action="/knowledge" method="get" className="mb-8">
+          <form action="/knowledge#guide-search" method="get" className="mb-8">
             <label htmlFor="knowledge-search" className="mb-2 block text-[0.82rem] text-cream/70">Search guides</label>
             <div className="flex flex-wrap gap-3">
               <input
@@ -76,7 +73,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               {speciesOptions.map((option) => (
                 <Link
                   key={option}
-                  href={`/knowledge?species=${option}${section !== 'all' ? `&section=${section}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
+                  href={`/knowledge?species=${option}${section !== 'all' ? `&section=${section}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}#guide-search`}
                   aria-current={species === option ? 'page' : undefined}
                   className={`rounded-full border px-3.5 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] transition-colors ${
                     species === option ? 'border-amber text-gold' : 'border-white/15 text-cream/70 hover:border-white/30 hover:text-cream'
@@ -91,7 +88,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
               {sectionOptions.map((option) => (
                 <Link
                   key={option}
-                  href={`/knowledge?section=${option}${species !== 'all' ? `&species=${species}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
+                  href={`/knowledge?section=${option}${species !== 'all' ? `&species=${species}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}#guide-search`}
                   aria-current={section === option ? 'page' : undefined}
                   className={`rounded-full border px-3.5 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] transition-colors ${
                     section === option ? 'border-amber text-gold' : 'border-white/15 text-cream/70 hover:border-white/30 hover:text-cream'
@@ -126,7 +123,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
                   <div className="relative h-full">
                     <ArticleCard
                       article={article}
-                      image={['/brand/carrier.jpg', '/brand/bed.jpg', '/brand/gear.jpg', '/brand/hero.jpg'][i % 4]}
+                      image={article.species === 'cat' ? '/brand/garden/kitten.webp' : '/brand/garden/puppy.webp'}
                     />
                   </div>
                 </Reveal>
@@ -136,6 +133,9 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
         </div>
       </section>
 
+
+      </>}>
+        <ReferenceDetails title="Upcoming topics, sourced updates & review policy">
       <section className="border-t border-white/[0.07] py-10">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <details className="rounded-2xl border border-white/10 bg-moss/50 p-6">
@@ -205,6 +205,8 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
           </div>
         </div>
       </section>
+        </ReferenceDetails>
+      </PawVerdiShowcase>
     </div>
   );
 }

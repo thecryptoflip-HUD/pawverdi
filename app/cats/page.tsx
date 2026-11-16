@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
-import ArticleCard from '@/components/article-card';
-import AdSlot from '@/components/ad-slot';
+import ReferenceDetails from '@/components/reference-details';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
-import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
+import { breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Cat Center — breeds, health, nutrition, behaviour, grooming and kitten care',
@@ -23,51 +22,27 @@ const topics = [
 ] as const;
 
 export default function CatsPage() {
-  const catArticles = articlesBySpecies('cat');
   const breeds = breedsBySpecies('cat');
 
   return (
     <div className="vibrant-page">
       <CinematicHero variant="cat"
         kicker="Cat Center"
-        title={<>Make every day a happy cat day.</>}
+        title={<>Make every day<br /><em>a happy cat day.</em></>}
         intro="Explore kitten essentials, enrichment, behaviour, and everyday health. Every guide states its review status and cannot replace veterinary care."
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/knowledge?species=cat" className="btn btn-solid">
-            All cat guides
+            Explore cat care
           </Link>
-          <Link href="/knowledge/new-kitten-checklist" className="btn btn-ghost">
-            New kitten checklist
+          <Link href="/shop?species=cat#gear-types" className="btn btn-ghost">
+            Shop cat gear
           </Link>
         </div>
       </CinematicHero>
 
-      <PawVerdiShowcase variant="cat" />
-
-      
-
-      
-      <section className="py-[clamp(56px,8vw,96px)]">
-        <div className="mx-auto max-w-wrap px-5 sm:px-8">
-          <Reveal className="mb-9">
-            <p className="kicker mb-4">Topics</p>
-            <h2 className="display text-[clamp(1.7rem,3vw,2.4rem)] text-[#fcf8f1]">Five doors into the same evidence.</h2>
-          </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {topics.map((topic, i) => (
-              <Reveal key={topic.key} delay={i * 60}>
-                <Link href={`/knowledge?species=cat&section=${topic.key}`} className="card flex h-full flex-col p-6">
-                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.24em] text-amber">0{i + 1}</span>
-                  <h3 className="mt-3 font-serif text-lg text-[#fcf8f1]">{topic.label}</h3>
-                  <p className="mt-2 text-[0.86rem] leading-relaxed text-cream/70">{topic.blurb}</p>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      <PawVerdiShowcase variant="cat">
+        <ReferenceDetails title="Cat breed reference">
       <section className="border-y border-white/[0.07] bg-forest py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-9 flex flex-wrap items-end justify-between gap-5">
@@ -115,26 +90,8 @@ export default function CatsPage() {
         </div>
       </section>
 
-      <section className="py-[clamp(56px,8vw,96px)]">
-        <div className="mx-auto max-w-wrap px-5 sm:px-8">
-          <Reveal className="mb-9">
-            <p className="kicker mb-4">Latest for cats</p>
-            <h2 className="display text-[clamp(1.7rem,3vw,2.4rem)] text-[#fcf8f1]">Cat guides</h2>
-          </Reveal>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {catArticles.slice(0, 6).map((article, i) => (
-              <Reveal key={article.slug} delay={i * 60}>
-                <div className="relative h-full">
-                  <ArticleCard article={article} image={['/brand/carrier.jpg', '/brand/hero.jpg', '/brand/bed.jpg'][i % 3]} />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <div className="mt-10">
-            <AdSlot placement="cats-inline-01" />
-          </div>
-        </div>
-      </section>
+        </ReferenceDetails>
+      </PawVerdiShowcase>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { navigation, site } from '@/lib/site';
@@ -8,6 +8,7 @@ import { navigation, site } from '@/lib/site';
 export default function SiteHeader() {
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -18,6 +19,14 @@ export default function SiteHeader() {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { setOpen(false); menuButton.current?.focus(); }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open]);
 
   return (
     <header
@@ -47,11 +56,12 @@ export default function SiteHeader() {
         </nav>
 
         <button
+          ref={menuButton}
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#badccb] xl:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-[#badccb] xl:hidden"
         >
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
           <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true" className="fill-[#07543d]">
@@ -78,11 +88,12 @@ export default function SiteHeader() {
       </div>
 
       {open && (
-        <nav id="mobile-nav" aria-label="Mobile" className="border-t border-[#badccb] bg-[#fffdf7] px-5 pb-6 pt-2 md:hidden">
+        <nav id="mobile-nav" aria-label="Mobile" className="max-h-[calc(100dvh-76px)] overflow-y-auto border-t border-[#badccb] bg-[#fffdf7] px-5 pb-6 pt-2 xl:hidden">
           {navigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setOpen(false)}
               aria-current={pathname === item.href ? 'page' : undefined}
               className="block border-b border-[#e2eee5] py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#07543d]"
             >

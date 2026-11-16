@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
+import ReferenceDetails from '@/components/reference-details';
 
 export const metadata: Metadata = {
   title: 'Community — owner stories, newsletters and what comes next',
@@ -16,16 +17,13 @@ export default function CommunityPage() {
     <div className="vibrant-page">
       <CinematicHero variant="community"
         kicker="Community"
-        title={<>A community for pet people.</>}
-        intro="Reader stories, corrections and the monthly digest. Comment threads and forums are deliberately not switched on yet — a community needs moderation before it needs a text box."
+        title={<>A community for<br /><em>pet people.</em></>}
+        intro="Share stories, ask questions, and find practical inspiration for life with your pet. Reader submissions are open; moderated forums are still in preparation."
       />
 
-      <PawVerdiShowcase variant="community" />
-
-      
-
-      
-      <section className="py-[clamp(48px,7vw,88px)]">
+      <PawVerdiShowcase variant="community">
+        <ReferenceDetails title="Reader stories & community roadmap">
+<section className="py-[clamp(48px,7vw,88px)]">
         <div className="mx-auto grid max-w-wrap gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_.9fr]">
           <Reveal>
             <p className="kicker mb-4">Owner stories</p>
@@ -65,25 +63,7 @@ export default function CommunityPage() {
                   </li>
                 ))}
               </ul>
-              <form action="/api/newsletter" method="post" className="mt-6 grid gap-3">
-                <label htmlFor="community-email" className="text-[0.68rem] uppercase tracking-[0.2em] text-cream/60">
-                  Email address
-                </label>
-                <input
-                  id="community-email"
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="you@example.com"
-                  className="rounded-xl border border-white/15 bg-void/60 px-4 py-3.5 text-cream placeholder:text-cream/35 focus:border-amber focus:outline-none"
-                />
-                <button type="submit" className="btn btn-solid w-full justify-center">
-                  Subscribe
-                </button>
-              </form>
-              <p className="mt-3 text-[0.72rem] leading-relaxed text-cream/45">
-                Double opt-in, stored for the newsletter only. Unsubscribe link in every send.
-              </p>
+              <Link href="#pv-seven-updates" className="btn btn-ghost mt-6">Get the monthly digest →</Link>
             </div>
           </Reveal>
         </div>
@@ -126,6 +106,8 @@ export default function CommunityPage() {
           </div>
         </div>
       </section>
+        </ReferenceDetails>
+      </PawVerdiShowcase>
     </div>
   );
 }

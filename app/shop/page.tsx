@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
+import ReferenceDetails from '@/components/reference-details';
 import { products } from '@/lib/shop';
 
 export const metadata: Metadata = {
@@ -26,25 +27,21 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     <div className="vibrant-page">
       <CinematicHero variant="shop"
         kicker="Product shop"
-        title={<>Shop for happier pets.</>}
-        intro="These gear types are a starting point for your own comparison, not tested recommendations. No products in this shortlist have been tested or rated by PawVerdi. Links open retailer category or search pages, not individual product picks."
+        title={<>Shop for<br /><em>happier pets.</em></>}
+        intro="Thoughtfully chosen categories for everyday life. Start with fit, comfort and practical needs. Retailer links are clearly labeled; this is a category directory, not tested product recommendations."
       >
         <div className="flex flex-wrap gap-3">
-          <Link href="#how-we-test" className="btn btn-solid">
-            Future review policy
+          <Link href="/shop?species=dog#gear-types" className="btn btn-solid">
+            Shop dog gear
           </Link>
-          <Link href="#shop-disclosure" className="btn btn-ghost">
-            Affiliate disclosure
+          <Link href="/shop?species=cat#gear-types" className="btn btn-ghost">
+            Shop cat gear
           </Link>
         </div>
       </CinematicHero>
 
-      <PawVerdiShowcase variant="shop" />
-
-      
-
-      
-      <section className="py-[clamp(48px,7vw,88px)]">
+      <PawVerdiShowcase variant="shop">
+<section id="gear-types" className="pv-shop-results">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="mb-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
             <h2 className="font-serif text-xl text-cream">Affiliate disclosure</h2>
@@ -71,14 +68,14 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
           <nav aria-label="Filter by species" className="mb-4 flex flex-wrap gap-4">
             {['all', 'dog', 'cat'].map((value) => (
-              <Link key={value} href={`?species=${value}&category=${category}`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${value}&category=${category}#gear-types`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
           </nav>
           <nav aria-label="Filter by category" className="mb-4 flex flex-wrap gap-4">
             {['all', 'beds', 'carriers', 'harnesses', 'litter'].map((value) => (
-              <Link key={value} href={`?species=${species}&category=${value}`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${species}&category=${value}#gear-types`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
@@ -161,6 +158,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </section>
 
+
+        <ReferenceDetails title="How we plan product reviews">
       <section id="how-we-test" className="border-y border-white/[0.07] bg-forest py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-9 max-w-[640px]">
@@ -191,6 +190,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           </div>
         </div>
       </section>
+        </ReferenceDetails>
+      </PawVerdiShowcase>
     </div>
   );
 }

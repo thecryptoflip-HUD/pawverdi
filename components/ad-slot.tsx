@@ -26,6 +26,11 @@ export default function AdSlot({
 }) {
   const booked = Boolean(sponsor && headline && href);
 
+  if (!booked) return <aside className="pv-empty-ad" aria-label="Advertising availability" data-placement={placement}>
+    <span><span className="pv-empty-label">Advertising</span> · This slot is unsold.</span>
+    <Link href="/advertise">Advertising standards →</Link>
+  </aside>;
+
   return (
     <aside
       aria-label={`Sponsored content — ${placement}`}

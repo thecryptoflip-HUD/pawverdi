@@ -4,6 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
+import ReferenceDetails from '@/components/reference-details';
 
 export const metadata: Metadata = {
   title: 'Marketplace — verified sellers, health disclosures and adoption',
@@ -45,8 +46,8 @@ export default function MarketplacePage() {
     <div className="vibrant-page">
       <CinematicHero variant="marketplace"
         kicker="Marketplace"
-        title={<>Marketplace with care.</>}
-        intro="PawVerdi is an education platform that also hosts listings — not a classifieds board with a logo. Sellers are verified by a person, animals are never shipped as cargo, and adoption is presented alongside purchase at the same level of detail."
+        title={<>Marketplace<br /><em>with care.</em></>}
+        intro="Responsible connections begin with care. Explore adoption guidance and our welfare standards. No animal listings or verified sellers are published yet."
       >
         <div className="flex flex-wrap gap-3">
           <Link href="#sellers" className="btn btn-solid">
@@ -58,12 +59,8 @@ export default function MarketplacePage() {
         </div>
       </CinematicHero>
 
-      <PawVerdiShowcase variant="marketplace" />
-
-      
-
-      
-      <section className="py-[clamp(56px,8vw,96px)]">
+      <PawVerdiShowcase variant="marketplace">
+<section className="py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-10 max-w-[640px]">
             <p className="kicker mb-4">Current state</p>
@@ -91,6 +88,8 @@ export default function MarketplacePage() {
         </div>
       </section>
 
+
+        <ReferenceDetails title="Adoption, seller verification & applications">
       <section id="sellers" className="border-y border-white/[0.07] bg-forest py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-10 max-w-[640px]">
@@ -225,6 +224,8 @@ export default function MarketplacePage() {
           </div>
         </div>
       </section>
+        </ReferenceDetails>
+      </PawVerdiShowcase>
     </div>
   );
 }
