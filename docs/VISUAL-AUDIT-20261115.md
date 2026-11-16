@@ -27,4 +27,20 @@ The site continues to report two genuine completed guides, zero published animal
 
 ## Validation record
 
-Production build and TypeScript validation are required before review. Run the existing smoke, guide, publication-integrity and shop suites against a locally isolated server. Remote preview must be inspected at desktop, tablet and phone widths, then the same public domain must be verified after the protected merge. Final observed results will be added before completion.
+The first visual repair shipped through protected PR #14, main commit `00c53b5d040059af011dfb5e5c3ee690ed615648`. Required [CI run 43790097464](https://github.com/thecryptoflip-HUD/pawverdi/actions/runs/43790097464) passed install, TypeScript, production build and all existing tests. Local checks also passed: 31 smoke/security checks, 6 guide/publication tests and 8 shop checks. Vercel confirmed successful production deployment, and the public domain visibly served the new garden assets and layout.
+
+All seven public pages were then scrolled and inspected again at 1,363px desktop and 454px phone widths. Every page had exactly one H1, one newsletter form, zero broken images and no document horizontal overflow. The 779px tablet menu opened all seven links, closed on Escape and restored focus. At 340px, its contents scrolled and choosing Cats closed the menu and navigated correctly. Empty newsletter submission stayed on the page with native required-field validation. These are responsive browser checks, not physical-device or emulated-touch tests.
+
+| Page | Desktop height before | Desktop height after first repair |
+| --- | ---: | ---: |
+| Home | 3,245px | 2,402px |
+| Dogs | 6,475px | 2,426px |
+| Cats | 5,129px | 2,365px |
+| Knowledge | 5,342px | 2,833px |
+| Shop | 4,994px | 3,450px |
+| Marketplace | 6,324px | 2,697px |
+| Community | 4,276px | 2,351px |
+
+Functional public-domain checks confirmed Carriers leads to the actual one-row filtered results with disclosure present and correct scroll offset. Grooming now reports its real empty result rather than All topics. Final inspection found two additional defects: Next Link fragment navigation did not emit `hashchange`, so links into collapsed references did not open them; and the pre-existing seller form was missing its actual POST target. The follow-up fixes both, adds truthful inline application feedback and regression coverage for form targets/single newsletter counts, and softens the observed vertical seam in the desktop hero artwork. The final live recheck is recorded in the existing Notion PawVerdi project memory.
+
+The managed local preview launcher supplied unsupported Vite flags to Next.js; application code was not changed to compensate. The Vercel preview succeeded but required additional sign-in. Opening a new Vercel integration was rejected by automatic approval review, so no integration, access setting or preview-protection policy was changed. Validation proceeded through the existing protected GitHub/Vercel production workflow and the actual public site. No real newsletter subscriptions or seller applications were submitted as test data; submission API tests used an isolated local server with no database configuration.

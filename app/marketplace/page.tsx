@@ -5,6 +5,7 @@ import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import ReferenceDetails from '@/components/reference-details';
+import SellerApplicationForm from '@/components/seller-application-form';
 
 export const metadata: Metadata = {
   title: 'Marketplace — verified sellers, health disclosures and adoption',
@@ -179,44 +180,41 @@ export default function MarketplacePage() {
             <p className="kicker mb-4">Seller application</p>
             <h2 className="display text-[clamp(1.8rem,3.2vw,2.5rem)] text-[#fcf8f1]">Start the verification.</h2>
             <p className="lede mt-4">
-              Submit the form and a reviewer responds within five working days. Applications that fail a gate are told
-              which gate, and what evidence would change the decision.
+              Send your business details and supporting information for review. A seller is only verified after the required checks are complete.
             </p>
           </Reveal>
 
           <Reveal>
-            <form className="grid max-w-[720px] gap-4 rounded-2xl border border-white/[0.08] bg-moss/60 p-7" aria-describedby="seller-note">
+            <SellerApplicationForm>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                   Trading name
-                  <input required name="trading_name" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                  <input required minLength={2} maxLength={140} name="trading_name" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
                 </label>
                 <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                   Country
-                  <input required name="country" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                  <input required minLength={2} maxLength={80} name="country" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
                 </label>
                 <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                   Contact email
-                  <input required type="email" name="email" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                  <input required type="email" maxLength={254} name="email" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
                 </label>
                 <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                   Licence or registration number
-                  <input required name="licence" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                  <input required minLength={2} maxLength={80} name="licence" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
                 </label>
               </div>
               <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                 Which schemes can you evidence?
-                <textarea name="schemes" rows={3} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" placeholder="Kennel club registration, breed health screening, municipal inspection…" />
+                <textarea maxLength={1000} name="schemes" rows={3} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" placeholder="Kennel club registration, breed health screening, municipal inspection…" />
               </label>
               <button type="submit" className="btn btn-solid mt-2 w-full justify-center sm:w-auto">
                 Submit application
               </button>
               <p id="seller-note" className="text-[0.74rem] leading-relaxed text-cream/50">
-                In this build the form is wired to <code className="text-cream/70">/api/seller-application</code>, which
-                validates input and writes to Supabase when it is connected. In demo mode it returns a clear
-                &ldquo;not stored&rdquo; response instead of pretending to save your data.
+                Submitting an application does not verify a seller or publish a listing. The form will show whether your information was saved.
               </p>
-            </form>
+            </SellerApplicationForm>
           </Reveal>
 
           <div className="mt-10">
