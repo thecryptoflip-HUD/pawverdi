@@ -44,6 +44,29 @@ test('trust policy matches research-based guides and unobserved prices', async (
   assert.ok(policy.includes('No price-check date is shown until a price has actually been observed'), 'price evidence rule must match shop');
 });
 
+test('each public hub has exactly one newsletter signup with the correct POST target', async () => {
+  for (const path of ['/', '/dogs', '/cats', '/knowledge', '/shop', '/marketplace', '/community']) {
+    const html = await get(path);
+    const forms = [...html.matchAll(/<form\b([^>]*)>/g)].map((match) => match[1]);
+    const signups = forms.filter((attributes) => /action="\/api\/newsletter"/.test(attributes));
+    assert.equal(signups.length, 1, `${path}: expected one signup, without duplicate newsletter sections`);
+    assert.match(signups[0], /method="post"/i, `${path}: signup must POST to the intake endpoint`);
+  }
+});
+
+test('seller application is a POST form with every required intake field', async () => {
+  const html = await get('/marketplace');
+  const forms = [...html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/g)];
+  const application = forms.find((match) => /action="\/api\/seller-application"/.test(match[1]));
+  assert.ok(application, 'seller application must be connected to the existing intake endpoint');
+  assert.match(application[1], /method="post"/i, 'application fields must not be put in the URL');
+  for (const name of ['trading_name', 'country', 'email', 'licence']) {
+    assert.match(application[2], new RegExp(`<input[^>]*name="${name}"`), `missing ${name}`);
+  }
+  const grooming = text(await get('/knowledge?section=grooming'));
+  assert.ok(grooming.includes('topic: grooming'), 'a Grooming link must not silently reset to All topics');
+});
+
 test('all 24 existing article routes have a canonical URL and truthful indexing state', async () => {
   const content = await readFile(new URL('../lib/content.ts', import.meta.url), 'utf8');
   const records = content.split('const articleRecords: Article[] = [')[1].split('export const articles:')[0];
