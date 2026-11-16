@@ -17,3 +17,9 @@ TypeScript, production build and all 50 checks passed: 31 smoke/security checks,
 ## Scope
 
 This realizes the approved composition using truthful current inventory. It does not create tested product picks, listings or testimonials from the reference artwork. New images are illustrative brand assets, not retailer-supplied photographs. Affiliate account approval, commission attribution and earnings are outside these automated checks.
+
+## Production acceptance follow-up
+
+Live desktop and 454px phone-width checks caught inherited CSS overriding the new action and selected-filter colors. The correction in PR #17 restores white text on the green buttons and active filters, with a measured rendered contrast of 7.41:1. All four retailer card destinations retain their original tracking states. The owner independently reported the same contrast defect during this check.
+
+The disclosure shortcut now has the same 96px fixed-header clearance as the filter target. Card arrows use an inline SVG to avoid platform-dependent missing glyphs. Six other public hubs were rechecked at 1363px desktop and 454px phone widths: each retained one H1, one newsletter form and no document overflow. Mobile menu opening, Escape closing and focus restoration also passed. Responsive checks use browser zoom rather than physical-device emulation; the existing full seven-page visual audit remains the broader baseline.

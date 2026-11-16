@@ -138,7 +138,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-seven-support .btn,.pv-support-content .btn { background:#e2f4e8; color:#07543d !important; border-color:#b6dac5; }
 .pv-seven-support .btn-solid,.pv-support-content .btn-solid { background:#ff695d; color:#143e2d !important; }
 .pv-seven-support :is(input,select,textarea),.pv-support-content :is(input,select,textarea) { background:white; color:#143e2d; border-color:#adcfbb; }
-.pv-seven-support :is(section,aside),.pv-support-content :is(section,aside),#guide-search,#gear-types { scroll-margin-top:96px; }
+.pv-seven-support :is(section,aside),.pv-support-content :is(section,aside),#guide-search,#gear-types,#shop-disclosure { scroll-margin-top:96px; }
 
 /* Compact mint trust strip and one coral signup close, as in the approved references. */
 .pv-dog-trust,.pv-home-transparency,.pv-seven-trust { border-radius:23px; background:#d4f6e8 !important; }
