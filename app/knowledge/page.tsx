@@ -3,8 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import ArticleCard from '@/components/article-card';
 import Reveal from '@/components/reveal';
-import EditorialPaths from '@/components/editorial-paths';
-import ReferenceHighlights from '@/components/reference-highlights';
+import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import { articles, completeArticles, reviewLabel } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -44,31 +43,15 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
     <div className="vibrant-page">
       <CinematicHero variant="knowledge"
         kicker="Knowledge Center"
-        title={<>Trusted pet knowledge for everyday life.</>}
+        title={<>Knowledge for happier pets.</>}
         intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
       />
 
-      <ReferenceHighlights
-        eyebrow="Find your next read"
-        heading="Helpful Guides for Every Pet Parent"
-        subtitle="Browse real research-backed topics, with review status visible on each published guide."
-        items={[
-          {eyebrow:'Dog care',title:'Happy dogs, healthier routines',body:'Practical knowledge for dog owners.',href:'/knowledge?species=dog',image:'/brand/sections/dogs.jpg',action:'Browse dog care'},
-          {eyebrow:'Cat care',title:'Comfortable cats, curious minds',body:'Guidance for feline health and wellbeing.',href:'/knowledge?species=cat',image:'/brand/sections/cats.jpg',action:'Browse cat care'},
-          {eyebrow:'Care costs',title:'Plan for everyday costs',body:'Check actual source-linked cost guides.',href:'/knowledge?section=costs',image:'/brand/sections/knowledge.jpg',action:'Explore costs'},
-        ]}
-      />
+      <PawVerdiShowcase variant="knowledge" />
 
-      <EditorialPaths
-        kicker="Find a good place to begin"
-        heading="Learn together, one practical guide at a time."
-        intro="Choose the topic that fits your pet today. Full guides show their research and review status."
-        items={[
-          { label: 'For dogs', title: 'Everyday dog care', text: 'Explore routines, puppy setup and practical evidence-based guidance.', href: '/knowledge?species=dog', image: '/brand/sections/dogs.jpg' },
-          { label: 'For cats', title: 'A comfortable cat home', text: 'Explore kitten essentials, behaviour, nutrition and care.', href: '/knowledge?species=cat', image: '/brand/sections/cats.jpg' },
-          { label: 'Checklists', title: 'Prepare with confidence', text: 'Start with the source-linked guides already published.', href: '/knowledge/new-puppy-checklist', image: '/brand/sections/knowledge.jpg' },
-        ]}
-      />
+      
+
+      
       <section className="py-[clamp(40px,6vw,72px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <form action="/knowledge" method="get" className="mb-8">
