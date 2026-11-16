@@ -236,6 +236,60 @@ try {
     assert.match(copy, /no price check date is shown until a price has actually been observed/i);
   });
 
+  await check('photo cards preserve category destinations and inline disclosures', async () => {
+    const cards = [...main.matchAll(/<article\b[^>]*data-gear-card="[^"]+"[^>]*>([\s\S]*?)<\/article>/gi)].map((match) => match[1]);
+    assert.equal(cards.length, 4, 'All four real categories must be browseable as cards');
+    const images = new Set();
+    for (const [index, card] of cards.entries()) {
+      const cardLink = links(card)[0];
+      const tableLink = links(rows[index])[0];
+      assert.equal(links(card).length, 1);
+      assert.equal(cardLink.attrs.href, tableLink.attrs.href, 'Cards and comparison table must agree');
+      assert.equal(cardLink.attrs['data-track'], tableLink.attrs['data-track']);
+      assert.equal(cardLink.attrs.rel, tableLink.attrs.rel);
+      assert.equal(cardLink.attrs.target, '_blank');
+      assert.match(cardLink.attrs['aria-describedby'], /shop-disclosure/);
+      assert.match(text(card), index % 2 === 0 ? /Affiliate link.*may earn a commission/ : /Retailer link.*untracked/);
+      assert.ok(card.indexOf('pv-gear-link-label') < card.indexOf('<a '), 'The commercial label must precede its link');
+      const image = card.match(/<img\b[^>]*src="([^"]+)"[^>]*>/)?.[1];
+      assert.ok(image?.startsWith('/brand/garden/gear-'));
+      assert.match(card, /alt="Illustration of [^"]+"/);
+      images.add(image);
+      assert.equal((await request(new URL(image, base))).status, 200, 'Category image must be available');
+    }
+    assert.equal(images.size, 4, 'Each category needs its own relevant illustration');
+    assert.match(text(main), /AI-generated category illustrations/);
+    assert.ok(main.indexOf('id="shop-disclosure"') < main.indexOf('data-gear-card='));
+  });
+
+  await check('category and species filters keep cards and comparisons in sync', async () => {
+    for (const [query, count, name] of [
+      ['category=carriers', 1, 'Top-loading cat carriers'],
+      ['species=dog', 2, 'Orthopedic dog beds'],
+      ['species=cat&category=harnesses', 0, null],
+    ]) {
+      const filtered = await (await request(new URL(`/shop?${query}`, base))).text();
+      const filteredMain = filtered.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || '';
+      assert.equal([...filteredMain.matchAll(/data-gear-card="/g)].length, count);
+      assert.match(text(filteredMain), new RegExp(`Showing ${count} of 4 gear types`));
+      if (name) assert.ok(text(filteredMain).includes(name));
+      if (count === 0) {
+        assert.match(text(filteredMain), /No gear types match these filters/);
+        assert.ok(links(filteredMain).some(({ attrs }) => attrs.href === '?species=all&category=all#gear-types'));
+        assert.doesNotMatch(filteredMain, /<tbody\b/);
+      } else {
+        const filteredRows = filteredMain.match(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/i)?.[1] || '';
+        assert.equal([...filteredRows.matchAll(/<tr\b/g)].length, count);
+      }
+    }
+  });
+
+  await check('comparison details remain reachable without leading the shopping page', () => {
+    assert.match(main, /<summary>Compare category details/);
+    assert.ok(main.indexOf('data-gear-card=') < main.indexOf('<table'), 'Image cards should lead browsing');
+    assert.match(main, /role="region" aria-label="Gear category comparison" tabindex="0"/);
+  });
+
   console.log(`${passed}/${passed + failed} shop checks passed`);
   process.exitCode = failed ? 1 : 0;
 } catch (error) {

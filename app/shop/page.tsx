@@ -5,6 +5,7 @@ import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import ReferenceDetails from '@/components/reference-details';
+import GearCategoryCard from '@/components/gear-category-card';
 import { products } from '@/lib/shop';
 
 export const metadata: Metadata = {
@@ -41,54 +42,46 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </CinematicHero>
 
-      <PawVerdiShowcase variant="shop">
-<section id="gear-types" className="pv-shop-results">
-        <div className="mx-auto max-w-wrap px-5 sm:px-8">
-          <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="mb-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
-            <h2 className="font-serif text-xl text-cream">Affiliate disclosure</h2>
-            <p className="mt-2 max-w-[70ch] text-[0.92rem] leading-relaxed text-cream/70">
-              As an Amazon Associate I earn from qualifying purchases. Labelled Amazon links contain our configured
-              tracking tag. If you buy through one, PawVerdi may earn a commission at no extra cost to you.
+      <PawVerdiShowcase variant="shop" featuredContent={
+      <section id="gear-types" className="pv-shop-browse" aria-label="Pet gear category shortlist">
+          <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="pv-shop-disclosure">
+            <h3>Affiliate disclosure</h3>
+            <p>
+              As an Amazon Associate I earn from qualifying purchases. If you buy through a labelled Amazon link,
+              PawVerdi may earn a commission at no extra cost to you.
               Chewy links are ordinary retailer links without affiliate tracking.
             </p>
-            <Link href="/trust#disclosure" className="mt-3 inline-block text-sm text-gold underline underline-offset-4">
+            <Link href="/trust#disclosure">
               Read our full disclosure
             </Link>
           </aside>
 
-          <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="kicker mb-4">Browse by type</p>
-              <h2 className="display text-[clamp(1.8rem,3.2vw,2.5rem)] text-[#fcf8f1]">Category shortlist</h2>
-            </div>
-            <p className="max-w-[36ch] text-[0.82rem] leading-relaxed text-cream/55">
-              Choose a gear type to browse at the retailer. Check the individual listing for fit, materials, price and
-              availability before buying.
-            </p>
-          </Reveal>
-
-          <nav aria-label="Filter by species" className="mb-4 flex flex-wrap gap-4">
+          <nav aria-label="Filter by species" className="pv-shop-filters">
             {['all', 'dog', 'cat'].map((value) => (
               <Link key={value} href={`?species=${value}&category=${category}#gear-types`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
           </nav>
-          <nav aria-label="Filter by category" className="mb-4 flex flex-wrap gap-4">
+          <nav aria-label="Filter by category" className="pv-shop-filters">
             {['all', 'beds', 'carriers', 'harnesses', 'litter'].map((value) => (
               <Link key={value} href={`?species=${species}&category=${value}#gear-types`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
                 {value}
               </Link>
             ))}
           </nav>
-          <p className="mb-4 text-sm text-cream/70">Showing {filteredProducts.length} of {products.length} gear types</p>
+          <p className="pv-shop-count" role="status">Showing {filteredProducts.length} of {products.length} gear types</p>
+          <p className="pv-shop-image-note">AI-generated category illustrations. Actual retailer products vary; these are not tested product recommendations.</p>
 
           {filteredProducts.length === 0 ? (
-            <p className="text-cream/70">
-              No gear types match these filters. <Link href="?species=all&category=all" className="text-gold underline underline-offset-4">Reset filters</Link>
+            <p className="pv-shop-empty">
+              No gear types match these filters. <Link href="?species=all&category=all#gear-types">Reset filters</Link>
             </p>
           ) : (
-          <div className="overflow-x-auto">
+          <>
+          <div className="pv-gear-grid">{filteredProducts.map((product) => <GearCategoryCard key={product.id} product={product} />)}</div>
+          <ReferenceDetails title="Compare category details">
+          <div className="pv-shop-table-scroll" role="region" aria-label="Gear category comparison" tabIndex={0}>
             <table className="table min-w-[760px]" aria-describedby="shop-disclosure">
               <caption className="sr-only">Pet gear category/type shortlist with retailer links, price check dates and review status</caption>
               <thead>
@@ -146,9 +139,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
               </tbody>
             </table>
           </div>
-          )}
 
-          <div className="mt-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
+          <div className="pv-shop-price-note">
             <h3 className="font-serif text-xl text-cream">Why the price column is empty</h3>
             <p className="mt-2 max-w-[70ch] text-[0.92rem] leading-relaxed text-cream/70">
               We have not captured prices for this shortlist, and a category page does not have a single product price.
@@ -156,8 +148,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
               and no price check date is shown until a price has actually been observed.
             </p>
           </div>
-        </div>
+          </ReferenceDetails>
+          </>
+          )}
       </section>
+      }>
 
 
         <ReferenceDetails title="How we plan product reviews">

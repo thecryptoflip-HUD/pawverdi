@@ -5,6 +5,10 @@ export interface Product {
   species: 'dog' | 'cat' | 'both';
   merchant: string;
   href: string;
+  image: string;
+  imageAlt: string;
+  description: string;
+  considerations: [string, string, string];
   priceUsd: number | null;
   /** Null until a price has actually been observed at the retailer. */
   priceChecked: string | null;
@@ -42,6 +46,10 @@ export const products: Product[] = [
     species: 'dog',
     merchant: 'Amazon',
     ...amazonCategoryLink('orthopedic dog beds'),
+    image: '/brand/garden/gear-bed.webp',
+    imageAlt: 'Illustration of a golden retriever resting in a cream bolster bed',
+    description: 'Start with your dog’s sleeping space and the care the bed will need.',
+    considerations: ['Sleeping area and entry height', 'Removable, washable cover', 'Return and warranty terms'],
     priceUsd: null,
     priceChecked: null,
     rating: null,
@@ -53,6 +61,10 @@ export const products: Product[] = [
     species: 'cat',
     merchant: 'Chewy',
     href: 'https://www.chewy.com/b/carriers-106726',
+    image: '/brand/garden/gear-carrier.webp',
+    imageAlt: 'Illustration of a tabby beside an open top-loading carrier',
+    description: 'Compare access, dimensions and ventilation before choosing a carrier.',
+    considerations: ['Internal size and pet weight limit', 'Top access and secure closures', 'Ventilation and cleaning access'],
     priceUsd: null,
     priceChecked: null,
     affiliate: false, // Source config: approved=false, no tracking ID.
@@ -65,6 +77,10 @@ export const products: Product[] = [
     species: 'dog',
     merchant: 'Amazon',
     ...amazonCategoryLink('front clip dog harnesses'),
+    image: '/brand/garden/gear-harness.webp',
+    imageAlt: 'Illustration of a golden retriever wearing a green walking harness',
+    description: 'Use your dog’s measurements and the maker’s fitting instructions.',
+    considerations: ['Neck and chest measurements', 'Front attachment and adjustment', 'Manufacturer fitting instructions'],
     priceUsd: null,
     priceChecked: null,
     rating: null,
@@ -76,6 +92,10 @@ export const products: Product[] = [
     species: 'cat',
     merchant: 'Chewy',
     href: 'https://www.chewy.com/b/litter-boxes-413',
+    image: '/brand/garden/gear-litter.webp',
+    imageAlt: 'Illustration of an empty high-sided litter tray with a low entrance',
+    description: 'Look at usable space, entry height and everyday cleaning needs.',
+    considerations: ['Tray dimensions and entry height', 'Space for turning and digging', 'Material and cleaning instructions'],
     priceUsd: null,
     priceChecked: null,
     affiliate: false, // Source config: approved=false, no tracking ID.

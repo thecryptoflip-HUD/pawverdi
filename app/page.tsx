@@ -104,7 +104,7 @@ export default function HomePage() {
             </div>
             <div className="pv-home-subscribe-copy">
               <h2 id="pv-subscribe-title">Explore More Pet Care Help</h2>
-              <p>One useful email each month with new guides, updates and corrections. New guides, useful updates, and corrections.</p>
+              <p>One useful email each month with new guides, updates and corrections.</p>
               <NewsletterForm id="pv-home-email" placeholder="Enter your email address"/>
               <p className="pv-home-subscribe-small">Reader-supported. <Link href="/trust#disclosure">Read our disclosures</Link>.</p>
             </div>

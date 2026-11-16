@@ -245,6 +245,42 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-signup-status:empty { display:none; }
 .pv-signup-status:not(:empty) { padding:9px 12px; border-radius:9px; background:#fff9ed; color:#07543d !important; font-weight:700; font-size:.8rem; }
 .pv-signup-error:not(:empty) { color:#742c24 !important; }
+
+/* The approved Shop leads with useful image cards; comparison details remain optional. */
+.pv-shop-browse { color:#153f31; }
+.pv-shop-disclosure { padding:17px 20px; margin-bottom:20px; border:1px solid #cce3d2; border-radius:15px; background:#eaf7ec; }
+.pv-shop-disclosure h3 { font:700 1.1rem/1.2 var(--font-display),Georgia,serif; color:#10382b; }
+.pv-shop-disclosure p { max-width:95ch; margin:6px 0; font-size:.8rem; line-height:1.55; color:#345745; }
+.pv-shop-disclosure a,.pv-shop-empty a { color:#006246; font-weight:800; font-size:.8rem; text-decoration:underline; text-underline-offset:3px; }
+.pv-shop-filters { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+.pv-shop-filters .vibrant-filter { display:inline-flex; align-items:center; min-height:44px; padding:8px 15px; border:1px solid #c8ddce; border-radius:99px; background:#fffdf7; color:#07543d; font-size:.8rem; font-weight:800; text-decoration:none; }
+.pv-shop-filters .vibrant-filter[aria-current="page"] { background:#006246; border-color:#006246; color:white; }
+.pv-shop-count { margin:18px 0 5px; font-size:.85rem; font-weight:800; }
+.pv-shop-image-note { max-width:95ch; margin-bottom:18px; font-size:.75rem; line-height:1.5; color:#496553; }
+.pv-gear-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.pv-gear-card { display:flex; flex-direction:column; min-width:0; overflow:hidden; border:1px solid #dedfd0; border-radius:18px; background:#fffdf7; }
+.pv-gear-card>img { width:100%; aspect-ratio:3/2; height:auto; object-fit:cover; }
+.pv-gear-card-copy { display:flex; flex-direction:column; flex:1; padding:18px; }
+.pv-gear-card-copy>.pv-seven-eyebrow { font-size:.6rem; letter-spacing:.04em; }
+.pv-gear-card h3 { margin:7px 0; color:#10382b; font:700 1.25rem/1.15 var(--font-display),Georgia,serif; letter-spacing:-.02em; }
+.pv-gear-card p { color:#345745; font-size:.82rem; line-height:1.5; }
+.pv-gear-card ul { padding-left:16px; margin:12px 0 18px; list-style:disc; color:#345745; font-size:.77rem; line-height:1.55; }
+.pv-gear-card li+li { margin-top:4px; }
+.pv-gear-card-action { margin-top:auto; }
+.pv-gear-link-label { display:block; min-height:2.8em; margin-bottom:8px; color:#395846; font-size:.68rem; line-height:1.4; }
+.pv-gear-card-action a { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:48px; padding:10px 12px; border-radius:12px; background:#006246; color:white; font-size:.76rem; line-height:1.35; font-weight:800; }
+.pv-gear-card-action a:hover { background:#064a35; }
+.pv-shop-browse>.pv-support-wrap { padding:0; margin-top:22px; }
+.pv-shop-table-scroll { overflow-x:auto; max-width:100%; padding:0 16px; }
+.pv-shop-table-scroll:focus-visible { outline:3px solid #d28a00; outline-offset:-3px; }
+.pv-shop-browse .table { color:#153f31; }
+.pv-shop-browse .table a { color:#006246; }
+.pv-shop-price-note { padding:0 20px 22px; }
+.pv-shop-price-note h3 { margin-top:12px; }
+.pv-shop-price-note p { font-size:.85rem; line-height:1.55; }
+.pv-shop-empty { padding:25px 20px; background:#eaf7ec; border-radius:15px; line-height:1.6; }
+@media(max-width:1100px) { .pv-gear-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.pv-gear-link-label { min-height:0; } }
+@media(max-width:700px) { .pv-gear-grid { grid-template-columns:1fr; }.pv-gear-card-copy { padding:20px; }.pv-gear-card h3 { font-size:1.45rem; }.pv-gear-card p,.pv-gear-card ul { font-size:.9rem; }.pv-gear-link-label { font-size:.75rem; }.pv-gear-card-action a { font-size:.85rem; }.pv-shop-disclosure { padding:16px; } }
 .vibrant-page button:disabled { cursor:wait; opacity:.7; }
 .pv-hero-disclosure { color:#fffbed; font-size:.75rem; font-weight:700; text-decoration:underline; text-underline-offset:4px; }
 .pv-application-status:empty { display:none; }
