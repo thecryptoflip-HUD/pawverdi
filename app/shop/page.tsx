@@ -58,14 +58,14 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
           <nav aria-label="Filter by species" className="pv-shop-filters">
             {['all', 'dog', 'cat'].map((value) => (
-              <Link key={value} href={`?species=${value}&category=${category}#gear-types`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${value}&category=${category}#gear-types`} aria-current={species === value ? 'page' : undefined} className="vibrant-filter capitalize">
                 {value}
               </Link>
             ))}
           </nav>
           <nav aria-label="Filter by category" className="pv-shop-filters">
             {['all', 'beds', 'carriers', 'harnesses', 'litter'].map((value) => (
-              <Link key={value} href={`?species=${species}&category=${value}#gear-types`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize text-gold underline underline-offset-4">
+              <Link key={value} href={`?species=${species}&category=${value}#gear-types`} aria-current={category === value ? 'page' : undefined} className="vibrant-filter capitalize">
                 {value}
               </Link>
             ))}

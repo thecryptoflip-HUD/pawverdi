@@ -268,7 +268,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-gear-card li+li { margin-top:4px; }
 .pv-gear-card-action { margin-top:auto; }
 .pv-gear-link-label { display:block; min-height:2.8em; margin-bottom:8px; color:#395846; font-size:.68rem; line-height:1.4; }
-.pv-gear-card-action a { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:48px; padding:10px 12px; border-radius:12px; background:#006246; color:white; font-size:.76rem; line-height:1.35; font-weight:800; }
+.vibrant-page article.pv-gear-card .pv-gear-card-action a { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:48px; padding:10px 12px; border-radius:12px; background:#006246; color:white; font-size:.76rem; line-height:1.35; font-weight:800; }
 .pv-gear-card-action a:hover { background:#064a35; }
 .pv-shop-browse>.pv-support-wrap { padding:0; margin-top:22px; }
 .pv-shop-table-scroll { overflow-x:auto; max-width:100%; padding:0 16px; }
@@ -279,6 +279,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-shop-price-note h3 { margin-top:12px; }
 .pv-shop-price-note p { font-size:.85rem; line-height:1.55; }
 .pv-shop-empty { padding:25px 20px; background:#eaf7ec; border-radius:15px; line-height:1.6; }
+.pv-seven-shop .pv-seven-feature-card:first-child img { object-position:35% center; }
 @media(max-width:1100px) { .pv-gear-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.pv-gear-link-label { min-height:0; } }
 @media(max-width:700px) { .pv-gear-grid { grid-template-columns:1fr; }.pv-gear-card-copy { padding:20px; }.pv-gear-card h3 { font-size:1.45rem; }.pv-gear-card p,.pv-gear-card ul { font-size:.9rem; }.pv-gear-link-label { font-size:.75rem; }.pv-gear-card-action a { font-size:.85rem; }.pv-shop-disclosure { padding:16px; } }
 .vibrant-page button:disabled { cursor:wait; opacity:.7; }
