@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import NewsletterForm from '@/components/newsletter-form';
+import CareIcon from '@/components/care-icon';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
+import ReferenceDetails from '@/components/reference-details';
+import ResourceCard from '@/components/resource-card';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -11,17 +15,17 @@ export const metadata: Metadata = {
 };
 
 const paths = [
-  { title: 'Puppy Care', label: 'A happy start', body: 'Prepare for a calm first week with practical, source-linked checklists.', href: '/knowledge/new-puppy-checklist', action: 'Explore puppy care', photo: '/brand/sections/dogs.jpg' },
-  { title: 'Everyday Care', label: 'For every life stage', body: 'Find clear ideas for everyday walks, health, feeding and wellbeing.', href: '/knowledge?species=dog', action: 'Explore everyday care', photo: '/brand/bed.jpg' },
-  { title: 'Dog Gear', label: 'Shop thoughtfully', body: 'Compare harnesses, beds and other essentials without invented ratings.', href: '/shop?species=dog', action: 'Browse dog gear', photo: '/brand/gear.jpg' },
+  { title: 'Puppy Care', label: 'A happy start', body: 'Prepare for a calm first week with practical, source-linked checklists.', href: '/knowledge/new-puppy-checklist', action: 'Explore puppy care', photo: '/brand/garden/puppy.webp' },
+  { title: 'Everyday Care', label: 'For every life stage', body: 'Find clear ideas for everyday walks, health, feeding and wellbeing.', href: '/knowledge?species=dog', action: 'Explore everyday care', photo: '/brand/garden/dog-garden.webp' },
+  { title: 'Dog Gear', label: 'Shop thoughtfully', body: 'Compare harnesses, beds and other essentials without invented ratings.', href: '/shop?species=dog', action: 'Browse dog gear', photo: '/brand/garden/pet-gear.webp' },
 ];
 
 const topics = [
-  { title: 'Health', icon: '♡', section: 'health', photo: '/brand/sections/dogs.jpg' },
-  { title: 'Nutrition', icon: '♧', section: 'nutrition', photo: '/brand/hero.jpg' },
-  { title: 'Training', icon: '☆', section: 'training', photo: '/brand/sections/community.jpg' },
-  { title: 'Grooming', icon: '✂', section: 'grooming', photo: '/brand/bed.jpg' },
-  { title: 'Puppy Care', icon: '✿', section: 'setup', photo: '/brand/sections/knowledge.jpg' },
+  { title: 'Health', icon: '♡', section: 'health', photo: '/brand/garden/dog-garden.webp' },
+  { title: 'Nutrition', icon: '♧', section: 'nutrition', photo: '/brand/garden/dog-nutrition.webp' },
+  { title: 'Training', icon: '☆', section: 'training', photo: '/brand/garden/dog-training.webp' },
+  { title: 'Grooming', icon: '✂', section: 'grooming', photo: '/brand/garden/dog-grooming.webp' },
+  { title: 'Puppy Care', icon: '✿', section: 'setup', photo: '/brand/garden/puppy.webp' },
 ];
 
 export default function DogsPage() {
@@ -73,8 +77,8 @@ export default function DogsPage() {
             </div>
             <div className="pv-dog-topic-grid">
               {topics.map((topic, index) => (
-                <Link href={`/knowledge?species=dog&section=${topic.section}`} key={topic.title} className={`pv-dog-topic pv-dog-topic-${index}`}>
-                  <div className="pv-dog-topic-heading"><span aria-hidden="true">{topic.icon}</span><h3>{topic.title}</h3><i aria-hidden="true">✦</i></div>
+                <Link href={`/knowledge?species=dog&section=${topic.section}#guide-search`} key={topic.title} className={`pv-dog-topic pv-dog-topic-${index}`}>
+                  <div className="pv-dog-topic-heading"><CareIcon name={topic.title}/><h3>{topic.title}</h3><i aria-hidden="true">✦</i></div>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={topic.photo} alt="" width={440} height={310} loading="lazy" />
                 </Link>
@@ -90,39 +94,17 @@ export default function DogsPage() {
             <div className="grid gap-5 md:grid-cols-3">
               {featured.map((article, index) => (
                 <div className="pv-dog-featured-card" key={article.slug}>
-                  <ArticleCard article={article} image={['/brand/sections/dogs.jpg', '/brand/sections/shop.jpg', '/brand/sections/community.jpg'][index]} />
+                  <ArticleCard article={article} image={['/brand/garden/puppy.webp', '/brand/garden/pet-gear.webp', '/brand/garden/dog-training.webp'][index]} />
                 </div>
               ))}
+              <ResourceCard title="Explore dog care topics" body="Browse dog health, nutrition and training topics, with unfinished guides clearly marked." href="/knowledge?species=dog#guide-search" image="/brand/garden/dog-training.webp" label="Topic directory"/>
+              <ResourceCard title="Choose gear with care" body="Start with fit, materials and everyday needs. Browse our clearly labeled retailer categories." href="/shop?species=dog#gear-types" image="/brand/garden/pet-gear.webp" label="Gear resource"/>
             </div>
             {featured.length === 0 && <p className="pv-dog-empty">Additional dog guides are in preparation.</p>}
           </section>
 
-          <section className="pv-dog-trust" aria-label="Our publishing standards">
-            <div><span aria-hidden="true">♧</span><div><h2>Clear Disclosures</h2><p>Sponsored content and affiliate links are clearly labeled.</p></div></div>
-            <div><span aria-hidden="true">▤</span><div><h2>Practical Guides</h2><p>Real-world help, with sources and review status.</p></div></div>
-            <div><span aria-hidden="true">✓</span><div><h2>Transparent Review</h2><p>Veterinary review is in progress, not falsely claimed as complete.</p></div></div>
-          </section>
-
-          <section className="pv-dog-subscribe" aria-label="Dog care updates">
-            <div className="pv-dog-subscribe-photo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/sections/dogs.jpg" alt="Happy dog" width={550} height={390} loading="lazy" />
-            </div>
-            <div className="pv-dog-subscribe-main">
-              <h2>Explore More Dog Care Help</h2>
-              <p>Get monthly pet care guides, new research and important corrections delivered to your inbox.</p>
-              <form action="/api/newsletter" method="post">
-                <label className="sr-only" htmlFor="dog-newsletter-email">Your email address</label>
-                <input id="dog-newsletter-email" name="email" type="email" autoComplete="email" placeholder="Enter your email address" required />
-                <button type="submit">Subscribe <span aria-hidden="true">→</span></button>
-              </form>
-              <p className="pv-dog-subscribe-note">Monthly updates only. <Link href="/trust">Editorial and disclosure standards</Link>.</p>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <section className="pv-dog-breed-reference" id="breed-reference" aria-labelledby="breed-reference-title">
+          <ReferenceDetails title="Dog breed reference">
+<section className="pv-dog-breed-reference" id="breed-reference" aria-labelledby="breed-reference-title">
         <div className="mx-auto max-w-wrap px-5 py-14 sm:px-8">
           <p className="pv-dog-label">Breed reference</p>
           <h2 id="breed-reference-title">Breed reference, not a guarantee</h2>
@@ -136,6 +118,29 @@ export default function DogsPage() {
           </div>
         </div>
       </section>
+          </ReferenceDetails>
+
+          <section className="pv-dog-trust" aria-label="Our publishing standards">
+            <div><span aria-hidden="true">♧</span><div><h2>Clear Disclosures</h2><p>Sponsored content and affiliate links are clearly labeled.</p></div></div>
+            <div><span aria-hidden="true">▤</span><div><h2>Practical Guides</h2><p>Real-world help, with sources and review status.</p></div></div>
+            <div><span aria-hidden="true">✓</span><div><h2>Transparent Review</h2><p>Veterinary review is in progress, not falsely claimed as complete.</p></div></div>
+          </section>
+
+          <section className="pv-dog-subscribe" aria-label="Dog care updates">
+            <div className="pv-dog-subscribe-photo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/garden/dog-garden.webp" alt="Happy dog" width={550} height={390} loading="lazy" />
+            </div>
+            <div className="pv-dog-subscribe-main">
+              <h2>Explore More Dog Care Help</h2>
+              <p>Get monthly pet care guides, new research and important corrections delivered to your inbox.</p>
+              <NewsletterForm id="dog-newsletter-email" placeholder="Enter your email address"/>
+              <p className="pv-dog-subscribe-note">Monthly updates only. <Link href="/trust">Editorial and disclosure standards</Link>.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
       <div className="pv-dog-ad"><div className="mx-auto max-w-wrap px-5 py-8 sm:px-8"><AdSlot placement="dogs-inline-01" /></div></div>
     </div>
   );

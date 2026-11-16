@@ -17,11 +17,11 @@ const sectionTone: Record<string, string> = {
 export default function ArticleCard({ article, image }: { article: Article; image?: string }) {
   const reviewed = article.review.status === 'vet-reviewed';
   return (
-    <article className="card group flex flex-col">
+    <article className="card relative group flex flex-col">
       {image && (
         <div className="relative aspect-[16/10] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="" loading="lazy" className="h-full w-full object-cover saturate-[.85] brightness-90 transition-transform duration-700 group-hover:scale-105 group-hover:saturate-100 group-hover:brightness-100" />
+          <img src={image} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-moss via-moss/25 to-transparent" />
         </div>
       )}

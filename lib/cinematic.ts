@@ -32,7 +32,7 @@ export interface CinematicTreatment {
 
 export const treatments: Record<CinematicVariant, CinematicTreatment> = {
   dog: {
-    image: '/brand/sections/dogs.jpg',
+    image: '/brand/garden/dog-garden.webp',
     filter: 'saturate(1.02) contrast(1.03) brightness(.97)',
     position: '66% 34%',
     motion: 'kenburns',
@@ -43,9 +43,9 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     note: 'Stylised 3D render of an adult border collie. Warm key light, subject right, clean left field.',
   },
   cat: {
-    image: '/brand/sections/cats.jpg',
+    image: '/brand/garden/cat-garden.webp',
     filter: 'saturate(.94) contrast(1.05) brightness(.95) hue-rotate(-5deg)',
-    position: '68% 32%',
+    position: '70% 35%',
     motion: 'pan',
     scrim:
       'linear-gradient(90deg, rgba(4,10,12,.96) 0%, rgba(4,10,12,.84) 36%, rgba(6,14,16,.25) 70%, rgba(4,10,12,.6) 100%), radial-gradient(80% 60% at 78% 40%, rgba(90,180,190,.16), transparent 70%)',
@@ -54,9 +54,9 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     note: '3D render of an adult British Shorthair. Cool moonlight mixed with interior warmth.',
   },
   knowledge: {
-    image: '/brand/sections/knowledge.jpg',
+    image: '/brand/garden/pets-together.webp',
     filter: 'grayscale(.4) contrast(1.08) brightness(.92)',
-    position: '64% 50%',
+    position: '70% 35%',
     motion: 'drift',
     scrim:
       'linear-gradient(to right, rgba(6,8,7,.96) 0%, rgba(6,8,7,.88) 42%, rgba(6,8,7,.55) 72%, rgba(6,8,7,.8) 100%), linear-gradient(to top, #050807 0%, transparent 55%)',
@@ -66,9 +66,9 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     note: '3D render of a corgi puppy with books. Archive grade, letterbox rules, copy anchored low.',
   },
   marketplace: {
-    image: '/brand/sections/marketplace.jpg',
+    image: '/brand/garden/people-pets-garden.webp',
     filter: 'saturate(.72) contrast(1.06) brightness(.94)',
-    position: '66% 50%',
+    position: '70% 35%',
     motion: 'sweep',
     scrim:
       'linear-gradient(100deg, rgba(5,7,8,.97) 0%, rgba(5,7,8,.86) 40%, rgba(10,14,16,.3) 72%, rgba(5,7,8,.62) 100%), linear-gradient(0deg, rgba(5,7,8,.9), transparent 45%)',
@@ -77,7 +77,7 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     note: '3D render of a tabby kitten in a rehoming box. Procedural, institutional grade.',
   },
   shop: {
-    image: '/brand/sections/shop.jpg',
+    image: '/brand/garden/pets-together.webp',
     filter: 'saturate(1) contrast(1.05) brightness(1.02)',
     position: '50% 50%',
     motion: 'none',
@@ -89,9 +89,9 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     note: '3D render of a vizsla in harness beside product props. High-key retail light.',
   },
   community: {
-    image: '/brand/sections/community.jpg',
+    image: '/brand/garden/people-pets-garden.webp',
     filter: 'saturate(1.06) brightness(.96) contrast(1.03)',
-    position: '64% 50%',
+    position: '70% 35%',
     motion: 'float',
     scrim:
       'linear-gradient(88deg, rgba(8,6,4,.96) 0%, rgba(10,7,5,.84) 40%, rgba(20,12,8,.2) 74%, rgba(8,6,4,.6) 100%), radial-gradient(60% 70% at 76% 34%, rgba(255,196,140,.2), transparent 68%)',

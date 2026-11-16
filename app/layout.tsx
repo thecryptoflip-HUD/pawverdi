@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import './reference-qa.css';
 import SiteHeader from '@/components/site-header';
 import SiteFooter from '@/components/site-footer';
 import { site } from '@/lib/site';
@@ -27,16 +28,16 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
     url: '/',
-    images: [{ url: '/brand/home-hero.jpg', width: 1920, height: 834, alt: 'A dog and a cat in warm window light' }],
+    images: [{ url: '/brand/garden/pets-together.webp', width: 1440, height: 960, alt: 'A golden retriever and tabby cat in a sunny garden' }],
   },
-  twitter: { card: 'summary_large_image', images: ['/brand/home-hero.jpg'] },
+  twitter: { card: 'summary_large_image', images: ['/brand/garden/pets-together.webp'] },
   robots: { index: true, follow: true },
   icons: { icon: [{ url: '/brand/favicon.svg', type: 'image/svg+xml' }] },
 };
 
 export const viewport: Viewport = {
   themeColor: '#fffaf2',
-  colorScheme: 'dark',
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
 };

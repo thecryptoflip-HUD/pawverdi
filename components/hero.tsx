@@ -23,6 +23,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      <span className="pv-hero-corner" aria-hidden="true"/>
       <span className="pv-reference-star" aria-hidden="true">✦</span>
       <span className="pv-reference-heart" aria-hidden="true">♡</span>
     </section>

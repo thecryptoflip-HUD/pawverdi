@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 import { treatments, type CinematicVariant } from '@/lib/cinematic';
 
 const words: Record<CinematicVariant, {label:string;href:string;action:string}> = {
- dog: {label:'Explore every good dog day',href:'/knowledge?species=dog',action:'Explore dog guides'},
- cat: {label:'For curious cats and their people',href:'/knowledge?species=cat',action:'Explore cat guides'},
- knowledge: {label:'Pet care made clearer',href:'/knowledge?species=dog',action:'Browse dog guides'},
+ dog: {label:'Explore every good dog day',href:'/knowledge#guide-search',action:'Explore dog guides'},
+ cat: {label:'For curious cats and their people',href:'/knowledge?species=cat#guide-search',action:'Explore cat guides'},
+ knowledge: {label:'Pet care made clearer',href:'/knowledge#guide-search',action:'Browse dog guides'},
  marketplace: {label:'Thoughtful connections first',href:'/trust#sellers',action:'Our seller standards'},
  shop: {label:'Gear for everyday adventures',href:'/shop?species=dog',action:'Browse dog gear'},
  community: {label:'A community worth caring for',href:'/contact',action:'Share your story'},
@@ -23,11 +23,15 @@ export default function CinematicHero({variant,kicker,title,intro,children}:{
          <span className="pv-reference-overline">✦ {kicker} · {item.label}</span>
          <h1 id={`pv-ref-title-${variant}`}>{title}</h1>
          {intro && <p>{intro}</p>}
-         {children ? <div className="pv-reference-section-actions">{children}</div> :
-           <Link href={item.href} className="pv-reference-hero-button pv-reference-hero-coral">{item.action} <span aria-hidden="true">→</span></Link>}
+         <div className="pv-reference-section-actions">{children ?? <>
+           <Link href={item.href} className="pv-reference-hero-button pv-reference-hero-coral">{item.action} <span aria-hidden="true">→</span></Link>
+           <Link href={variant==='community'?'#pv-seven-updates':'/knowledge/new-kitten-checklist'} className="pv-reference-hero-button pv-reference-hero-cream">{variant==='community'?'Get monthly updates':'Start with the basics'} <span aria-hidden="true">→</span></Link>
+         </>}</div>
        </div>
      </div>
      <span aria-hidden="true" className="pv-reference-section-spark">✦</span>
+     <span aria-hidden="true" className="pv-hero-heart">♡</span>
+     <span aria-hidden="true" className="pv-hero-corner"/>
    </section>
  );
 }

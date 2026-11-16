@@ -1,8 +1,8 @@
 export const site = {
   name: 'PawVerdi',
-  tagline: 'What your pet actually needs. And what it costs.',
+  tagline: 'Happy pets. Thoughtful choices.',
   description:
-    'Independent, research-based pet knowledge for dog and cat owners: costs, health, nutrition, training, grooming and honestly-reviewed gear.',
+    'Practical, source-linked dog and cat care guides, everyday ideas, and thoughtfully researched gear. Clear review status and commercial disclosures.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pawverdi.com',
   email: 'PawVerdi@hotmail.com',
   launched: '2026-11-02',
