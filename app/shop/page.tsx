@@ -28,7 +28,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       <CinematicHero variant="shop"
         kicker="Product shop"
         title={<>Shop for<br /><em>happier pets.</em></>}
-        intro="Thoughtfully chosen categories for everyday life. Start with fit, comfort and practical needs. Retailer links are clearly labeled; this is a category directory, not tested product recommendations."
+        intro="Thoughtful gear categories for everyday life. Start with fit, comfort and practical needs. No products in this shortlist have been tested or rated by PawVerdi."
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/shop?species=dog#gear-types" className="btn btn-solid">
@@ -37,6 +37,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <Link href="/shop?species=cat#gear-types" className="btn btn-ghost">
             Shop cat gear
           </Link>
+          <Link href="#shop-disclosure" className="pv-hero-disclosure">Affiliate disclosure</Link>
         </div>
       </CinematicHero>
 

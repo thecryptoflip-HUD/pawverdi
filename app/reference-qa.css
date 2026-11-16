@@ -245,3 +245,4 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-signup-status:not(:empty) { padding:9px 12px; border-radius:9px; background:#fff9ed; color:#07543d !important; font-weight:700; font-size:.8rem; }
 .pv-signup-error:not(:empty) { color:#742c24 !important; }
 .vibrant-page button:disabled { cursor:wait; opacity:.7; }
+.pv-hero-disclosure { color:#fffbed; font-size:.75rem; font-weight:700; text-decoration:underline; text-underline-offset:4px; }
