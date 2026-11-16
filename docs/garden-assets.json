@@ -102,5 +102,37 @@
     "date": "2026-11-15 America/New_York",
     "brief": "Generic unbranded green harness, teal carrier, cream bed, bowl and toys in natural sunlight; no product endorsements, labels or writing.",
     "use": "illustrative brand imagery; not an actual listing, testimonial, or tested product"
+  },
+  {
+    "file": "public/brand/garden/gear-bed.webp",
+    "sha256": "27698fb1f0031c99e921885c7b2de785c6752a57d50607b03cb10f305d453a0d",
+    "source": "AI-generated for the authorized PawVerdi Shop design repair",
+    "date": "2026-11-16 UTC",
+    "brief": "Distinct bed category illustration; full prompt in docs/gear-asset-prompts.json",
+    "use": "Illustrative category imagery; not an actual retail item, recommendation or product test"
+  },
+  {
+    "file": "public/brand/garden/gear-carrier.webp",
+    "sha256": "cc91fcf2306bdace7c09c8af95f7308f1f5b530d2fa534a54c2ddd0c3cb956d6",
+    "source": "AI-generated for the authorized PawVerdi Shop design repair",
+    "date": "2026-11-16 UTC",
+    "brief": "Distinct carrier category illustration; full prompt in docs/gear-asset-prompts.json",
+    "use": "Illustrative category imagery; not an actual retail item, recommendation or product test"
+  },
+  {
+    "file": "public/brand/garden/gear-harness.webp",
+    "sha256": "abdcf485fae767fd29cff7948c942539dd579d7868fc1421ce6b14deeb77ac00",
+    "source": "AI-generated for the authorized PawVerdi Shop design repair",
+    "date": "2026-11-16 UTC",
+    "brief": "Distinct harness category illustration; full prompt in docs/gear-asset-prompts.json",
+    "use": "Illustrative category imagery; not an actual retail item, recommendation or product test"
+  },
+  {
+    "file": "public/brand/garden/gear-litter.webp",
+    "sha256": "d3564028389bb44ed1d965a0205fd7ed6bcda13a6bb2a24b1dd5fc1712f4a9a8",
+    "source": "AI-generated for the authorized PawVerdi Shop design repair",
+    "date": "2026-11-16 UTC",
+    "brief": "Distinct litter category illustration; full prompt in docs/gear-asset-prompts.json",
+    "use": "Illustrative category imagery; not an actual retail item, recommendation or product test"
   }
 ]

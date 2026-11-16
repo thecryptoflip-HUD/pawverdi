@@ -23,7 +23,8 @@ const common = {
   training:'/brand/garden/dog-training.webp',grooming:'/brand/garden/dog-grooming.webp',
   catGrooming:'/brand/garden/cat-grooming.webp',enrichment:'/brand/garden/cat-enrichment.webp',
   gear:'/brand/garden/pet-gear.webp',knowledge:'/brand/garden/pets-together.webp',
-  community:'/brand/garden/people-pets-garden.webp',bed:'/brand/garden/pet-gear.webp',carrier:'/brand/garden/pet-gear.webp',
+  community:'/brand/garden/people-pets-garden.webp',bed:'/brand/garden/gear-bed.webp',carrier:'/brand/garden/gear-carrier.webp',
+  harness:'/brand/garden/gear-harness.webp',litter:'/brand/garden/gear-litter.webp',
 };
 const data:Record<Variant,VariantData> = {
   cat:{
@@ -67,18 +68,18 @@ const data:Record<Variant,VariantData> = {
   shop:{
     eyebrow:'Shop with care',heading:'Find the right fit.',summary:'Start with needs and dimensions before choosing a retailer.',
     cards:[
-      {title:'Dog Gear',eyebrow:'For the everyday walk',description:'Look at harnesses and useful essentials.',href:'/shop?species=dog#gear-types',image:common.gear,action:'Browse dog gear'},
-      {title:'Cat Gear',eyebrow:'For curious cats',description:'Browse carriers, litter gear, and comfort.',href:'/shop?species=cat#gear-types',image:common.gear,action:'Browse cat gear'},
+      {title:'Dog Gear',eyebrow:'For the everyday walk',description:'Look at harnesses and useful essentials.',href:'/shop?species=dog#gear-types',image:common.harness,action:'Browse dog gear'},
+      {title:'Cat Gear',eyebrow:'For curious cats',description:'Browse carriers, litter gear, and comfort.',href:'/shop?species=cat#gear-types',image:common.carrier,action:'Browse cat gear'},
       {title:'Home Essentials',eyebrow:'Comfort first',description:'Compare practical beds and accessories.',href:'/shop?category=beds#gear-types',image:common.bed,action:'Explore beds'},
     ],
     topicEyebrow:'Explore our shop',topicsHeading:'Popular Shopping Topics',topics:[
-      {title:'Harnesses',icon:'♡',href:'/shop?species=dog&category=harnesses#gear-types',image:common.gear},
+      {title:'Harnesses',icon:'♡',href:'/shop?species=dog&category=harnesses#gear-types',image:common.harness},
       {title:'Carriers',icon:'▣',href:'/shop?category=carriers#gear-types',image:common.carrier},
       {title:'Beds',icon:'⌂',href:'/shop?category=beds#gear-types',image:common.bed},
-      {title:'Litter',icon:'✦',href:'/shop?category=litter#gear-types',image:common.cat},
+      {title:'Litter',icon:'✦',href:'/shop?category=litter#gear-types',image:common.litter},
       {title:'Cat Essentials',icon:'✿',href:'/shop?species=cat#gear-types',image:common.cat},
     ],
-    featureEyebrow:'Shopping guidance',featureHeading:'Explore Pet Gear Categories',featureIntro:'Retailer categories are not PawVerdi-tested products; prices and reviews are not invented.',
+    featureEyebrow:'Shopping guidance',featureHeading:'Explore Pet Gear Categories',featureIntro:'A useful starting point: compare fit, care and return terms, then browse at the retailer.',
     featureCards:[
       {title:'Harness Fit',eyebrow:'Dog gear',description:'Check sizing and attachment points before you buy.',href:'/shop?species=dog&category=harnesses#gear-types',image:common.gear,action:'Browse harnesses'},
       {title:'Comfy Rest',eyebrow:'Beds',description:'Compare dimensions, washability, and returns.',href:'/shop?category=beds#gear-types',image:common.bed,action:'Browse beds'},
@@ -161,7 +162,7 @@ export default function PawVerdiShowcase({variant, children, featuredContent}:{v
    </section>
    <section className="pv-seven-guides" aria-labelledby={`pv-seven-guides-${variant}`}>
      <div className="mx-auto max-w-wrap px-5 py-12 sm:px-8">
-       <div className="pv-seven-heading"><div><span className="pv-seven-eyebrow">{page.featureEyebrow}</span><h2 id={`pv-seven-guides-${variant}`}>{page.featureHeading}</h2><p>{page.featureIntro}</p></div><Link href={variant==='cat'?'/knowledge?species=cat':variant==='shop'?'/shop':variant==='marketplace'?'/trust#sellers':variant==='community'?'/contact':'/knowledge'}>Explore more →</Link></div>
+       <div className="pv-seven-heading"><div><span className="pv-seven-eyebrow">{page.featureEyebrow}</span><h2 id={`pv-seven-guides-${variant}`}>{page.featureHeading}</h2><p>{page.featureIntro}</p></div><Link href={variant==='cat'?'/knowledge?species=cat':variant==='shop'?'/shop?species=all&category=all#gear-types':variant==='marketplace'?'/trust#sellers':variant==='community'?'/contact':'/knowledge'}>Explore more →</Link></div>
        {featuredContent ?? (variant==='knowledge'||variant==='cat' ? <div className="pv-seven-guide-grid">
          {published.map((article)=><div key={article.slug} className="pv-seven-article"><ArticleCard article={article} image={article.species==='cat'?common.kitten:common.puppy}/></div>)}
          {variant==='cat' && <>
