@@ -4,8 +4,7 @@ import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
-import WelcomePaths from '@/components/welcome-paths';
-import ReferenceHighlights from '@/components/reference-highlights';
+import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -31,7 +30,7 @@ export default function CatsPage() {
     <div className="vibrant-page">
       <CinematicHero variant="cat"
         kicker="Cat Center"
-        title={<>Create a calmer, happier cat home.</>}
+        title={<>Make every day a happy cat day.</>}
         intro="Explore kitten essentials, enrichment, behaviour, and everyday health. Every guide states its review status and cannot replace veterinary care."
       >
         <div className="flex flex-wrap gap-3">
@@ -44,27 +43,11 @@ export default function CatsPage() {
         </div>
       </CinematicHero>
 
-      <ReferenceHighlights
-        eyebrow="Explore cat care"
-        heading="Popular Cat Care Topics"
-        subtitle="Explore research and clear guidance for everyday life with cats."
-        items={[
-          { eyebrow:'Health', title:'Wellness & prevention', body:'Know what to watch for and when to call a vet.', href:'/knowledge?species=cat&section=health', image:'/brand/sections/cats.jpg', action:'Cat health guides' },
-          { eyebrow:'Nutrition', title:'Food & feeding', body:'Learn about feeding routines and nutrition basics.', href:'/knowledge?species=cat&section=nutrition', image:'/brand/carrier.jpg', action:'Nutrition topics' },
-          { eyebrow:'Kitten care', title:'A happy new start', body:'Prepare a comfortable home and essentials.', href:'/knowledge?species=cat&section=setup', image:'/brand/sections/knowledge.jpg', action:'Kitten checklists' },
-        ]}
-      />
+      <PawVerdiShowcase variant="cat" />
 
-      <WelcomePaths
-        kicker="For the cat-curious"
-        heading="Little comforts, big purrs."
-        intro="From a kitten's first room to a favourite resting spot, discover everyday ways to make home feel welcoming."
-        items={[
-          { eyebrow: 'New kitten', title: 'A gentle start together', description: 'Set up a safe room, food, water and a comfortable place to settle.', href: '/knowledge/new-kitten-checklist', image: '/brand/sections/cats.jpg', action: 'Kitten checklist' },
-          { eyebrow: 'Understanding cats', title: 'Get to know their world', description: 'Explore wellbeing, behaviour and practical home routines.', href: '/knowledge?species=cat', image: '/brand/carrier.jpg', action: 'Cat care guides' },
-          { eyebrow: 'Thoughtful gear', title: 'Choose comfort with care', description: 'Browse litter trays and carriers while checking size and seller details yourself.', href: '/shop?species=cat', image: '/brand/sections/shop.jpg', action: 'Browse cat gear' },
-        ]}
-      />
+      
+
+      
       <section className="py-[clamp(56px,8vw,96px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <Reveal className="mb-9">

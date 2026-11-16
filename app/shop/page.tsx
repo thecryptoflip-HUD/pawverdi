@@ -3,8 +3,7 @@ import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import AdSlot from '@/components/ad-slot';
-import WelcomePaths from '@/components/welcome-paths';
-import ReferenceHighlights from '@/components/reference-highlights';
+import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import { products } from '@/lib/shop';
 
 export const metadata: Metadata = {
@@ -27,7 +26,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     <div className="vibrant-page">
       <CinematicHero variant="shop"
         kicker="Product shop"
-        title={<>Find the right fit for everyday pet life.</>}
+        title={<>Shop for happier pets.</>}
         intro="These gear types are a starting point for your own comparison, not tested recommendations. No products in this shortlist have been tested or rated by PawVerdi. Links open retailer category or search pages, not individual product picks."
       >
         <div className="flex flex-wrap gap-3">
@@ -40,27 +39,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </CinematicHero>
 
-      <ReferenceHighlights
-        eyebrow="Shop with purpose"
-        heading="Good Gear for Real Pet Life"
-        subtitle="Browse gear categories by usefulness and fit. No invented product tests or star ratings."
-        items={[
-          {eyebrow:'For dogs',title:'Walks & daily adventures',body:'Explore beds, harnesses, and practical gear.',href:'/shop?species=dog',image:'/brand/sections/shop.jpg',action:'Dog gear'},
-          {eyebrow:'For cats',title:'Cozy homes & carriers',body:'Compare everyday essentials for cats.',href:'/shop?species=cat',image:'/brand/carrier.jpg',action:'Cat gear'},
-          {eyebrow:'How we choose',title:'Clear criteria, no hype',body:'Read how PawVerdi describes and discloses retail links.',href:'/trust#disclosure',image:'/brand/gear.jpg',action:'Our approach'},
-        ]}
-      />
+      <PawVerdiShowcase variant="shop" />
 
-      <WelcomePaths
-        kicker="Shop with confidence"
-        heading="Find the right fit, not just a pretty picture."
-        intro="Start with your pet's needs. Our links lead to retailer categories, not PawVerdi-tested product recommendations."
-        items={[
-          { eyebrow: 'For cozy days', title: 'A bed for their favourite spot', description: 'Compare sleeping space, washable covers and return terms before you buy.', href: '/shop?species=dog&category=beds', image: '/brand/bed.jpg', action: 'Explore dog beds' },
-          { eyebrow: 'On the move', title: 'Ready for the next adventure', description: 'Look for secure fastenings, ventilation and useful dimensions.', href: '/shop?species=cat&category=carriers', image: '/brand/carrier.jpg', action: 'Explore cat carriers' },
-          { eyebrow: 'Daily essentials', title: 'Useful gear for life together', description: 'Start with fit and function, then check current prices at the retailer.', href: '/shop?species=dog&category=harnesses', image: '/brand/gear.jpg', action: 'Explore dog harnesses' },
-        ]}
-      />
+      
+
+      
       <section className="py-[clamp(48px,7vw,88px)]">
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="mb-8 rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
