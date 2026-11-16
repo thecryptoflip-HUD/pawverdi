@@ -31,7 +31,7 @@ export default function SiteHeader() {
           <span className="font-serif text-[1.55rem] font-bold tracking-tight text-[#07543d]">{site.name}</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 xl:flex">
           {navigation.map((item) => (
             <Link
               key={item.href}
@@ -51,7 +51,7 @@ export default function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#badccb] lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#badccb] xl:hidden"
         >
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
           <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true" className="fill-[#07543d]">
@@ -66,7 +66,7 @@ export default function SiteHeader() {
             )}
           </svg>
         </button>
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 xl:flex">
           <Link href="/knowledge" aria-label="Search pet guides" className="pv-header-icon" title="Search pet guides">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="19" height="19" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
           </Link>
@@ -89,6 +89,7 @@ export default function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link href="/community" className="mt-4 block rounded-full bg-[#ff6659] px-5 py-3 text-center text-sm font-bold text-white">Join PawVerdi updates</Link>
         </nav>
       )}
     </header>
