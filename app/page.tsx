@@ -68,7 +68,7 @@ export default function HomePage() {
           <div className="pv-home-heading">
             <div>
               <p className="pv-home-label">Knowledge &amp; guides</p>
-              <h2 id="pv-guides-title">Featured Pet Guides</h2>
+              <h2 id="pv-guides-title" data-guide-count={completeArticles.length}>Featured Pet Guides</h2>
               <p className="pv-home-intro">Helpful articles with sources, reading time, and honest review status.</p>
             </div>
             <Link href="/knowledge">All pet guides <span aria-hidden="true">→</span></Link>
