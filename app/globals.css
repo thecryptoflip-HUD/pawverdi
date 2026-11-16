@@ -877,3 +877,41 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
  .pv-seven-newsletter-shell { grid-template-columns:1fr; }.pv-seven-newsletter-image { max-height:200px; overflow:hidden; }.pv-seven-newsletter-copy form button { width:100%; }
 }
 @media(prefers-reduced-motion:reduce) { .pv-seven-feature-card { transition:none; } }
+
+
+/* Harmonize retained evidence-based sections with the approved light design.
+   Never alter private admin styling or the photographic hero. */
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) {
+  background:#fffaf2 !important; color:#153e30;
+  border-color:#dfe9de !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) :is(h2,h3,h4) {
+  color:#124330 !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) :is(p,li,dt,dd,th,td,label,small),
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) [class*="text-cream"] {
+  color:#315949 !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) .card,
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) [class*="bg-moss"],
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) [class*="bg-void"] {
+  background:#fffdf8 !important; border-color:#dbe9df !important; box-shadow:0 8px 25px -23px #245d40;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) .table {
+  color:#17432f; background:white; border-color:#dbe9df;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) .table :is(th,td) {
+  color:#315949 !important; border-color:#dbe9df !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) :is(input,textarea,select) {
+  background:white !important; color:#103e2b !important; border-color:#aecfbf !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) :is(.btn,.btn-solid) {
+  color:#fff !important; background:#006347 !important; border-color:#006347 !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) .btn-ghost {
+  color:#07543d !important; background:#fffdf8 !important; border-color:#a5d7c0 !important;
+}
+.vibrant-page:has(.pv-seven-showcase) > section:not(.pv-reference-sectionhero) a:not(.btn):not(.btn-solid):not(.btn-ghost) {
+  text-underline-offset:3px;
+}
