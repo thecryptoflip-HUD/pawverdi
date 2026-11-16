@@ -107,12 +107,12 @@ const data:Record<Variant,VariantData> = {
     cards:[
       {title:'Pet Stories',eyebrow:'Share responsibly',description:'Send your real story for editorial consideration.',href:'/contact',image:common.dog,action:'Share a pet story'},
       {title:'Helpful Resources',eyebrow:'Learn together',description:'Read useful pet care information.',href:'/knowledge',image:common.cat,action:'Explore guides'},
-      {title:'Updates & News',eyebrow:'Stay in the loop',description:'Get monthly guide and project updates.',href:'#newsletter',image:common.community,action:'Updates'},
+      {title:'Updates & News',eyebrow:'Stay in the loop',description:'Get monthly guide and project updates.',href:'#pv-seven-updates',image:common.community,action:'Updates'},
     ],
     topicEyebrow:'Explore the community',topicsHeading:'Popular Community Topics',topics:[
       {title:'Stories',icon:'♡',href:'/contact',image:common.dog},
       {title:'Questions',icon:'?',href:'/contact',image:common.cat},
-      {title:'Pet News',icon:'✦',href:'#newsletter',image:common.community},
+      {title:'Pet News',icon:'✦',href:'#pv-seven-updates',image:common.community},
       {title:'Training Tips',icon:'☆',href:'/knowledge?section=training',image:common.gear},
       {title:'New Pet Tips',icon:'❀',href:'/knowledge?section=setup',image:common.knowledge},
     ],
@@ -120,7 +120,7 @@ const data:Record<Variant,VariantData> = {
     featureCards:[
       {title:'Share Your Pet Story',eyebrow:'Get involved',description:'Submit an original experience for editorial consideration.',href:'/contact',image:common.community,action:'Contact PawVerdi'},
       {title:'Learn Together',eyebrow:'Care basics',description:'Read source-linked guides for pet parents.',href:'/knowledge',image:common.dog,action:'Browse guides'},
-      {title:'Stay Informed',eyebrow:'Monthly updates',description:'Get news as community features become ready.',href:'#newsletter',image:common.cat,action:'Newsletter details'},
+      {title:'Stay Informed',eyebrow:'Monthly updates',description:'Get news as community features become ready.',href:'#pv-seven-updates',image:common.cat,action:'Newsletter details'},
     ],
     emailHeading:'Stay Connected with PawVerdi',emailText:'One email a month with new guides, updates, and corrections.',newsletterImage:common.community,
     trust:[{title:'Friendly Community',body:'People and pets come first.'},{title:'Helpful Resources',body:'Practical information without fake stories.'},{title:'Safety Before Features',body:'Forums launch only with moderation.'}],
