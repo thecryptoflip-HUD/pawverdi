@@ -540,7 +540,7 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
 .vibrant-page article > header .lede { color:#153f31 !important; }
 .vibrant-page article > header .tag { color:#07543d; }
 .vibrant-page article:not(.card) :is(h2,h3,p,li,blockquote) { color:#153f31; }
-.vibrant-page article:not(.card) a { color:#006c52; text-underline-offset:3px; }
+.vibrant-page article:not(.card):not(.pv-gear-card) a { color:#006c52; text-underline-offset:3px; }
 .vibrant-page article:not(.card) .btn { text-decoration:none; }
 .vibrant-not-found .lede { color:#315948; }
 .vibrant-not-found .btn-solid { background:#ff6b5d; color:#173d2d; }
