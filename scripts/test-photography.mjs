@@ -2,6 +2,9 @@
 /** Read-only checks of rendered image placements, including renamed duplicate files. */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+
+const catalogue = JSON.parse(await readFile(new URL('../lib/pet-photography.json', import.meta.url), 'utf8'));
 
 const base = process.env.BASE || 'http://127.0.0.1:3000';
 assert.ok(['127.0.0.1', 'localhost'].includes(new URL(base).hostname), 'Run photo checks against a local test server');
@@ -28,6 +31,7 @@ await check('all seven pages retain a photograph for every assigned placement', 
     assert.equal(page.backgrounds.length, 1, `${page.route}: expected one visible hero photo`);
     assert.equal(page.all.length, expected[index], `${page.route}: photo count changed`);
   });
+  assert.deepEqual(new Set(pages.flatMap(page => page.all)), new Set(Object.values(catalogue).map(photo => photo.src)), 'Rendered images must match the approved placement catalogue');
 });
 const placements = pages.flatMap(page => page.all.map(src => ({ route: page.route, src })));
 await check('no photograph URL repeats within or across the seven pages', () => {

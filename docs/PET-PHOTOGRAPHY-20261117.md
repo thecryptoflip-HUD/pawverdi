@@ -6,7 +6,9 @@ Each of those 91 placements now owns a distinct image. Six existing generated Pa
 
 `lib/pet-photography.json` maps placement IDs to their image paths and descriptions. `docs/pet-photography-20261117.json` records the complete generation prompts, source provenance and final file hashes. Generated assets live in `public/brand/pets/`, with Shop category files in `public/brand/garden/`. Future guides can omit a photograph until a new illustration is assigned instead of silently reusing a default puppy or kitten image.
 
-The approved cream, emerald, mint and coral visual system is retained. Card and newsletter crops are centered to suit the new subjects. Existing guide content, publication status, forms, retailer destinations, disclosures and tracking settings are preserved.
+The approved cream, emerald, mint and coral visual system is retained. Card and newsletter crops are adjusted to suit the new subjects. Existing guide content, publication status, forms, retailer destinations, disclosures and tracking settings are preserved.
+
+The live desktop review found that the bed category still referenced its prior image and that wide guide/resource crops clipped some ears. The follow-up wires the bed card to its assigned Clumber Spaniel illustration, raises guide/resource crops, and checks that rendered paths exactly match the full placement catalogue.
 
 ## Acceptance
 

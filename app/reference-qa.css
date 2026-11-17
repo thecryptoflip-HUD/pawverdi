@@ -106,6 +106,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-dog-featured-card .card>div:last-child,.pv-home-article .card>div:last-child,.pv-seven-article .card>div:last-child { padding:18px; }
 .vibrant-page .card .tag { letter-spacing:.04em; font-size:.58rem; }
 .pv-seven-resource-image { aspect-ratio:16/8; }
+.pv-dog-featured-card .card>div:first-child img,.pv-home-article .card>div:first-child img,.pv-seven-article .card>div:first-child img,.pv-seven-resource-image img { object-position:50% 15%; }
 .pv-seven-resource-copy { padding:18px; }.pv-seven-resource-copy h3 { font-size:1.25rem; }
 .pv-seven-resource-copy p { font-size:.85rem; }
 
