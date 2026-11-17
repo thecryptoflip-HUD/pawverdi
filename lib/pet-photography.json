@@ -1,0 +1,366 @@
+{
+  "home-hero": {
+    "src": "/brand/garden/dog-garden.webp",
+    "alt": "Illustration of an adult golden retriever with a sunny golden coat"
+  },
+  "home-collection-1": {
+    "src": "/brand/pets/home-collection-1.webp",
+    "alt": "Illustration of a small tricolor Beagle puppy"
+  },
+  "home-collection-2": {
+    "src": "/brand/pets/home-collection-2.webp",
+    "alt": "Illustration of an adult Blenheim Cavalier King Charles Spaniel"
+  },
+  "home-collection-3": {
+    "src": "/brand/garden/pet-gear.webp",
+    "alt": "Illustration of a plain green pet carrier, cream bed, steel bowl and rope toys, without an animal"
+  },
+  "home-topic-1": {
+    "src": "/brand/pets/home-topic-1.webp",
+    "alt": "Illustration of an adult Dalmatian with black spots"
+  },
+  "home-topic-2": {
+    "src": "/brand/pets/home-topic-2.webp",
+    "alt": "Illustration of a glossy black Labrador Retriever"
+  },
+  "home-topic-3": {
+    "src": "/brand/pets/home-topic-3.webp",
+    "alt": "Illustration of a red-merle Australian Shepherd with a white blaze"
+  },
+  "home-topic-4": {
+    "src": "/brand/pets/home-topic-4.webp",
+    "alt": "Illustration of an apricot miniature Poodle"
+  },
+  "home-topic-5": {
+    "src": "/brand/pets/home-topic-5.webp",
+    "alt": "Illustration of an adult seal-point Siamese cat with blue eyes"
+  },
+  "home-guide-new-puppy-checklist": {
+    "src": "/brand/pets/home-guide-new-puppy-checklist.webp",
+    "alt": "Illustration of a buff-colored Cocker Spaniel puppy"
+  },
+  "home-guide-new-kitten-checklist": {
+    "src": "/brand/pets/home-guide-new-kitten-checklist.webp",
+    "alt": "Illustration of a round-faced blue British Shorthair kitten"
+  },
+  "home-resource-1": {
+    "src": "/brand/pets/home-resource-1.webp",
+    "alt": "Illustration of a sable Shetland Sheepdog and a white Turkish Angora cat"
+  },
+  "home-newsletter": {
+    "src": "/brand/pets/home-newsletter.webp",
+    "alt": "Illustration of a red Shiba Inu with a cream chest"
+  },
+  "dog-hero": {
+    "src": "/brand/pets/dog-hero.webp",
+    "alt": "Illustration of a mahogany Irish Setter with long feathered ears"
+  },
+  "dog-collection-1": {
+    "src": "/brand/pets/dog-collection-1.webp",
+    "alt": "Illustration of a black-and-white Boston Terrier puppy"
+  },
+  "dog-collection-2": {
+    "src": "/brand/pets/dog-collection-2.webp",
+    "alt": "Illustration of a slim fawn Whippet with a white chest"
+  },
+  "dog-collection-3": {
+    "src": "/brand/pets/dog-collection-3.webp",
+    "alt": "Illustration of a liver-and-white roan German Shorthaired Pointer"
+  },
+  "dog-topic-1": {
+    "src": "/brand/pets/dog-topic-1.webp",
+    "alt": "Illustration of a red-and-white Pembroke Welsh Corgi"
+  },
+  "dog-topic-2": {
+    "src": "/brand/garden/dog-nutrition.webp",
+    "alt": "Illustration of a scruffy brown-and-white terrier eating from a cream bowl"
+  },
+  "dog-topic-3": {
+    "src": "/brand/garden/dog-training.webp",
+    "alt": "Illustration of a black-and-white Border Collie learning with rewards"
+  },
+  "dog-topic-4": {
+    "src": "/brand/pets/dog-topic-4.webp",
+    "alt": "Illustration of a fluffy white Samoyed"
+  },
+  "dog-topic-5": {
+    "src": "/brand/pets/dog-topic-5.webp",
+    "alt": "Illustration of a lemon-and-white Basset Hound puppy with long ears"
+  },
+  "dog-guide-new-puppy-checklist": {
+    "src": "/brand/pets/dog-guide-new-puppy-checklist.webp",
+    "alt": "Illustration of a tiny black-and-tan smooth-haired Dachshund puppy"
+  },
+  "dog-resource-1": {
+    "src": "/brand/pets/dog-resource-1.webp",
+    "alt": "Illustration of a lean rust-colored Vizsla"
+  },
+  "dog-resource-2": {
+    "src": "/brand/pets/dog-resource-2.webp",
+    "alt": "Illustration of a silver-gray Weimaraner"
+  },
+  "dog-newsletter": {
+    "src": "/brand/pets/dog-newsletter.webp",
+    "alt": "Illustration of a large black Newfoundland with a soft fluffy coat"
+  },
+  "cat-hero": {
+    "src": "/brand/garden/cat-garden.webp",
+    "alt": "Illustration of a brown-and-white tabby cat resting on a cream blanket"
+  },
+  "cat-collection-1": {
+    "src": "/brand/pets/cat-collection-1.webp",
+    "alt": "Illustration of a blue-gray Russian Blue kitten with a narrow face"
+  },
+  "cat-collection-2": {
+    "src": "/brand/pets/cat-collection-2.webp",
+    "alt": "Illustration of an adult sable Burmese cat with golden eyes"
+  },
+  "cat-collection-3": {
+    "src": "/brand/pets/cat-collection-3.webp",
+    "alt": "Illustration of a pale pink Sphynx cat resting indoors beside a cream pet blanket"
+  },
+  "cat-topic-1": {
+    "src": "/brand/pets/cat-topic-1.webp",
+    "alt": "Illustration of a white Turkish Van cat with auburn ears and tail"
+  },
+  "cat-topic-2": {
+    "src": "/brand/pets/cat-topic-2.webp",
+    "alt": "Illustration of a ruddy Abyssinian cat with a ticked short coat"
+  },
+  "cat-topic-3": {
+    "src": "/brand/pets/cat-topic-3.webp",
+    "alt": "Illustration of a sleek black Oriental Shorthair cat with large ears"
+  },
+  "cat-topic-4": {
+    "src": "/brand/pets/cat-topic-4.webp",
+    "alt": "Illustration of a blue Persian cat with a long plush coat"
+  },
+  "cat-topic-5": {
+    "src": "/brand/pets/cat-topic-5.webp",
+    "alt": "Illustration of a small calico kitten with orange, black and white patches"
+  },
+  "cat-guide-new-kitten-checklist": {
+    "src": "/brand/pets/cat-guide-new-kitten-checklist.webp",
+    "alt": "Illustration of a silver Maine Coon kitten with ear tufts"
+  },
+  "cat-resource-1": {
+    "src": "/brand/pets/cat-resource-1.webp",
+    "alt": "Illustration of a chocolate Devon Rex cat with a short curly coat"
+  },
+  "cat-resource-2": {
+    "src": "/brand/pets/cat-resource-2.webp",
+    "alt": "Illustration of a brown-and-white Norwegian Forest cat with a thick ruff"
+  },
+  "cat-newsletter": {
+    "src": "/brand/pets/cat-newsletter.webp",
+    "alt": "Illustration of a cream British Longhair cat with amber eyes"
+  },
+  "knowledge-hero": {
+    "src": "/brand/pets/knowledge-hero.webp",
+    "alt": "Illustration of a salt-and-pepper miniature Schnauzer and an adult blue-bicolor Ragdoll cat"
+  },
+  "knowledge-collection-1": {
+    "src": "/brand/pets/knowledge-collection-1.webp",
+    "alt": "Illustration of a tricolor Bernese Mountain Dog puppy"
+  },
+  "knowledge-collection-2": {
+    "src": "/brand/pets/knowledge-collection-2.webp",
+    "alt": "Illustration of a black-and-white English Springer Spaniel"
+  },
+  "knowledge-collection-3": {
+    "src": "/brand/pets/knowledge-collection-3.webp",
+    "alt": "Illustration of an adult silver classic-tabby American Shorthair cat"
+  },
+  "knowledge-topic-1": {
+    "src": "/brand/pets/knowledge-topic-1.webp",
+    "alt": "Illustration of an adult brindle Boxer with a white chest"
+  },
+  "knowledge-topic-2": {
+    "src": "/brand/pets/knowledge-topic-2.webp",
+    "alt": "Illustration of a brown Bengal cat with distinct rosette markings"
+  },
+  "knowledge-topic-3": {
+    "src": "/brand/pets/knowledge-topic-3.webp",
+    "alt": "Illustration of a white-and-black Papillon dog with butterfly ears"
+  },
+  "knowledge-topic-4": {
+    "src": "/brand/pets/knowledge-topic-4.webp",
+    "alt": "Illustration of a small white Bichon Frise"
+  },
+  "knowledge-topic-5": {
+    "src": "/brand/pets/knowledge-topic-5.webp",
+    "alt": "Illustration of an adult orange domestic shorthair cat with white toes"
+  },
+  "knowledge-guide-new-puppy-checklist": {
+    "src": "/brand/pets/knowledge-guide-new-puppy-checklist.webp",
+    "alt": "Illustration of a chocolate-and-tan Havanese puppy"
+  },
+  "knowledge-guide-new-kitten-checklist": {
+    "src": "/brand/pets/knowledge-guide-new-kitten-checklist.webp",
+    "alt": "Illustration of a chocolate-point Snowshoe kitten with white paws"
+  },
+  "knowledge-newsletter": {
+    "src": "/brand/pets/knowledge-newsletter.webp",
+    "alt": "Illustration of a tricolor Rough Collie with a long elegant muzzle"
+  },
+  "shop-hero": {
+    "src": "/brand/pets/shop-hero.webp",
+    "alt": "Illustration of a blue Staffordshire Bull Terrier with a white chest and a long-haired red Somali cat"
+  },
+  "shop-collection-1": {
+    "src": "/brand/pets/shop-collection-1.webp",
+    "alt": "Illustration of a red-wheaten Rhodesian Ridgeback"
+  },
+  "shop-collection-2": {
+    "src": "/brand/pets/shop-collection-2.webp",
+    "alt": "Illustration of an adult cream Cornish Rex cat with a wavy coat"
+  },
+  "shop-collection-3": {
+    "src": "/brand/pets/shop-collection-3.webp",
+    "alt": "Illustration of an adult brindle Greyhound"
+  },
+  "shop-topic-1": {
+    "src": "/brand/pets/shop-topic-1.webp",
+    "alt": "Illustration of a blue Italian Greyhound with a white chest"
+  },
+  "shop-topic-2": {
+    "src": "/brand/pets/shop-topic-2.webp",
+    "alt": "Illustration of a black-and-white Japanese Bobtail cat"
+  },
+  "shop-topic-3": {
+    "src": "/brand/pets/shop-topic-3.webp",
+    "alt": "Illustration of a tall fawn Great Dane"
+  },
+  "shop-topic-4": {
+    "src": "/brand/pets/shop-topic-4.webp",
+    "alt": "Illustration of a ginger tabby Manx cat"
+  },
+  "shop-topic-5": {
+    "src": "/brand/pets/shop-topic-5.webp",
+    "alt": "Illustration of a cream-and-white Selkirk Rex cat with a curly coat"
+  },
+  "shop-category-beds": {
+    "src": "/brand/garden/gear-shop-category-beds.webp",
+    "alt": "Illustration of a white-and-orange Clumber Spaniel"
+  },
+  "shop-category-carriers": {
+    "src": "/brand/garden/gear-shop-category-carriers.webp",
+    "alt": "Illustration of a champagne Tonkinese cat with aqua eyes"
+  },
+  "shop-category-harnesses": {
+    "src": "/brand/garden/gear-shop-category-harnesses.webp",
+    "alt": "Illustration of a red-and-white Siberian Husky"
+  },
+  "shop-category-litter": {
+    "src": "/brand/garden/gear-litter.webp",
+    "alt": "Illustration of a clean ivory high-sided litter tray and scoop, without an animal"
+  },
+  "shop-newsletter": {
+    "src": "/brand/pets/shop-newsletter.webp",
+    "alt": "Illustration of a gray-and-white Alaskan Malamute with a thick coat"
+  },
+  "marketplace-hero": {
+    "src": "/brand/pets/marketplace-hero.webp",
+    "alt": "Illustration of two generic adult pet owners, a fawn Briard dog and a long-haired torbie cat"
+  },
+  "marketplace-collection-1": {
+    "src": "/brand/pets/marketplace-collection-1.webp",
+    "alt": "Illustration of an adult blue-speckled Australian Cattle Dog"
+  },
+  "marketplace-collection-2": {
+    "src": "/brand/pets/marketplace-collection-2.webp",
+    "alt": "Illustration of a generic adult woman sitting beside a black Flat-Coated Retriever"
+  },
+  "marketplace-collection-3": {
+    "src": "/brand/pets/marketplace-collection-3.webp",
+    "alt": "Illustration of an adult chocolate-point Balinese cat with a silky coat"
+  },
+  "marketplace-topic-1": {
+    "src": "/brand/pets/marketplace-topic-1.webp",
+    "alt": "Illustration of an orange-belton English Setter"
+  },
+  "marketplace-topic-2": {
+    "src": "/brand/pets/marketplace-topic-2.webp",
+    "alt": "Illustration of a short-haired dilute tortoiseshell cat with blue and cream patches"
+  },
+  "marketplace-topic-3": {
+    "src": "/brand/pets/marketplace-topic-3.webp",
+    "alt": "Illustration of a white West Highland Terrier beside plain pet supplies"
+  },
+  "marketplace-topic-4": {
+    "src": "/brand/pets/marketplace-topic-4.webp",
+    "alt": "Illustration of a generic adult pet owner and a white Bull Terrier with one black eye patch"
+  },
+  "marketplace-topic-5": {
+    "src": "/brand/pets/marketplace-topic-5.webp",
+    "alt": "Illustration of an adult red-and-white Ragamuffin cat with a fluffy tail"
+  },
+  "marketplace-resource-1": {
+    "src": "/brand/pets/marketplace-resource-1.webp",
+    "alt": "Illustration of an adult wolf-gray Keeshond with dark spectacles around the eyes"
+  },
+  "marketplace-resource-2": {
+    "src": "/brand/pets/marketplace-resource-2.webp",
+    "alt": "Illustration of a jet-black Bombay cat with round copper eyes"
+  },
+  "marketplace-resource-3": {
+    "src": "/brand/pets/marketplace-resource-3.webp",
+    "alt": "Illustration of a white Puli dog with a natural corded coat"
+  },
+  "marketplace-newsletter": {
+    "src": "/brand/pets/marketplace-newsletter.webp",
+    "alt": "Illustration of a lean black-and-white English Pointer"
+  },
+  "community-hero": {
+    "src": "/brand/pets/community-hero.webp",
+    "alt": "Illustration of three generic adult friends, a brown Portuguese Water Dog with a curly coat and a black-and-orange tortoiseshell cat"
+  },
+  "community-collection-1": {
+    "src": "/brand/pets/community-collection-1.webp",
+    "alt": "Illustration of a honey-colored Lhasa Apso with a black muzzle"
+  },
+  "community-collection-2": {
+    "src": "/brand/pets/community-collection-2.webp",
+    "alt": "Illustration of a long-haired white-and-gray Siberian cat"
+  },
+  "community-collection-3": {
+    "src": "/brand/pets/community-collection-3.webp",
+    "alt": "Illustration of a generic adult pet owner and an orange-and-white Brittany dog"
+  },
+  "community-topic-1": {
+    "src": "/brand/pets/community-topic-1.webp",
+    "alt": "Illustration of an elegant cream Saluki with feathered ears"
+  },
+  "community-topic-2": {
+    "src": "/brand/pets/community-topic-2.webp",
+    "alt": "Illustration of an adult silver Egyptian Mau cat with black spots"
+  },
+  "community-topic-3": {
+    "src": "/brand/pets/community-topic-3.webp",
+    "alt": "Illustration of a generic adult pet owner and a chocolate Chesapeake Bay Retriever"
+  },
+  "community-topic-4": {
+    "src": "/brand/pets/community-topic-4.webp",
+    "alt": "Illustration of a fawn Belgian Malinois with a black mask"
+  },
+  "community-topic-5": {
+    "src": "/brand/pets/community-topic-5.webp",
+    "alt": "Illustration of a tiny black Scottish Terrier puppy with upright ears"
+  },
+  "community-resource-1": {
+    "src": "/brand/pets/community-resource-1.webp",
+    "alt": "Illustration of a generic adult pet owner sitting beside an apricot Shar-Pei dog"
+  },
+  "community-resource-2": {
+    "src": "/brand/pets/community-resource-2.webp",
+    "alt": "Illustration of a short-haired white-and-gray bicolor domestic cat with a gray nose patch"
+  },
+  "community-resource-3": {
+    "src": "/brand/pets/community-resource-3.webp",
+    "alt": "Illustration of a ginger LaPerm cat with a curly coat"
+  },
+  "community-newsletter": {
+    "src": "/brand/pets/community-newsletter.webp",
+    "alt": "Illustration of a small black-and-tan mixed-breed dog with a white chin and one floppy ear"
+  }
+}

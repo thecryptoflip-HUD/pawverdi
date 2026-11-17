@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { petPhoto } from '@/lib/pet-photography';
 
 /**
  * PawVerdi editorial home: responsive, real HTML and links matching
@@ -7,7 +8,7 @@ import Link from 'next/link';
 export default function Hero() {
   return (
     <section className="pv-reference-homehero" aria-labelledby="pv-home-heading">
-      <div className="pv-reference-homehero-image" aria-hidden="true" />
+      <div className="pv-reference-homehero-image" aria-hidden="true" data-pet-photo="home-hero" style={{backgroundImage:`url("${petPhoto('home-hero')}")`}} />
       <div className="pv-reference-homehero-overlay" aria-hidden="true" />
       <div className="mx-auto flex min-h-[440px] max-w-wrap items-center px-5 pb-20 pt-[calc(76px+68px)] sm:px-8 lg:min-h-[550px]">
         <div className="pv-reference-homehero-copy">

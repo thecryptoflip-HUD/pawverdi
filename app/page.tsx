@@ -6,22 +6,22 @@ import Hero from '@/components/hero';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
 import { completeArticles } from '@/lib/content';
+import { petPhoto, petPhotoAlt, guidePhoto } from '@/lib/pet-photography';
 
 const collections = [
-  { label:'Start here', name:'Puppy Care', description:'A calm, prepared start for your new companion.', href:'/knowledge/new-puppy-checklist', image:'/brand/garden/puppy.webp', action:'Puppy checklist' },
-  { label:'For everyday life', name:'Daily Care', description:'Thoughtful routines for health and happiness.', href:'/knowledge?species=dog#guide-search', image:'/brand/garden/dog-garden.webp', action:'Dog care guides' },
-  { label:'Choose with care', name:'Pet Gear', description:'Beds, carriers and harnesses for real life.', href:'/shop', image:'/brand/garden/pet-gear.webp', action:'Explore pet gear' },
+  { label:'Start here', name:'Puppy Care', description:'A calm, prepared start for your new companion.', href:'/knowledge/new-puppy-checklist', image:petPhoto('home-collection-1'), action:'Puppy checklist' },
+  { label:'For everyday life', name:'Daily Care', description:'Thoughtful routines for health and happiness.', href:'/knowledge?species=dog#guide-search', image:petPhoto('home-collection-2'), action:'Dog care guides' },
+  { label:'Choose with care', name:'Pet Gear', description:'Beds, carriers and harnesses for real life.', href:'/shop', image:petPhoto('home-collection-3'), action:'Explore pet gear' },
 ];
 
 const topics = [
-  { label:'Health', glyph:'♡', image:'/brand/garden/dog-garden.webp', href:'/knowledge?section=health#guide-search', tone:'mint' },
-  { label:'Nutrition', glyph:'♧', image:'/brand/garden/dog-nutrition.webp', href:'/knowledge?section=nutrition#guide-search', tone:'sun' },
-  { label:'Training', glyph:'☆', image:'/brand/garden/dog-training.webp', href:'/knowledge?section=training#guide-search', tone:'pink' },
-  { label:'Grooming', glyph:'✂', image:'/brand/garden/dog-grooming.webp', href:'/knowledge?section=grooming#guide-search', tone:'blue' },
-  { label:'Cats', glyph:'❀', image:'/brand/garden/kitten.webp', href:'/cats', tone:'peach' },
+  { label:'Health', glyph:'♡', image:petPhoto('home-topic-1'), href:'/knowledge?section=health#guide-search', tone:'mint' },
+  { label:'Nutrition', glyph:'♧', image:petPhoto('home-topic-2'), href:'/knowledge?section=nutrition#guide-search', tone:'sun' },
+  { label:'Training', glyph:'☆', image:petPhoto('home-topic-3'), href:'/knowledge?section=training#guide-search', tone:'pink' },
+  { label:'Grooming', glyph:'✂', image:petPhoto('home-topic-4'), href:'/knowledge?section=grooming#guide-search', tone:'blue' },
+  { label:'Cats', glyph:'❀', image:petPhoto('home-topic-5'), href:'/cats', tone:'peach' },
 ];
 
-const featuredPhotos = ['/brand/garden/puppy.webp','/brand/garden/kitten.webp'];
 export default function HomePage() {
   // Only published, source-linked guides appear as article cards.
   const guides = completeArticles.slice(0,3);
@@ -78,9 +78,9 @@ export default function HomePage() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {guides.map((article,i)=><div className="pv-home-article" key={article.slug}>
-              <ArticleCard article={article} image={featuredPhotos[i % featuredPhotos.length]}/>
+              <ArticleCard article={article} image={guidePhoto('home',article.slug)}/>
             </div>)}
-            <ResourceCard title="How we research & review" body="See how we use sources, label review status, and disclose commercial links." href="/trust" image="/brand/garden/pets-together.webp" label="Our publishing standards"/>
+            <ResourceCard title="How we research & review" body="See how we use sources, label review status, and disclose commercial links." href="/trust" image={petPhoto('home-resource-1')} label="Our publishing standards"/>
           </div>
           {guides.length===0 && <p>Our first source-linked guides are being prepared.</p>}
         </div>
@@ -100,7 +100,7 @@ export default function HomePage() {
           <div className="pv-home-subscribe-shell">
             <div className="pv-home-subscribe-photo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/garden/dog-garden.webp" alt="Happy dog in warm sunlight" width={640} height={440} loading="lazy" />
+              <img src={petPhoto('home-newsletter')} alt={petPhotoAlt('home-newsletter')} width={640} height={440} loading="lazy" />
             </div>
             <div className="pv-home-subscribe-copy">
               <h2 id="pv-subscribe-title">Explore More Pet Care Help</h2>
