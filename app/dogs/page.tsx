@@ -7,6 +7,7 @@ import AdSlot from '@/components/ad-slot';
 import ReferenceDetails from '@/components/reference-details';
 import ResourceCard from '@/components/resource-card';
 import { articlesBySpecies, breedsBySpecies } from '@/lib/content';
+import { petPhoto, petPhotoAlt, guidePhoto } from '@/lib/pet-photography';
 
 export const metadata: Metadata = {
   title: 'Dog Care — puppy care, nutrition, training, health and grooming',
@@ -15,17 +16,17 @@ export const metadata: Metadata = {
 };
 
 const paths = [
-  { title: 'Puppy Care', label: 'A happy start', body: 'Prepare for a calm first week with practical, source-linked checklists.', href: '/knowledge/new-puppy-checklist', action: 'Explore puppy care', photo: '/brand/garden/puppy.webp' },
-  { title: 'Everyday Care', label: 'For every life stage', body: 'Find clear ideas for everyday walks, health, feeding and wellbeing.', href: '/knowledge?species=dog', action: 'Explore everyday care', photo: '/brand/garden/dog-garden.webp' },
-  { title: 'Dog Gear', label: 'Shop thoughtfully', body: 'Compare harnesses, beds and other essentials without invented ratings.', href: '/shop?species=dog', action: 'Browse dog gear', photo: '/brand/garden/pet-gear.webp' },
+  { title: 'Puppy Care', label: 'A happy start', body: 'Prepare for a calm first week with practical, source-linked checklists.', href: '/knowledge/new-puppy-checklist', action: 'Explore puppy care', photo:petPhoto('dog-collection-1') },
+  { title: 'Everyday Care', label: 'For every life stage', body: 'Find clear ideas for everyday walks, health, feeding and wellbeing.', href: '/knowledge?species=dog', action: 'Explore everyday care', photo:petPhoto('dog-collection-2') },
+  { title: 'Dog Gear', label: 'Shop thoughtfully', body: 'Compare harnesses, beds and other essentials without invented ratings.', href: '/shop?species=dog', action: 'Browse dog gear', photo:petPhoto('dog-collection-3') },
 ];
 
 const topics = [
-  { title: 'Health', icon: '♡', section: 'health', photo: '/brand/garden/dog-garden.webp' },
-  { title: 'Nutrition', icon: '♧', section: 'nutrition', photo: '/brand/garden/dog-nutrition.webp' },
-  { title: 'Training', icon: '☆', section: 'training', photo: '/brand/garden/dog-training.webp' },
-  { title: 'Grooming', icon: '✂', section: 'grooming', photo: '/brand/garden/dog-grooming.webp' },
-  { title: 'Puppy Care', icon: '✿', section: 'setup', photo: '/brand/garden/puppy.webp' },
+  { title: 'Health', icon: '♡', section: 'health', photo:petPhoto('dog-topic-1') },
+  { title: 'Nutrition', icon: '♧', section: 'nutrition', photo:petPhoto('dog-topic-2') },
+  { title: 'Training', icon: '☆', section: 'training', photo:petPhoto('dog-topic-3') },
+  { title: 'Grooming', icon: '✂', section: 'grooming', photo:petPhoto('dog-topic-4') },
+  { title: 'Puppy Care', icon: '✿', section: 'setup', photo:petPhoto('dog-topic-5') },
 ];
 
 export default function DogsPage() {
@@ -36,7 +37,7 @@ export default function DogsPage() {
   return (
     <div className="vibrant-page pv-dog-reference">
       <section className="pv-dog-cover" aria-labelledby="dog-main-heading">
-        <div className="pv-dog-cover-photo" aria-hidden="true" />
+        <div className="pv-dog-cover-photo" aria-hidden="true" data-pet-photo="dog-hero" style={{backgroundImage:`url("${petPhoto('dog-hero')}")`}} />
         <div className="pv-dog-cover-shade" aria-hidden="true" />
         <div className="mx-auto flex min-h-[440px] max-w-wrap items-center px-5 pb-20 pt-[calc(76px+58px)] sm:px-8 lg:min-h-[510px]">
           <div className="pv-dog-cover-content">
@@ -94,11 +95,11 @@ export default function DogsPage() {
             <div className="grid gap-5 md:grid-cols-3">
               {featured.map((article, index) => (
                 <div className="pv-dog-featured-card" key={article.slug}>
-                  <ArticleCard article={article} image={['/brand/garden/puppy.webp', '/brand/garden/pet-gear.webp', '/brand/garden/dog-training.webp'][index]} />
+                  <ArticleCard article={article} image={guidePhoto('dog',article.slug)} />
                 </div>
               ))}
-              <ResourceCard title="Explore dog care topics" body="Browse dog health, nutrition and training topics, with unfinished guides clearly marked." href="/knowledge?species=dog#guide-search" image="/brand/garden/dog-training.webp" label="Topic directory"/>
-              <ResourceCard title="Choose gear with care" body="Start with fit, materials and everyday needs. Browse our clearly labeled retailer categories." href="/shop?species=dog#gear-types" image="/brand/garden/pet-gear.webp" label="Gear resource"/>
+              <ResourceCard title="Explore dog care topics" body="Browse dog health, nutrition and training topics, with unfinished guides clearly marked." href="/knowledge?species=dog#guide-search" image={petPhoto('dog-resource-1')} label="Topic directory"/>
+              <ResourceCard title="Choose gear with care" body="Start with fit, materials and everyday needs. Browse our clearly labeled retailer categories." href="/shop?species=dog#gear-types" image={petPhoto('dog-resource-2')} label="Gear resource"/>
             </div>
             {featured.length === 0 && <p className="pv-dog-empty">Additional dog guides are in preparation.</p>}
           </section>
@@ -129,7 +130,7 @@ export default function DogsPage() {
           <section className="pv-dog-subscribe" aria-label="Dog care updates">
             <div className="pv-dog-subscribe-photo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/garden/dog-garden.webp" alt="Happy dog" width={550} height={390} loading="lazy" />
+              <img src={petPhoto('dog-newsletter')} alt={petPhotoAlt('dog-newsletter')} width={550} height={390} loading="lazy" />
             </div>
             <div className="pv-dog-subscribe-main">
               <h2>Explore More Dog Care Help</h2>

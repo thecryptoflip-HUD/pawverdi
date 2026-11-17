@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import CinematicHero from '@/components/cinematic-hero';
 import ArticleCard from '@/components/article-card';
+import { guidePhoto } from '@/lib/pet-photography';
 import Reveal from '@/components/reveal';
 import PawVerdiShowcase from '@/components/pawverdi-seven-page-showcase';
 import ReferenceDetails from '@/components/reference-details';
@@ -123,7 +124,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
                   <div className="relative h-full">
                     <ArticleCard
                       article={article}
-                      image={article.species === 'cat' ? '/brand/garden/kitten.webp' : '/brand/garden/puppy.webp'}
+                      image={guidePhoto('knowledge',article.slug)}
                     />
                   </div>
                 </Reveal>

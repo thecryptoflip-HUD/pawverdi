@@ -6,6 +6,8 @@
  * config entry, and swapping the artwork later (e.g. purpose-shot OpenArt
  * renders) means changing only `image`.
  */
+import { petPhoto } from '@/lib/pet-photography';
+
 export type CinematicVariant = 'dog' | 'cat' | 'knowledge' | 'marketplace' | 'shop' | 'community';
 
 export interface CinematicTreatment {
@@ -32,7 +34,7 @@ export interface CinematicTreatment {
 
 export const treatments: Record<CinematicVariant, CinematicTreatment> = {
   dog: {
-    image: '/brand/garden/dog-garden.webp',
+    image: petPhoto('dog-hero'),
     filter: 'saturate(1.02) contrast(1.03) brightness(.97)',
     position: '66% 34%',
     motion: 'kenburns',
@@ -40,10 +42,10 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
       'linear-gradient(94deg, rgba(5,8,7,.95) 0%, rgba(5,8,7,.82) 34%, rgba(5,8,7,.16) 66%, rgba(5,8,7,.55) 100%), linear-gradient(to top, #050807 2%, rgba(5,8,7,.2) 30%, transparent 62%)',
     accent: '#e3a575',
     align: 'center',
-    note: 'Stylised 3D render of an adult border collie. Warm key light, subject right, clean left field.',
+    note: 'Irish Setter in a bright flower garden; a dedicated illustration for the dog hero.',
   },
   cat: {
-    image: '/brand/garden/cat-garden.webp',
+    image: petPhoto('cat-hero'),
     filter: 'saturate(.94) contrast(1.05) brightness(.95) hue-rotate(-5deg)',
     position: '70% 35%',
     motion: 'pan',
@@ -51,10 +53,10 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
       'linear-gradient(90deg, rgba(4,10,12,.96) 0%, rgba(4,10,12,.84) 36%, rgba(6,14,16,.25) 70%, rgba(4,10,12,.6) 100%), radial-gradient(80% 60% at 78% 40%, rgba(90,180,190,.16), transparent 70%)',
     accent: '#8fd0d6',
     align: 'center',
-    note: '3D render of an adult British Shorthair. Cool moonlight mixed with interior warmth.',
+    note: 'Brown-and-white tabby in the garden; retained only for the cat hero.',
   },
   knowledge: {
-    image: '/brand/garden/pets-together.webp',
+    image: petPhoto('knowledge-hero'),
     filter: 'grayscale(.4) contrast(1.08) brightness(.92)',
     position: '70% 35%',
     motion: 'drift',
@@ -63,10 +65,10 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     accent: '#d8cbb8',
     letterbox: true,
     align: 'end',
-    note: '3D render of a corgi puppy with books. Archive grade, letterbox rules, copy anchored low.',
+    note: 'Miniature Schnauzer and Ragdoll in a sunlit garden; dedicated knowledge artwork.',
   },
   marketplace: {
-    image: '/brand/garden/people-pets-garden.webp',
+    image: petPhoto('marketplace-hero'),
     filter: 'saturate(.72) contrast(1.06) brightness(.94)',
     position: '70% 35%',
     motion: 'sweep',
@@ -74,10 +76,10 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
       'linear-gradient(100deg, rgba(5,7,8,.97) 0%, rgba(5,7,8,.86) 40%, rgba(10,14,16,.3) 72%, rgba(5,7,8,.62) 100%), linear-gradient(0deg, rgba(5,7,8,.9), transparent 45%)',
     accent: '#9fb4c2',
     align: 'center',
-    note: '3D render of a tabby kitten in a rehoming box. Procedural, institutional grade.',
+    note: 'Illustrative family with a Briard and tabby; no available animal or seller is depicted.',
   },
   shop: {
-    image: '/brand/garden/pets-together.webp',
+    image: petPhoto('shop-hero'),
     filter: 'saturate(1) contrast(1.05) brightness(1.02)',
     position: '50% 50%',
     motion: 'none',
@@ -86,10 +88,10 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     accent: '#f6d6ac',
     spotlight: true,
     align: 'center',
-    note: '3D render of a vizsla in harness beside product props. High-key retail light.',
+    note: 'Blue Staffordshire-type dog and Somali cat in the garden; dedicated shop artwork.',
   },
   community: {
-    image: '/brand/garden/people-pets-garden.webp',
+    image: petPhoto('community-hero'),
     filter: 'saturate(1.06) brightness(.96) contrast(1.03)',
     position: '70% 35%',
     motion: 'float',
@@ -98,6 +100,6 @@ export const treatments: Record<CinematicVariant, CinematicTreatment> = {
     accent: '#ffca9a',
     bokeh: true,
     align: 'center',
-    note: '3D render of an owner with a dog and kitten at lamp light. Warm, intimate, no faces shown.',
+    note: 'Illustrative family with a brown water dog and tabby; no member story is implied.',
   },
 };

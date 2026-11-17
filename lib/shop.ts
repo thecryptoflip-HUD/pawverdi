@@ -1,3 +1,5 @@
+import { petPhoto, petPhotoAlt } from '@/lib/pet-photography';
+
 export interface Product {
   id: string;
   name: string;
@@ -61,8 +63,8 @@ export const products: Product[] = [
     species: 'cat',
     merchant: 'Chewy',
     href: 'https://www.chewy.com/b/carriers-106726',
-    image: '/brand/garden/gear-carrier.webp',
-    imageAlt: 'Illustration of a tabby beside an open top-loading carrier',
+    image: petPhoto('shop-category-carriers'),
+    imageAlt: petPhotoAlt('shop-category-carriers'),
     description: 'Compare access, dimensions and ventilation before choosing a carrier.',
     considerations: ['Internal size and pet weight limit', 'Top access and secure closures', 'Ventilation and cleaning access'],
     priceUsd: null,
@@ -77,8 +79,8 @@ export const products: Product[] = [
     species: 'dog',
     merchant: 'Amazon',
     ...amazonCategoryLink('front clip dog harnesses'),
-    image: '/brand/garden/gear-harness.webp',
-    imageAlt: 'Illustration of a golden retriever wearing a green walking harness',
+    image: petPhoto('shop-category-harnesses'),
+    imageAlt: petPhotoAlt('shop-category-harnesses'),
     description: 'Use your dog’s measurements and the maker’s fitting instructions.',
     considerations: ['Neck and chest measurements', 'Front attachment and adjustment', 'Manufacturer fitting instructions'],
     priceUsd: null,
@@ -92,8 +94,8 @@ export const products: Product[] = [
     species: 'cat',
     merchant: 'Chewy',
     href: 'https://www.chewy.com/b/litter-boxes-413',
-    image: '/brand/garden/gear-litter.webp',
-    imageAlt: 'Illustration of an empty high-sided litter tray with a low entrance',
+    image: petPhoto('shop-category-litter'),
+    imageAlt: petPhotoAlt('shop-category-litter'),
     description: 'Look at usable space, entry height and everyday cleaning needs.',
     considerations: ['Tray dimensions and entry height', 'Space for turning and digging', 'Material and cleaning instructions'],
     priceUsd: null,

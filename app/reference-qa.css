@@ -23,7 +23,6 @@ body:has(.vibrant-page) .grain { display:none; }
   background-size:cover; background-position:right 12% !important;
   mask-image:linear-gradient(90deg,transparent,#000 22%);
 }
-.pv-finished-home .pv-reference-homehero-image,.pv-dog-cover-photo { background-image:url('/brand/garden/dog-garden.webp'); }
 .pv-reference-homehero-overlay,.pv-reference-section-shade,.pv-dog-cover-shade,
 .pv-finished-home .pv-reference-homehero-overlay {
   position:absolute; z-index:-2; inset:0;
@@ -71,7 +70,7 @@ body:has(.vibrant-page) .grain { display:none; }
   overflow:hidden; border:0; border-radius:24px; box-shadow:none;
 }
 .pv-dog-path-0 { background:#ccf5e4; }.pv-dog-path-1 { background:#ffe1dd; }.pv-dog-path-2 { background:#fff0b4; }
-.pv-dog-path>img,.pv-home-collection-photo img,.pv-seven-feature-image img { width:100%; height:100%; object-fit:cover; object-position:72% center; }
+.pv-dog-path>img,.pv-home-collection-photo img,.pv-seven-feature-image img { width:100%; height:100%; object-fit:cover; object-position:50% center; }
 .pv-home-collection-photo,.pv-seven-feature-image { min-height:185px; }
 .pv-dog-path-info,.pv-home-collection-copy,.pv-seven-feature-copy { padding:20px 14px 16px 10px; display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
 .pv-dog-path-info>span:first-child,.pv-home-collection-copy .pv-home-label,.pv-seven-feature-copy .pv-seven-eyebrow { display:none; }
@@ -93,7 +92,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-dog-topic-heading,.pv-home-topic-name,.pv-seven-topic-title { display:flex; align-items:center; gap:.5rem; min-height:51px; padding:9px 11px; }
 .pv-dog-topic-heading h3,.pv-home-topic-name h3,.pv-seven-topic-title strong { color:#102d24; font:800 .92rem/1.1 var(--font-sans),sans-serif; min-width:0; }
 .pv-dog-topic-heading i,.pv-home-topic-spark,.pv-seven-topic-title>i { margin-left:auto; color:#e6b200; font-style:normal; font-size:1.15rem; }
-.pv-dog-topic img,.pv-home-topic img,.pv-seven-topic img { display:block; width:100%; height:145px; object-fit:cover; object-position:65% 45%; }
+.pv-dog-topic img,.pv-home-topic img,.pv-seven-topic img { display:block; width:100%; height:145px; object-fit:cover; object-position:50% 50%; }
 
 /* Real published guide cards. Empty inventories never become fictional content. */
 .pv-dog-guide-section,.pv-home-guides>div,.pv-seven-guides>div { padding-top:4px; padding-bottom:32px; }
@@ -154,7 +153,7 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-dog-subscribe,.pv-home-subscribe-shell,.pv-seven-newsletter-shell { display:grid; grid-template-columns:27% 73%; min-height:210px; border-radius:30px; overflow:hidden; background:linear-gradient(120deg,#ff8c76,#ff625a 55%,#ff6f66); }
 .pv-home-subscribe>div,.pv-seven-newsletter>div { padding-top:24px; padding-bottom:24px; }
 .pv-dog-subscribe-photo,.pv-home-subscribe-photo,.pv-seven-newsletter-image { overflow:hidden; min-height:210px; }
-.pv-dog-subscribe-photo img,.pv-home-subscribe-photo img,.pv-seven-newsletter-image img { height:100%; width:100%; object-fit:cover; object-position:75% center; }
+.pv-dog-subscribe-photo img,.pv-home-subscribe-photo img,.pv-seven-newsletter-image img { height:100%; width:100%; object-fit:cover; object-position:50% center; }
 .pv-dog-subscribe-main,.pv-home-subscribe-copy,.pv-seven-newsletter-copy { position:relative; display:flex; flex-direction:column; justify-content:center; padding:26px 36px; }
 .pv-dog-subscribe-main::after,.pv-home-subscribe-copy::after,.pv-seven-newsletter-copy::after { content:"✦"; position:absolute; right:24px; top:12px; font-size:2.3rem; color:#ffdc5e; transform:rotate(12deg); }
 .pv-dog-subscribe-main h2,.pv-home-subscribe-copy h2,.pv-seven-newsletter-copy h2 { color:#fffbed; font:700 clamp(1.65rem,2.6vw,2.35rem)/1.08 var(--font-display),Georgia,serif; max-width:90%; }
@@ -226,7 +225,7 @@ body:has(.vibrant-page) .grain { display:none; }
   .pv-dog-trust>div,.pv-home-transparency>div>div,.pv-seven-trust>div>div { border:0 !important; padding:0 !important; }
   .pv-dog-subscribe,.pv-home-subscribe-shell,.pv-seven-newsletter-shell { grid-template-columns:1fr; border-radius:23px; }
   .pv-dog-subscribe-photo,.pv-home-subscribe-photo,.pv-seven-newsletter-image { min-height:0; height:175px; max-height:none; }
-  .pv-dog-subscribe-photo img,.pv-home-subscribe-photo img,.pv-seven-newsletter-image img { object-position:70% 40%; }
+  .pv-dog-subscribe-photo img,.pv-home-subscribe-photo img,.pv-seven-newsletter-image img { object-position:50% 40%; }
   .pv-dog-subscribe-main,.pv-home-subscribe-copy,.pv-seven-newsletter-copy { padding:24px 22px; }
   .pv-dog-subscribe-main form,.pv-home-subscribe-copy form,.pv-seven-newsletter-copy form { flex-direction:column; gap:9px; }
   .pv-dog-subscribe-main button,.pv-home-subscribe-copy button,.pv-seven-newsletter-copy button { width:100%; }
@@ -281,7 +280,6 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-shop-price-note h3 { margin-top:12px; }
 .pv-shop-price-note p { font-size:.85rem; line-height:1.55; }
 .pv-shop-empty { padding:25px 20px; background:#eaf7ec; border-radius:15px; line-height:1.6; }
-.pv-seven-shop .pv-seven-feature-card:first-child img { object-position:35% center; }
 @media(max-width:1100px) { .pv-gear-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.pv-gear-link-label { min-height:0; } }
 @media(max-width:700px) { .pv-gear-grid { grid-template-columns:1fr; }.pv-gear-card-copy { padding:20px; }.pv-gear-card h3 { font-size:1.45rem; }.pv-gear-card p,.pv-gear-card ul { font-size:.9rem; }.pv-gear-link-label { font-size:.75rem; }.pv-shop-disclosure { padding:16px; } }
 .vibrant-page button:disabled { cursor:wait; opacity:.7; }
