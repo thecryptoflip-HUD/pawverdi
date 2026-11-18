@@ -46,7 +46,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
       <CinematicHero variant="knowledge"
         kicker="Knowledge Center"
         title={<>Knowledge for<br /><em>happier pets.</em></>}
-        intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete checklists link their sources and state their review status; none has completed independent veterinary review.`}
+        intro={`${completeArticles.length} full guides. ${upcoming.length} topics in preparation. The complete guides link their sources and state their review status; none has completed independent veterinary review.`}
       />
 
       <PawVerdiShowcase variant="knowledge" featuredContent={<>

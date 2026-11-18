@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Fragment } from 'react';
 import type { Guide } from '@/lib/guides';
 
@@ -24,6 +25,15 @@ export default function GuideBody({ guide }: { guide: Guide }) {
         <section key={section.id} id={section.id} className="scroll-mt-28">
           <h2 className="mb-4 font-serif text-[1.6rem] leading-tight text-[#fcf8f1]">{section.title}</h2>
           {section.paragraphs.map((paragraph) => <p key={paragraph}><CitationText text={paragraph} /></p>)}
+          {section.illustration && (
+            <Image
+              src={section.illustration.src}
+              alt={section.illustration.alt}
+              width={720}
+              height={320}
+              className="my-5 h-auto w-full rounded-2xl"
+            />
+          )}
           {section.items && <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-amber">{section.items.map((item) => <li key={item}><CitationText text={item} /></li>)}</ul>}
         </section>
       ))}
