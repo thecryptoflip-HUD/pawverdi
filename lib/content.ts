@@ -26,7 +26,7 @@ export interface Article {
   updated: string; // ISO date
   readingMinutes: number;
   review: { status: ReviewStatus; reviewer?: string };
-  sources: { id: number; label: string; url: string }[];
+  sources: { id: number; label: string; url: string; accessed: string }[];
   guide?: Guide;
 }
 
@@ -96,7 +96,7 @@ const articleRecords: Article[] = [
   {
     slug: 'best-cat-carrier',
     title: 'Top-loading vs front-loading cat carriers',
-    summary: 'A top opening is what lets a vet examine a frightened cat without tipping it out. What that means when you buy.',
+    summary: 'Compare top doors, front doors and removable shells, then check carrier fit, ventilation and cleaning access.',
     section: 'safety',
     species: 'cat',
     updated: '2026-10-27',
@@ -239,7 +239,7 @@ const articleRecords: Article[] = [
   {
     slug: 'dog-harness-size-guide',
     title: 'Harness sizing for large, small and medium breeds',
-    summary: 'Which circumference to measure, how brands differ, and the two fit checks people skip.',
+    summary: 'Find your dog’s chest girth, compare model-specific size charts and check the fit indoors.',
     section: 'training',
     species: 'dog',
     updated: '2026-10-11',
@@ -272,7 +272,7 @@ const articleRecords: Article[] = [
   {
     slug: 'best-dog-crate',
     title: 'Dog crate sizing and which type to buy',
-    summary: 'A sizing chart that uses standing height, plus the fabric-vs-wire decision.',
+    summary: 'Measure your dog and compare usable crate dimensions, materials and adjustable dividers.',
     section: 'setup',
     species: 'dog',
     updated: '2026-10-07',
@@ -294,7 +294,7 @@ const articleRecords: Article[] = [
   {
     slug: 'best-cat-litter-box-multiple-cats',
     title: 'Litter boxes for multiple cats',
-    summary: 'The one-box-per-cat rule, where it comes from, and what to do in a small flat.',
+    summary: 'Plan separate tray locations and compare open, covered and high-sided boxes for your space.',
     section: 'behaviour',
     species: 'cat',
     updated: '2026-10-05',

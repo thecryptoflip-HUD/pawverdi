@@ -44,3 +44,15 @@ test('kitten checklist renders safe-room, litter and settling guidance with sour
   assert.match(text, /not vet-reviewed/i, 'review status must be explicit');
   assert.ok(!article.includes('Veterinary review by'), 'do not fabricate a veterinary reviewer');
 });
+
+test('first-week checklists link to downloadable PDFs', async () => {
+  for (const pet of ['puppy', 'kitten']) {
+    const { article } = await page(`/knowledge/new-${pet}-checklist`);
+    const path = `/downloads/first-week-${pet}.pdf`;
+    assert.ok(article.includes(`href="${path}" download`));
+    const response = await fetch(`${BASE}${path}`);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get('content-type') || '', /application\/pdf/);
+    assert.equal(Buffer.from(await response.arrayBuffer()).subarray(0, 5).toString(), '%PDF-');
+  }
+});

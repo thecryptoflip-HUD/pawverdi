@@ -79,6 +79,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <aside className="mb-8 rounded-2xl border border-white/10 bg-moss/50 p-5 text-[0.88rem] leading-relaxed text-cream/75">
                 Prepared with AI assistance from the published welfare guidance cited below. No independent veterinary review or hands-on product testing is claimed. Buying priorities are PawVerdi’s recommendations, not endorsements by the cited organisations.
               </aside>
+              {article.guide.download && (
+                <a href={article.guide.download.href} download className="btn btn-ghost mb-8">
+                  {article.guide.download.label}
+                </a>
+              )}
               <GuideBody guide={article.guide} />
               <nav aria-label="Related guides" className="mt-8 border-t border-white/10 pt-6">
                 <h2 className="mb-3 font-serif text-xl text-cream">Related guides</h2>
@@ -91,9 +96,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </nav>
               <section aria-labelledby="sources-heading" className="mt-12 border-t border-white/10 pt-8">
                 <h2 id="sources-heading" className="font-serif text-2xl text-cream">Sources</h2>
-                <p className="mt-3 text-[0.85rem] text-cream/70">UK-based welfare guidance, read on {article.guide.updated}. Care arrangements and legal requirements can vary by location.</p>
+                <p className="mt-3 text-[0.85rem] text-cream/70">Care arrangements and legal requirements can vary by location.</p>
                 <ul className="mt-4 space-y-3 text-[0.9rem] leading-relaxed">
-                  {article.sources.map((source) => <li id={`source-${source.id}`} key={source.id} className="scroll-mt-28"><a href={source.url} rel="noopener" className="text-gold underline underline-offset-4">[{source.id}] {source.label}</a></li>)}
+                  {article.sources.map((source) => <li id={`source-${source.id}`} key={source.id} className="scroll-mt-28"><a href={source.url} rel="noopener" className="text-gold underline underline-offset-4">[{source.id}] {source.label}</a> <span className="text-cream/70">(accessed <time dateTime={source.accessed}>{source.accessed}</time>)</span></li>)}
                 </ul>
               </section>
               <section className="mt-8 border-t border-white/10 pt-6 text-[0.85rem] leading-relaxed text-cream/70">

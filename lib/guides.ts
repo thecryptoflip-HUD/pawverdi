@@ -12,6 +12,10 @@ export const guideSources: GuideSource[] = [
   { id: 3, label: 'Blue Cross: Bringing your new puppy home', url: 'https://www.bluecross.org.uk/advice/dog/wellbeing-and-care/bringing-your-new-puppy-home', accessed: '2026-11-05' },
   { id: 4, label: 'Cats Protection: Bringing a new kitten home', url: 'https://www.cats.org.uk/help-and-advice/getting-a-cat/bringing-a-new-kitten-home', accessed: '2026-11-05' },
   { id: 5, label: 'Cats Protection: Preparing for a cat', url: 'https://www.cats.org.uk/help-and-advice/getting-a-cat/preparing-for-a-cat', accessed: '2026-11-05' },
+  { id: 6, label: 'Blue Cross: Indoor dog crates', url: 'https://www.bluecross.org.uk/advice/dog/behaviour-and-training/dog-crates', accessed: '2026-11-18' },
+  { id: 7, label: 'Cats Protection: Choosing and using a cat carrier', url: 'https://www.cats.org.uk/help-and-advice/getting-a-cat/how-to-choose-and-use-a-cat-carrier', accessed: '2026-11-18' },
+  { id: 8, label: 'Ruffwear: How to measure for your dog’s gear', url: 'https://ruffwear.com/blogs/explored/the-size-is-right-how-to-measure-for-your-dogs-gear', accessed: '2026-11-18' },
+  { id: 9, label: 'Cats Protection: Toileting and litter trays', url: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/toileting', accessed: '2026-11-18' },
 ];
 
 export interface GuideSection {
@@ -19,6 +23,7 @@ export interface GuideSection {
   title: string;
   paragraphs: string[];
   items?: string[];
+  illustration?: { src: string; alt: string };
 }
 
 export interface Guide {
@@ -27,10 +32,12 @@ export interface Guide {
   introduction: string;
   sourceIds: number[];
   sections: GuideSection[];
+  download?: { href: string; label: string };
 }
 
 export const guideBySlug: Record<string, Guide> = {
   'new-puppy-checklist': {
+    download: { href: '/downloads/first-week-puppy.pdf', label: 'Download the first-week puppy checklist (PDF)' },
     title: 'New puppy checklist: what to buy before day one',
     updated: '2026-11-05',
     introduction: 'Buy enough to bring your puppy home safely, feed them their familiar food and give them somewhere quiet to rest. Leave the matching accessories until you know the dog. This buying order is PawVerdi’s practical recommendation, based on the welfare guidance linked below.',
@@ -106,6 +113,7 @@ export const guideBySlug: Record<string, Guide> = {
     ],
   },
   'new-kitten-checklist': {
+    download: { href: '/downloads/first-week-kitten.pdf', label: 'Download the first-week kitten checklist (PDF)' },
     title: 'New kitten checklist: a safe first week at home',
     updated: '2026-11-05',
     introduction: 'Prepare a quiet room before you fill a shopping basket. A kitten needs somewhere safe to hide, familiar food, an accessible litter tray and a carrier for the trip home. The buying priorities here are PawVerdi’s recommendations, informed by Cats Protection’s guidance rather than hands-on product tests.',
@@ -184,6 +192,142 @@ export const guideBySlug: Record<string, Guide> = {
           'Our later list includes expensive beds, a large toy collection and automated feeders or toilets. A cardboard hiding box, a comfortable resting space and suitable play can meet immediate needs without a coordinated set of furniture.[4][5]',
           'Do not postpone the scratching surface or access to a safe retreat.[4][5] Those are part of the first setup. Choose extra furniture after you see where the kitten rests, how confidently they climb and what kind of play they enjoy.[4][5]',
           'Spend the first week noticing what works. Can the kitten reach the tray easily? Are the water and food away from the toilet? Can they hide without getting trapped? Those checks are more useful than adding another accessory to the basket.',
+        ],
+      },
+    ],
+  },
+  'best-dog-crate': {
+    title: 'Dog crate size guide: how to measure and choose a crate',
+    updated: '2026-11-18',
+    introduction: 'Start with the space your dog needs inside the crate. Then check the doorway, floor space and cleaning access before buying.',
+    sourceIds: [3, 6],
+    sections: [
+      {
+        id: 'measure',
+        title: 'Measure the dog and the usable interior',
+        paragraphs: [
+          'Measure your dog from the floor to their highest point while standing naturally, then check their height sitting upright. Measure their nose-to-tail-base length while standing, and watch how much room they use to lie down and stretch. The finished setup must let them stand, sit upright, turn easily and lie comfortably.[3][6]',
+          'Ask the retailer for interior length, width and height if only the outside dimensions are listed. Check the smallest part of a tapered shell, the area lost to bedding, and the height and width of the entrance. If measurements are marginal, choose a model you can try and return.',
+        ],
+      },
+      {
+        id: 'compare',
+        title: 'Compare wire, rigid plastic and fabric',
+        paragraphs: ['For use at home, compare latches, cleaning access and how much floor space the open door needs. Blue Cross describes fold-down mesh crates as a common option.[6]'],
+        items: [
+          'Wire: compare tray removal, latch operation and whether you can open the door in the intended corner.',
+          'Rigid plastic: inspect the vents and fastenings, and measure the narrowest part of the shell.',
+          'Fabric: useful if packability matters. Skip it if your dog scratches or chews the mesh or zipper.',
+        ],
+      },
+      {
+        id: 'divider',
+        title: 'Decide whether a puppy needs a divider',
+        paragraphs: [
+          'A compatible divider can make a larger crate usable as your puppy grows. Measure the space on the puppy’s side and check the fit again after growth spurts. Move or remove the divider whenever it interferes with standing, turning or stretching.[6]',
+          'Leave the door open while introducing the crate and build up gradually. Use it as a resting space, never as punishment.[6] For car trips, check the restraint manufacturer’s installation instructions separately. An indoor crate’s dimensions tell you about fit, while its vehicle instructions tell you whether it is designed for transport.[3]',
+        ],
+      },
+    ],
+  },
+  'best-cat-carrier': {
+    title: 'Top-loading vs. front-loading cat carriers',
+    updated: '2026-11-18',
+    introduction: 'Choose a carrier your cat can enter comfortably and that you can close, carry and clean confidently. The door is only one part of that decision.',
+    sourceIds: [5, 7],
+    sections: [
+      {
+        id: 'openings',
+        title: 'Compare the openings you will use',
+        paragraphs: [
+          'A top opening gives you access from above. A front door lets a cat walk in from floor level, which is useful when introducing the carrier at home. A rigid front-loader with a removable upper shell can provide both a walk-in entrance and access from above when the shell comes off.[5][7]',
+          'Check how much the lid actually opens. A small top hatch and a fully removable shell offer different access. Try the catches on an empty carrier so you know which ones release the door and which release the shell.',
+        ],
+      },
+      {
+        id: 'fit',
+        title: 'Check fit, ventilation and carry weight',
+        paragraphs: [
+          'Compare your cat’s standing height and body length with the usable interior and door opening. Look for space to stand, turn and settle comfortably. Check the manufacturer’s weight limit and remember you will be carrying the carrier, the cat and the bedding together.[7]',
+          'Look for a sturdy, ventilated model with secure closures and surfaces you can wipe clean. Check that you can remove the bedding without dismantling the carrier. If you need it for a flight, verify the airline’s requirements for that booking before ordering.[7]',
+        ],
+      },
+      {
+        id: 'practice',
+        title: 'Make the carrier familiar before the first trip',
+        paragraphs: [
+          'Leave the carrier out with the door held open and familiar bedding inside. Let your cat investigate at their own pace. Ask the veterinary practice how they prefer to handle check-in and removal if your cat tends to hide or resist handling.[7]',
+          'Before leaving, check the door latch and every shell fastener. Lift the empty carrier first to learn its balance. At the practice, keep it closed until staff advise where it can be opened securely.[7]',
+        ],
+      },
+    ],
+  },
+  'dog-harness-size-guide': {
+    title: 'How to measure your dog for a harness',
+    updated: '2026-11-18',
+    introduction: 'Use a soft tape and the size chart for the exact harness you plan to buy. Keep the measurements handy so you can compare models without relying on a breed label.',
+    sourceIds: [8],
+    sections: [
+      {
+        id: 'measure',
+        title: 'Find the chest girth',
+        illustration: {
+          src: '/guide-illustrations/dog-chest-girth.png',
+          alt: 'Side view of a standing dog with the tape at the widest point of the rib cage, behind the front legs.',
+        },
+        paragraphs: [
+          'With your dog standing comfortably on all four paws, wrap a soft tape around the widest part of the rib cage. Keep it flat and snug against the coat without squeezing. Take the measurement twice and record the units. If the model also asks for neck girth or back length, use the maker’s diagram for those measurements.[8]',
+          'If you only have a flexible cord, mark where it meets around the chest, then lay it flat against a ruler. Avoid adding extra inches for comfort unless the manufacturer’s instructions tell you to do so.[8]',
+        ],
+      },
+      {
+        id: 'between-sizes',
+        title: 'Handle a measurement between sizes',
+        paragraphs: [
+          'Use the exact model’s size chart and its advice for measurements near a cutoff. If chest and neck measurements point to different sizes, ask the maker which adjustment ranges apply or try a different shape. Check the return policy before buying.[8]',
+          'Keep both measurements if you are buying for a growing dog. Recheck them as your dog grows, and use the adjustment range to decide when to try another size.[8]',
+        ],
+      },
+      {
+        id: 'fit-check',
+        title: 'Check the fit indoors before walking',
+        paragraphs: [
+          'Follow the maker’s fitting instructions, then watch your dog take a few relaxed steps and turn in a secure room. Look for straps that stay flat, sit clear of the armpits and do not slide sideways or gape when the dog moves. Adjust and try again if they do.[8]',
+          'With the lead attached indoors, check whether the harness shifts toward the head when your dog backs up. Stop and reassess the fit if a shoulder slips free or a strap rides into the neck. Ask a qualified trainer or experienced fitter if you cannot get a secure, comfortable fit.',
+        ],
+      },
+    ],
+  },
+  'best-cat-litter-box-multiple-cats': {
+    title: 'How to set up litter boxes for multiple cats',
+    updated: '2026-11-18',
+    introduction: 'Plan the locations before choosing a box. Each cat needs a tray they can reach without having to pass another cat or wait for a closed door to open.',
+    sourceIds: [5, 9],
+    sections: [
+      {
+        id: 'count-and-place',
+        title: 'Start with one tray per cat, plus one extra',
+        paragraphs: [
+          'Cats Protection recommends one tray per cat plus one extra. For two cats, start by planning three usable locations. Look for quiet spots away from food and water, with enough room for a cat to enter and leave freely.[5][9]',
+          'In a small home, sketch your rooms and mark which doors are usually open. Try separate rooms before placing trays side by side. Avoid a spot where another cat can easily block the only route out. A tray behind a laundry-room door only helps if the cat can reach it when needed.[9]',
+        ],
+      },
+      {
+        id: 'box-types',
+        title: 'Choose a tray each cat can use comfortably',
+        paragraphs: ['Start by checking the interior floor area and entry height. Cats Protection recommends room for the cat to turn and dig, and notes that preferences for cover can vary.[9]'],
+        items: [
+          'Open tray: easy to inspect and scoop. Look for a low entry if a kitten or less mobile cat needs it.',
+          'High-sided tray: worth considering if litter scatters over the sides. Check that the entry is still easy to clear.',
+          'Covered tray: offer it alongside a familiar open option so you can see which the cat prefers. Check the opening and usable space with the lid fitted.[9]',
+        ],
+      },
+      {
+        id: 'adjust',
+        title: 'Change one thing at a time',
+        paragraphs: [
+          'Keep the familiar litter in at least one tray if you are trying a different surface. Scoop regularly and watch which locations get used. If a tray is consistently avoided, check the entry, noise, nearby doors and whether another cat can block access before buying a replacement.[5][9]',
+          'Contact your vet if a cat starts toileting outside the tray or changes their usual toilet habits. Treat repeated attempts to urinate with little or no urine as urgent.[9]',
         ],
       },
     ],

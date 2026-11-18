@@ -24,7 +24,7 @@ const topics = [
 
 export default function HomePage() {
   // Only published, source-linked guides appear as article cards.
-  const guides = completeArticles.slice(0,3);
+  const guides = completeArticles.filter((article) => guidePhoto('home', article.slug)).slice(0, 2);
   return (
     <div className="vibrant-page pv-finished-home">
       <Hero />
@@ -77,7 +77,7 @@ export default function HomePage() {
             <Link href="/knowledge">All pet guides <span aria-hidden="true">→</span></Link>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
-            {guides.map((article,i)=><div className="pv-home-article" key={article.slug}>
+            {guides.map((article)=><div className="pv-home-article" key={article.slug}>
               <ArticleCard article={article} image={guidePhoto('home',article.slug)}/>
             </div>)}
             <ResourceCard title="How we research & review" body="See how we use sources, label review status, and disclose commercial links." href="/trust" image={petPhoto('home-resource-1')} label="Our publishing standards"/>
