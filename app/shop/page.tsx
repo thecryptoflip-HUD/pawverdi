@@ -15,8 +15,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/shop' },
 };
 
+const blackFridayStart = Date.parse('2026-11-19T00:00:00-08:00');
+const blackFridayEnd = Date.parse('2026-12-01T00:00:00-08:00');
+
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ species?: string | string[]; category?: string | string[] }> }) {
   const params = await searchParams;
+  const now = Date.now();
+  const showBlackFriday = now >= blackFridayStart && now < blackFridayEnd;
   const species = params.species === 'dog' || params.species === 'cat' ? params.species : 'all';
   const category = typeof params.category === 'string' && ['beds', 'carriers', 'harnesses', 'litter'].includes(params.category) ? params.category : 'all';
   const filteredProducts = products.filter((product) =>
@@ -55,6 +60,22 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
               Read our full disclosure
             </Link>
           </aside>
+
+          {showBlackFriday && (
+            <section aria-labelledby="black-friday-heading" className="my-6 rounded-2xl border border-white/10 bg-moss/50 p-5 sm:p-6">
+              <h3 id="black-friday-heading" className="font-serif text-2xl text-cream">Black Friday pet gear shopping</h3>
+              <p className="mt-2 text-cream/80">
+                Amazon’s U.S. Black Friday Week and Cyber Monday event runs November 19–30.
+                Use the gear shortlist below to compare sizes and check current prices at the retailer.
+                Prices, availability and discounts vary by item.
+              </p>
+              <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                <li><Link href="?species=dog&category=beds#gear-types" className="text-gold underline underline-offset-4">Browse dog beds</Link></li>
+                <li><Link href="?species=dog&category=harnesses#gear-types" className="text-gold underline underline-offset-4">Browse dog harnesses</Link></li>
+                <li><a href="https://press.aboutamazon.com/2026/11/amazons-black-friday-week-and-cyber-monday-return-november-19-30-with-millions-of-deals-to-deliver-joy-this-holiday-season" className="text-gold underline underline-offset-4">Amazon’s event details</a></li>
+              </ul>
+            </section>
+          )}
 
           <nav aria-label="Filter by species" className="pv-shop-filters">
             {['all', 'dog', 'cat'].map((value) => (
