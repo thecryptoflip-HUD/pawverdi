@@ -16,6 +16,10 @@ export const guideSources: GuideSource[] = [
   { id: 7, label: 'Cats Protection: Choosing and using a cat carrier', url: 'https://www.cats.org.uk/help-and-advice/getting-a-cat/how-to-choose-and-use-a-cat-carrier', accessed: '2026-11-18' },
   { id: 8, label: 'Ruffwear: How to measure for your dog’s gear', url: 'https://ruffwear.com/blogs/explored/the-size-is-right-how-to-measure-for-your-dogs-gear', accessed: '2026-11-18' },
   { id: 9, label: 'Cats Protection: Toileting and litter trays', url: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/toileting', accessed: '2026-11-18' },
+  { id: 10, label: 'Humane World for Animals: How to remove pet stains and odors', url: 'https://www.humaneworld.org/en/resources/how-remove-pet-stains-and-odors', accessed: '2026-11-23' },
+  { id: 11, label: 'CDC: Cleaning and disinfecting pet supplies', url: 'https://www.cdc.gov/healthy-pets/about/cleaning-and-disinfecting-pet-supplies.html', accessed: '2026-11-23' },
+  { id: 12, label: 'Poison Control: Safe household cleaning', url: 'https://www.poison.org/articles/spring-cleaning', accessed: '2026-11-23' },
+  { id: 13, label: 'CDC: Staying healthy around cats', url: 'https://www.cdc.gov/healthy-pets/about/cats.html', accessed: '2026-11-23' },
 ];
 
 export interface GuideSection {
@@ -36,6 +40,54 @@ export interface Guide {
 }
 
 export const guideBySlug: Record<string, Guide> = {
+  'how-to-clean-pet-urine-and-poop': {
+    title: 'How to clean dog and cat pee, poop, and lingering odors',
+    updated: '2026-11-23',
+    introduction: 'Pick up solids or blot up urine first. Then use a cleaner suited to the surface. Check the area again when it is dry, especially if the accident soaked into padding or seams.',
+    sourceIds: [10, 11, 12, 13],
+    sections: [
+      {
+        id: 'poop',
+        title: 'Pick up poop and clean the spot',
+        paragraphs: [
+          'Keep pets and children out of the area. Put on disposable gloves, lift the waste with paper towels or a scoop, and seal it in a bag for disposal. If the stool is soft, work inward with fresh towels to avoid spreading it. Wash your hands with soap and water when you finish.[11][13]',
+          'On a hard, nonporous surface, remove visible residue with a suitable cleaner before disinfecting. Use a disinfectant labeled for the surface and follow its wet contact time and rinsing directions. For carpet or upholstery, use products labeled for that fabric. Keep pets away until the area is dry and any required rinsing is complete.[11][13]',
+        ],
+      },
+      {
+        id: 'urine',
+        title: 'Blot urine from carpet, rugs and upholstery',
+        paragraphs: [
+          'Press clean absorbent towels onto the wet spot, changing them until they stop picking up liquid. Check the rug or upholstery care label and spot-test in a hidden area. If water is permitted, use a small amount of cool water and blot again. Avoid soaking the backing or cushion.[10]',
+          'If odor remains, use a pet urine odor remover or enzyme cleaner labeled for the material. Follow its directions for application, time and drying. Skip the steam cleaner on urine spots because heat can set the stain and odor.[10]',
+        ],
+      },
+      {
+        id: 'floors-and-laundry',
+        title: 'Wipe floors and wash bedding',
+        paragraphs: [
+          'On sealed tile or a washable hard floor, blot first and clean with a product approved for that finish. For wood or laminate, avoid flooding seams and follow the flooring maker’s directions. If odor returns after drying, check nearby grout, baseboards or unfinished wood where liquid may have reached.[10]',
+          'For washable bedding or removable covers, take off any solids, then launder according to the care label. Let the item air-dry and check for lingering odor before using a dryer. Repeat with a laundry-compatible enzyme product if the care label allows it.[10][11]',
+        ],
+      },
+      {
+        id: 'lingering-odor',
+        title: 'Find the source of a smell that comes back',
+        paragraphs: [
+          'Check the rug backing, carpet pad, cushion insert and nearby baseboards. For an old spot that reached the pad or subfloor, surface cleaner may only reach part of the problem. Ask a carpet or flooring professional whether deeper cleaning or replacement is needed.[10]',
+          'Scoop the litter box daily and clean it regularly. If you are pregnant or immunocompromised, ask someone else to handle litter cleanup if possible. If you must do it, wear disposable gloves and wash your hands afterward.[11][13]',
+        ],
+      },
+      {
+        id: 'safety',
+        title: 'Use one cleaning product at a time',
+        paragraphs: [
+          'Never mix cleaning products. In particular, keep bleach away from ammonia, vinegar and other cleaners. Ventilate the room and follow the product label before letting pets back into the area.[11][12]',
+          'If accidents start suddenly or keep happening, call your vet. Cleaning removes the mess, while a vet can help identify a health issue behind a change in toilet habits.[10]',
+        ],
+      },
+    ],
+  },
   'new-puppy-checklist': {
     download: { href: '/downloads/first-week-puppy.pdf', label: 'Download the first-week puppy checklist (PDF)' },
     title: 'New puppy checklist: what to buy before day one',
