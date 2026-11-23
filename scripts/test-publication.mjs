@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 const complete = new Set([
+  'how-to-clean-pet-urine-and-poop',
   'new-puppy-checklist',
   'new-kitten-checklist',
   'best-dog-crate',
@@ -38,7 +39,7 @@ test('homepage and knowledge center count and promote only complete guides', asy
   assert.ok(!/24\s*guides/.test(text(home)), 'homepage must not pass off topic records as complete guides');
   const knowledge = await get('/knowledge');
   assert.ok(text(knowledge).includes(`${complete.size} full guides`), 'knowledge center must state the actual complete count');
-  assert.ok(text(knowledge).includes(`${24 - complete.size} topics in preparation`), 'knowledge center must account for unfinished topics separately');
+  assert.ok(text(knowledge).includes(`${25 - complete.size} topics in preparation`), 'knowledge center must account for unfinished topics separately');
   assert.ok(!/Editorial reviews completed this month/.test(text(knowledge)), 'do not invent monthly editorial review metrics');
   for (const path of ['/knowledge?species=cat&section=health','/knowledge?species=dog&section=costs']) {
     const filtered = await get(path);
@@ -76,11 +77,11 @@ test('seller application is a POST form with every required intake field', async
   assert.ok(grooming.includes('topic: grooming'), 'a Grooming link must not silently reset to All topics');
 });
 
-test('all 24 existing article routes have a canonical URL and truthful indexing state', async () => {
+test('all 25 article routes have a canonical URL and truthful indexing state', async () => {
   const content = await readFile(new URL('../lib/content.ts', import.meta.url), 'utf8');
   const records = content.split('const articleRecords: Article[] = [')[1].split('export const articles:')[0];
   const slugs = [...records.matchAll(/slug: '([^']+)'/g)].map((match) => match[1]);
-  assert.equal(slugs.length, 24, 'route coverage must account for every original article record');
+  assert.equal(slugs.length, 25, 'route coverage must account for every article record');
   for (const slug of slugs) {
     const html = await get(`/knowledge/${slug}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, `${slug}: expected one H1`);

@@ -50,6 +50,17 @@ export interface BreedEntry {
 
 const articleRecords: Article[] = [
   {
+    slug: 'how-to-clean-pet-urine-and-poop',
+    title: 'How to clean dog and cat pee, poop, and lingering odors',
+    summary: 'Clean pet accidents on carpet, upholstery, floors and bedding, and tackle lingering odors without mixing cleaners.',
+    section: 'setup',
+    species: 'both',
+    updated: '2026-11-23',
+    readingMinutes: 0,
+    review: { status: 'unreviewed' },
+    sources: [],
+  },
+  {
     slug: 'cat-cost-per-year',
     title: 'What a cat actually costs per year',
     summary: 'Food, litter, vet care and insurance broken out line by line, with the two categories that swing the widest.',
