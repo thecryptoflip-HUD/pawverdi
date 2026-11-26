@@ -40,6 +40,21 @@ const config: NextConfig = {
         destination: 'https://pawverdi.com/:path*',
         permanent: true,
       },
+      {
+        source: '/shop-by-needs',
+        destination: '/shop',
+        permanent: true,
+      },
+      {
+        source: '/shop-by-needs.html',
+        destination: '/shop',
+        permanent: true,
+      },
+      {
+        source: '/service-dogs',
+        destination: '/dogs',
+        permanent: false,
+      },
     ];
   },
   async headers() {
