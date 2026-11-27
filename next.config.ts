@@ -10,7 +10,7 @@ import type { NextConfig } from 'next';
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.youtube.com https://s.ytimg.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data:",
@@ -19,6 +19,7 @@ const CSP = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
+  "frame-src https://www.youtube-nocookie.com",
   "frame-ancestors 'none'",
   'upgrade-insecure-requests',
 ].join('; ');
