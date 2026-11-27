@@ -11,9 +11,10 @@ export const site = {
 export const navigation = [
   { href: '/dogs', label: 'Dogs' },
   { href: '/cats', label: 'Cats' },
-  { href: '/knowledge', label: 'Knowledge' },
+  { href: '/discover', label: 'Discover' },
+  { href: '/knowledge', label: 'Guides' },
   { href: '/marketplace', label: 'Marketplace' },
-  { href: '/shop', label: 'Shop' },
+  { href: '/deals', label: 'Deals' },
   { href: '/community', label: 'Community' },
 ] as const;
 
@@ -25,6 +26,7 @@ export const footerGroups = [
       { href: '/cats', label: 'Cat Center' },
       { href: '/knowledge', label: 'Knowledge Center' },
       { href: '/knowledge#news', label: 'Pet care news' },
+      { href: '/journal', label: 'Pet lifestyle journal' },
     ],
   },
   {
@@ -33,14 +35,38 @@ export const footerGroups = [
       { href: '/marketplace', label: 'Marketplace' },
       { href: '/marketplace#adoption', label: 'Adoption' },
       { href: '/shop', label: 'Product shop' },
+      { href: '/deals', label: 'Verified deals' },
+      { href: '/compare', label: 'Compare products' },
+      { href: '/discover/published', label: 'Published collections' },
+    ],
+  },
+  {
+    title: 'PawVerdi',
+    links: [
+      { href: '/about', label: 'About us' },
+      { href: '/faq', label: 'Frequently asked questions' },
+      { href: '/partners', label: 'Partner with us' },
       { href: '/advertise', label: 'Advertise' },
+      { href: '/media-kit', label: 'Media kit' },
+      { href: '/search', label: 'Search' },
+    ],
+  },
+  {
+    title: 'Policies',
+    links: [
+      { href: '/privacy', label: 'Privacy' },
+      { href: '/terms', label: 'Terms of use' },
+      { href: '/accessibility', label: 'Accessibility' },
+      { href: '/cookie-preferences', label: 'Cookie preferences' },
     ],
   },
   {
     title: 'Trust',
     links: [
       { href: '/trust', label: 'Editorial & safety policy' },
-      { href: '/trust#disclosure', label: 'Affiliate disclosure' },
+      { href: '/affiliate-disclosure', label: 'Affiliate disclosure' },
+      { href: '/advertising-disclosure', label: 'Advertising disclosure' },
+      { href: '/editorial-standards', label: 'Editorial standards' },
       { href: '/trust#sellers', label: 'Seller verification' },
       { href: '/contact', label: 'Contact' },
       { href: '/admin', label: 'Staff dashboard' },

@@ -77,7 +77,7 @@ export default function SiteHeader() {
           </svg>
         </button>
         <div className="hidden items-center gap-2 xl:flex">
-          <Link href="/knowledge" aria-label="Search pet guides" className="pv-header-icon" title="Search pet guides">
+          <Link href="/search" aria-label="Search PawVerdi" className="pv-header-icon" title="Search PawVerdi">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="19" height="19" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
           </Link>
           <Link href="/shop" aria-label="Explore pet gear" className="pv-header-icon" title="Explore pet gear">
@@ -100,7 +100,8 @@ export default function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/community" className="mt-4 block rounded-full bg-[#ff6659] px-5 py-3 text-center text-sm font-bold text-white">Join PawVerdi updates</Link>
+          <Link href="/search" className="block py-3.5 text-sm font-bold text-[#07543d]">Search PawVerdi</Link>
+          <Link href="/community" className="mt-4 block rounded-full bg-[#ff6659] px-5 py-3 text-center text-sm font-bold text-[#341710]">Join PawVerdi updates</Link>
         </nav>
       )}
     </header>

@@ -1,177 +1,467 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getSession, isStaff, isAdmin } from '@/lib/auth';
-import { articles, products, reviewLabel } from '@/lib/content';
-import { isLive } from '@/lib/supabase';
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { getSession, isStaff } from "@/lib/auth";
+import { serverSupabase } from "@/lib/supabase-server";
+import { entryKinds, speciesValues, type Entry } from "@/lib/publication";
+import { saveEntry, triageInquiry } from "./actions";
 
 export const metadata: Metadata = {
-  title: 'Admin — content, marketplace and advertising operations',
-  description: 'Internal operations dashboard for PawVerdi.',
+  title: "Publishing desk",
   robots: { index: false, follow: false },
 };
-
-function SignOut() {
-  return <form action="/api/auth/signout" method="post"><button className="rounded border border-gold px-4 py-2" type="submit">Sign out</button></form>;
-}
-
-export default async function AdminPage() {
-  const session = await getSession();
-  if (!session) redirect('/admin/login');
-  if (!isStaff(session.role)) return <div className="mx-auto max-w-wrap px-5 pb-20 pt-[calc(76px+48px)]">
-    <p className="mb-4">This account has no administrative access.</p><SignOut />
-  </div>;
-  const live = isLive();
-  const vetReviewed = articles.filter((a) => a.review.status === 'vet-reviewed').length;
-  const recent = [...articles].sort((a, b) => (a.updated < b.updated ? 1 : -1)).slice(0, 8);
-
+const messages: Record<string, string> = {
+  "media-cleanup":
+    "Media saved. The previous private file needs storage cleanup.",
+  updated: "Inquiry status saved.",
+  conflict: "The inquiry changed. Refresh and try again.",
+  saved: "Entry saved.",
+  invalid: "Check the required fields and dates.",
+  unavailable: "Database connection unavailable.",
+  rejected:
+    "Could not save. Refresh the record and check its slug, review state, disclosure and expiration.",
+};
+const queues = [
+  [
+    "contact_messages",
+    "Contact messages",
+    "id, email, topic, message, status, created_at",
+  ],
+  [
+    "ad_enquiries",
+    "Advertising inquiries",
+    "id, company, email, campaign, status, created_at",
+  ],
+  [
+    "seller_applications",
+    "Seller applications",
+    "id, trading_name, country, email, status, created_at",
+  ],
+  [
+    "newsletter_subscribers",
+    "Newsletter subscribers",
+    "email, source, confirmed_at, unsubscribed_at, created_at",
+  ],
+  ["audit_log", "Publishing audit", "entity, entity_id, action, created_at"],
+] as const;
+const field =
+  "mt-1 block w-full rounded border border-current bg-white px-3 py-2 text-black";
+function TextField({
+  name,
+  label,
+  value = "",
+  required = false,
+  max = 160,
+}: {
+  name: string;
+  label: string;
+  value?: string;
+  required?: boolean;
+  max?: number;
+}) {
   return (
-    <div className="mx-auto max-w-wrap px-5 pb-20 pt-[calc(76px+48px)] sm:px-8">
-      <section aria-label="Account" className="mb-8 rounded border border-white/15 p-5">
-        <p>{session.displayName ?? 'Staff'} · {session.email ?? 'No email'} · {session.role}</p>
-        <p className="my-3">Capabilities: view admin UI, edit content{isAdmin(session.role) ? ', run diagnostics, manage roles' : ''}.</p>
-        <SignOut />
-      </section>
-      <header className="mb-9">
-        <p className="kicker mb-4">Operations</p>
-        <h1 className="display text-[clamp(1.9rem,3.4vw,2.8rem)] text-[#fcf8f1]">Admin dashboard</h1>
-        <p className="lede mt-4 max-w-[62ch]">
-          Content, marketplace and advertising operations in one place. Every destructive action is gated behind a review
-          status, and nothing can be published while the review requirement is unmet.
-        </p>
-      </header>
-
-      <div
-        role="status"
-        className={`mb-8 rounded-2xl border p-5 ${live ? 'border-emerald-400/40 bg-emerald-400/10' : 'border-amber/40 bg-amber/10'}`}
-      >
-        <p className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-gold">
-          Content mode: {live ? 'live (Supabase connected)' : 'demo (no database)'}
-        </p>
-        <p className="mt-2 text-[0.9rem] leading-relaxed text-cream/80">
-          {live
-            ? 'Reads and writes hit Supabase Postgres under row-level security. Publishing requires an authenticated editor session.'
-            : 'No Supabase credentials are set, so this dashboard is read-only over seed content. Writes return a clear "not stored" response instead of appearing to succeed. Configure the server environment to switch modes.'}
-        </p>
-      </div>
-
-      <section aria-label="Key metrics" className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] lg:grid-cols-4">
-        {[
-          { label: 'Articles', value: articles.length, note: `${vetReviewed} vet-reviewed` },
-          { label: 'Products tracked', value: products.length, note: '0 scored' },
-          { label: 'Listings', value: 0, note: 'verification gate closed' },
-          { label: 'Ad campaigns', value: 0, note: '2 placements unsold' },
-        ].map((metric) => (
-          <div key={metric.label} className="bg-forest px-6 py-7">
-            <p className="text-[0.64rem] uppercase tracking-[0.2em] text-cream/50">{metric.label}</p>
-            <p className="mt-2 font-serif text-[2rem] leading-none text-gold">{metric.value}</p>
-            <p className="mt-2 text-[0.76rem] text-cream/55">{metric.note}</p>
-          </div>
-        ))}
-      </section>
-
-      <section className="mb-10">
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-serif text-2xl text-cream">Content queue</h2>
-          <div className="flex flex-wrap gap-2">
-            {['All', 'Needs vet review', 'Needs editorial', 'Published'].map((filter, i) => (
-              <span
-                key={filter}
-                className={`rounded-full border px-3.5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] ${
-                  i === 0 ? 'border-amber text-gold' : 'border-white/15 text-cream/60'
-                }`}
-              >
-                {filter}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="overflow-x-auto rounded-2xl border border-white/[0.08] bg-moss/40">
-          <table className="table min-w-[820px]">
-            <caption className="sr-only">Most recently updated articles and their review state</caption>
-            <thead>
-              <tr>
-                <th scope="col">Article</th>
-                <th scope="col">Section</th>
-                <th scope="col">Updated</th>
-                <th scope="col">Review</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recent.map((article) => {
-                const needsVet = article.review.status !== 'vet-reviewed';
-                return (
-                  <tr key={article.slug}>
-                    <th scope="row" className="max-w-[34ch] text-left font-normal text-cream">
-                      <Link href={`/knowledge/${article.slug}`} className="hover:text-gold">
-                        {article.title}
-                      </Link>
-                    </th>
-                    <td className="capitalize text-cream/70">{article.section}</td>
-                    <td className="text-cream/60">
-                      <time dateTime={article.updated}>
-                        {new Date(article.updated).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </time>
-                    </td>
-                    <td>
-                      <span className={`tag ${article.review.status === 'vet-reviewed' ? 'tag-verified' : ''}`}>
-                        {reviewLabel(article)}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        aria-disabled="true"
-                        title={needsVet ? 'Blocked: veterinary review required before publish' : 'Requires an authenticated editor session'}
-                        className="cursor-not-allowed text-[0.78rem] text-cream/35"
-                      >
-                        {needsVet ? 'Publish (blocked)' : 'Publish'}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-3 text-[0.78rem] text-cream/50">
-          Publish is disabled by design: the same rule the public site states — no article ships without a named review —
-          is enforced here in the UI, and enforced again by a database policy when Supabase is connected.
-        </p>
-      </section>
-
-      <section className="grid gap-4 lg:grid-cols-3">
-        {[
-          {
-            title: 'Marketplace intake',
-            body: '0 applications in review. Verification is a manual queue: each gate has an owner, and a rejected application records the gate that failed.',
-            cta: 'Open queue',
-          },
-          {
-            title: 'Advertising',
-            body: '2 placements unsold. Booking requires a category check against the refusal list before a rate card is issued.',
-            cta: 'View placements',
-          },
-          {
-            title: 'Corrections log',
-            body: 'Append-only. Every correction records the original claim, the correction, the source and the reviewer.',
-            cta: 'Open log',
-          },
-        ].map((panel) => (
-          <div key={panel.title} className="rounded-2xl border border-white/[0.08] bg-moss/40 p-6">
-            <h3 className="font-serif text-xl text-cream">{panel.title}</h3>
-            <p className="mt-2 text-[0.9rem] leading-relaxed text-cream/70">{panel.body}</p>
-            <button
-              type="button"
-              disabled
-              className="mt-4 cursor-not-allowed rounded-full border border-white/15 px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-cream/35"
+    <label>
+      {label}
+      <input
+        className={field}
+        name={name}
+        defaultValue={value}
+        maxLength={max}
+        required={required}
+      />
+    </label>
+  );
+}
+function Editor({ entry, approver }: { entry?: Entry; approver: boolean }) {
+  const states = entry
+    ? entry.state === "published"
+      ? ["draft", "archived"]
+      : entry.state === "archived"
+        ? ["draft"]
+        : [
+            "draft",
+            "review",
+            ...(approver
+              ? ["archived", ...(entry.state === "review" ? ["published"] : [])]
+              : []),
+          ]
+    : ["draft"];
+  return (
+    <form action={saveEntry} className="grid max-w-3xl gap-4">
+      {entry && (
+        <>
+          <input type="hidden" name="id" value={entry.id} />
+          <input type="hidden" name="revision" value={entry.revision} />
+        </>
+      )}
+      <label>
+        Content type
+        <select name="kind" className={field} defaultValue={entry?.kind}>
+          {entryKinds.map((v) => (
+            <option key={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <TextField name="title" label="Title" value={entry?.title} required />
+      <TextField
+        name="slug"
+        label="URL slug (lowercase words separated by hyphens)"
+        value={entry?.slug}
+        max={100}
+        required
+      />
+      <TextField
+        name="summary"
+        label="Summary and search description"
+        value={entry?.summary}
+        max={400}
+        required
+      />
+      <label>
+        Body
+        <textarea
+          className={field}
+          rows={7}
+          name="body"
+          defaultValue={entry?.body}
+          maxLength={30000}
+        />
+      </label>
+      <label>
+        Pet category
+        <select className={field} name="species" defaultValue={entry?.species}>
+          {speciesValues.map((v) => (
+            <option key={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <TextField
+        name="category"
+        label="Subcategory or campaign placement"
+        value={entry?.category}
+        max={100}
+      />
+      <TextField name="brand" label="Product brand" value={entry?.brand} />
+      <TextField
+        name="price_cents"
+        label="Verified product price in US cents"
+        value={entry?.price_cents?.toString()}
+      />
+      <TextField
+        name="price_checked_at"
+        label="Price checked at (UTC, e.g. 2026-11-27T14:00:00Z)"
+        value={
+          entry?.price_checked_at
+            ? new Date(entry.price_checked_at).toISOString()
+            : ""
+        }
+      />
+      <TextField
+        name="merchant"
+        label="Merchant or sponsor"
+        value={entry?.merchant}
+      />
+      <TextField
+        name="destination_url"
+        label="Approved destination (HTTPS)"
+        value={entry?.destination_url ?? ""}
+        max={2048}
+      />
+      <TextField
+        name="disclosure"
+        label="Commercial disclosure"
+        value={entry?.disclosure}
+        max={400}
+      />
+      <TextField
+        name="expires_at"
+        label="Expires at (UTC, e.g. 2026-12-31T23:59:00Z)"
+        value={
+          entry?.expires_at ? new Date(entry.expires_at).toISOString() : ""
+        }
+      />
+      <label>
+        <input
+          type="checkbox"
+          name="featured"
+          defaultChecked={entry?.featured}
+        />{" "}
+        Feature on the publication index
+      </label>
+      <label>
+        Save as
+        <select
+          className={field}
+          name="state"
+          defaultValue={
+            states.includes(entry?.state ?? "draft") ? entry?.state : "draft"
+          }
+        >
+          {states.map((v) => (
+            <option key={v}>{v}</option>
+          ))}
+        </select>
+      </label>
+      <button className="rounded bg-white p-3 text-black" type="submit">
+        Save entry
+      </button>
+    </form>
+  );
+}
+export default async function Admin({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    edit?: string;
+    result?: string;
+    queue?: string;
+    page?: string;
+  }>;
+}) {
+  const session = await getSession();
+  if (!session) redirect("/admin/login");
+  const params = await searchParams;
+  const db = await serverSupabase();
+  const staff = isStaff(session.role);
+  const page = Math.max(
+    1,
+    Math.min(100000, Math.floor(Number(params.page) || 1)),
+  );
+  const data =
+    staff && db
+      ? await db
+          .from("publication_entries")
+          .select("id,title,kind,state")
+          .order("updated_at", { ascending: false })
+          .range((page - 1) * 40, page * 40)
+      : null;
+  const editing =
+    staff && db && params.edit
+      ? await db
+          .from("publication_entries")
+          .select("*")
+          .eq("id", params.edit)
+          .maybeSingle()
+      : null;
+  const allowed = queues.filter(
+    (q) => session.role === "admin" || q[0] !== "audit_log",
+  );
+  const queue = allowed.find((q) => q[0] === params.queue);
+  const inbox =
+    queue && staff && db
+      ? await db
+          .from(queue[0])
+          .select(queue[2])
+          .order("created_at", { ascending: false })
+          .range((page - 1) * 40, page * 40)
+      : null;
+  return (
+    <div className="mx-auto max-w-wrap space-y-7 px-6 pb-16 pt-32">
+      <h1 className="font-serif text-4xl">Publishing desk</h1>
+      <p>
+        {session.email} · {session.role}
+      </p>
+      <form method="post" action="/api/auth/signout">
+        <button>Sign out</button>
+      </form>
+      {!staff ? (
+        <p>This account has no administrative access.</p>
+      ) : (
+        <>
+          {params.result && <p role="status">{messages[params.result]}</p>}
+          <p>
+            <Link href="/admin/performance">
+              View campaign and merchant performance
+            </Link>
+          </p>
+          <h2 className="text-2xl">Content library</h2>
+          {data?.error ? (
+            <p>
+              Content could not be loaded. Check the publishing migration and
+              database connection.
+            </p>
+          ) : (
+            <ul>
+              {data?.data?.slice(0, 40).map((row) => (
+                <li key={row.id}>
+                  <Link href={"/admin?edit=" + row.id}>{row.title}</Link> ·{" "}
+                  {row.kind} · {row.state}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!data?.error && !data?.data?.length && (
+            <p>No entries on this page.</p>
+          )}
+          <p>
+            <Link href="/admin#entry">Create entry</Link> ·{" "}
+            <Link href="/discover/published">View published content</Link>
+          </p>
+          <h2 id="entry" className="text-2xl">
+            {params.edit ? "Edit entry" : "Create draft"}
+          </h2>
+          {params.edit && !editing?.data ? (
+            <p>Entry unavailable.</p>
+          ) : (
+            <Editor
+              entry={editing?.data ?? undefined}
+              approver={session.role === "reviewer" || session.role === "admin"}
+            />
+          )}
+          {editing?.data?.media_path && (
+            <p>
+              <a href={"/api/admin/media?id=" + editing.data.id}>
+                Preview the attached media
+              </a>
+            </p>
+          )}
+          {editing?.data?.state === "draft" && (
+            <form
+              id="media"
+              className="grid max-w-3xl gap-3 rounded border p-5"
+              action="/api/admin/media"
+              method="post"
+              encType="multipart/form-data"
             >
-              {panel.cta}
-            </button>
-          </div>
-        ))}
-      </section>
+              <h2 className="text-2xl">Draft media</h2>
+              {editing.data.media_path && (
+                <p>
+                  Attached: {editing.data.media_description} ·{" "}
+                  {editing.data.media_credit}
+                </p>
+              )}
+              <input type="hidden" name="id" value={editing.data.id} />
+              <input
+                type="hidden"
+                name="revision"
+                value={editing.data.revision}
+              />
+              <label>
+                Image or silent video, up to 4 MiB
+                <input
+                  className={field}
+                  type="file"
+                  name="file"
+                  accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+                  required
+                />
+              </label>
+              <TextField
+                name="description"
+                label="Describe the image or video for visitors"
+                max={500}
+                required
+              />
+              <TextField
+                name="credit"
+                label="Source and visual credit"
+                max={250}
+                required
+              />
+              <label>
+                <input type="checkbox" name="rights" required /> I verified the
+                source, usage rights and asset against the PawVerdi visual
+                brief.
+              </label>
+              <button className="rounded bg-white p-3 text-black">
+                Attach to draft
+              </button>
+            </form>
+          )}
+          <h2 className="text-2xl">Operations inbox</h2>
+          <nav aria-label="Operations inbox" className="flex flex-wrap gap-4">
+            {allowed.map((q) => (
+              <Link key={q[0]} href={"/admin?queue=" + q[0] + "#inbox"}>
+                {q[1]}
+              </Link>
+            ))}
+          </nav>
+          {queue && (
+            <section id="inbox">
+              <h3>{queue[1]}</h3>
+              {inbox?.error ? (
+                <p>Queue unavailable.</p>
+              ) : inbox?.data?.length ? (
+                <ul>
+                  {inbox.data.slice(0, 40).map((row, i) => (
+                    <li key={i} className="my-4 border-b pb-3">
+                      <dl>
+                        {Object.entries(row)
+                          .filter(([name]) => name !== "id")
+                          .map(([key, value]) => (
+                            <div key={key}>
+                              <dt className="inline font-bold">
+                                {key.replaceAll("_", " ")}{" "}
+                              </dt>
+                              <dd className="inline">{String(value ?? "—")}</dd>
+                            </div>
+                          ))}
+                      </dl>
+                      {"status" in row && "id" in row && (
+                        <form
+                          action={triageInquiry}
+                          className="my-2 flex flex-wrap gap-3"
+                        >
+                          <input type="hidden" name="queue" value={queue[0]} />
+                          <input
+                            type="hidden"
+                            name="id"
+                            value={String(row.id)}
+                          />
+                          <input
+                            type="hidden"
+                            name="previous"
+                            value={String(row.status)}
+                          />
+                          <label>
+                            Inquiry status{" "}
+                            <select
+                              name="status"
+                              defaultValue={String(row.status)}
+                              className="rounded px-2 text-black"
+                            >
+                              {["new", "triaged", "closed"].map((s) => (
+                                <option key={s}>{s}</option>
+                              ))}
+                            </select>
+                          </label>
+                          <button type="submit">Save status</button>
+                        </form>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No records on this page.</p>
+              )}
+            </section>
+          )}
+          <nav aria-label="Record pages" className="flex gap-4">
+            {page > 1 && (
+              <Link
+                href={
+                  "/admin?page=" +
+                  (page - 1) +
+                  (queue ? "&queue=" + queue[0] + "#inbox" : "")
+                }
+              >
+                Previous page
+              </Link>
+            )}
+            {(queue ? inbox?.data : data?.data)?.length === 41 && (
+              <Link
+                href={
+                  "/admin?page=" +
+                  (page + 1) +
+                  (queue ? "&queue=" + queue[0] + "#inbox" : "")
+                }
+              >
+                Next page
+              </Link>
+            )}
+          </nav>
+        </>
+      )}
     </div>
   );
 }

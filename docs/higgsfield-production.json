@@ -1,0 +1,84 @@
+{
+  "asOf": "2026-11-27",
+  "provider": "Higgsfield",
+  "generatedAssets": [],
+  "usageRights": "No media delivered. Confirm applicable licensing and account rights before production publication.",
+  "requests": [
+    {
+      "id": "hero",
+      "placement": "Homepage responsive hero and social cover",
+      "prompt": "Premium cinematic editorial photograph, natural golden retriever reclining on the right side of a sunlit meadow with deep sage ferns in foreground, canine eye-level medium close portrait, warm cream honey highlights, fine fur and authentic dog anatomy, forest darkness and empty bokeh on left for cover title. Horizontal magazine cover photograph, absolutely no text, no logos.",
+      "model": "gpt_image_2_6",
+      "status": "submission_rejected",
+      "reason": "Requires basic plan or higher.",
+      "jobId": null,
+      "filename": null
+    },
+    {
+      "id": "categories",
+      "placement": "Six pet discovery category cards",
+      "prompt": "A perfectly aligned contact sheet of SIX individual square premium editorial photographs, exactly three equal columns and two equal rows, edge-to-edge no margins no borders no words. In reading order: golden retriever in meadow, tabby cat on linen, green budgie on branch, rabbit on woven rug, orange fish in planted aquarium, leopard gecko in warm terrarium. Every animal centered in its own square, natural lighting, muted forest green foliage and warm earth neutrals, luxury film editorial photography, natural anatomy. Overall aspect ratio 3:2.",
+      "model": "gpt_image_2_6",
+      "status": "submission_rejected",
+      "reason": "Requires basic plan or higher.",
+      "jobId": null,
+      "filename": null
+    },
+    {
+      "id": "hero-motion",
+      "placement": "Homepage hero motion layer",
+      "prompt": "Eye-level static cinematic shot of a healthy golden retriever relaxing on the right of a leafy garden meadow. Soft dark-green foliage on left for website copy. Warm natural light shifts gently over the fur as the dog breathes calmly, breeze moves grass. Natural anatomy, muted editorial color grade, no typography, no logos, locked-off camera.",
+      "model": "magi_2",
+      "status": "quoted_only",
+      "reason": "Four-second quote 10 credits exceeded 9.4 available credits.",
+      "jobId": null,
+      "filename": null
+    }
+  ],
+  "inheritedProvenance": [
+    {
+      "file": "docs/pet-photography-20261117.json",
+      "description": "Existing placement-level asset catalogue with prompts, dimensions, source descriptions and hashes.",
+      "entries": 91,
+      "missingPaths": [],
+      "changedSinceRecordedHash": []
+    },
+    {
+      "file": "docs/garden-assets.json",
+      "description": "Existing garden imagery, briefs, intended use and recorded hashes.",
+      "entries": 17,
+      "missingPaths": [],
+      "changedSinceRecordedHash": []
+    },
+    {
+      "file": "docs/gear-asset-prompts.json",
+      "description": "Prior shop category generation materials, described in the source as built-in image generation."
+    },
+    {
+      "file": "docs/FIELD-GUIDES-PHOTO-CREDITS.md",
+      "description": "Historical field-guide photographer credits, source links and license references."
+    },
+    {
+      "file": "docs/PET-PHOTOGRAPHY-20261117.md",
+      "description": "Historical design and photographic release notes."
+    },
+    {
+      "file": "lib/pet-photography.json",
+      "description": "Application placement mapping."
+    }
+  ],
+  "localRenditions": [
+    {
+      "file": "public/brand/garden/dog-garden-480.webp",
+      "derivedFrom": "public/brand/garden/dog-garden.webp",
+      "purpose": "Responsive homepage hero",
+      "sha256": "c41272459b78f760b88ab729bd073a0fb633cc0e17f7a79f761811c63bc29599"
+    },
+    {
+      "file": "public/brand/garden/dog-garden-850.webp",
+      "derivedFrom": "public/brand/garden/dog-garden.webp",
+      "purpose": "Responsive homepage hero",
+      "sha256": "b79e357540dce6801ce6b96774cd46eced13922b65e028352c4755a8e9ef2d48"
+    }
+  ]
+}

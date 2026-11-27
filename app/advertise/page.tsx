@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import EnquiryForm from '@/components/enquiry-form';
 import PageHeader from '@/components/page-header';
 import Reveal from '@/components/reveal';
 
@@ -63,7 +64,6 @@ export default function AdvertisePage() {
                 <div className="h-full rounded-2xl border border-white/[0.08] bg-moss/50 p-6">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-serif text-xl text-cream">{format.name}</h3>
-                    <span className="tag tag-ad">Unsold</span>
                   </div>
                   <p className="mt-1 text-[0.68rem] uppercase tracking-[0.18em] text-cream/45">{format.placement}</p>
                   <p className="mt-3 text-[0.92rem] leading-relaxed text-cream/70">{format.detail}</p>
@@ -94,11 +94,17 @@ export default function AdvertisePage() {
           </Reveal>
 
           <Reveal delay={100}>
-            <form action="/api/advertise" method="post" className="grid gap-4 rounded-2xl border border-white/[0.08] bg-moss/70 p-7">
-              <h3 className="font-serif text-xl text-cream">Enquire about inventory</h3>
+            <EnquiryForm id="enquire" action="/api/advertise" className="grid gap-4 rounded-2xl border border-white/[0.08] bg-moss/70 p-7">
+              <h3 className="font-serif text-xl text-cream">Enquire about a partnership or placement</h3>
+              <label className="flex flex-col gap-2">
+                Partnership type
+                <select name="partnership" className="rounded-xl border px-4 py-3">
+                  {['Advertising placement','Affiliate programme','Brand collaboration','Newsletter sponsorship'].map(type => <option key={type}>{type}</option>)}
+                </select>
+              </label>
               <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                 Company
-                <input required name="company" className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                <input required name="company" minLength={2} maxLength={120} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
               </label>
               <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                 Work email
@@ -106,16 +112,9 @@ export default function AdvertisePage() {
               </label>
               <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
                 What are you advertising?
-                <textarea required name="campaign" rows={3} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+                <textarea required name="campaign" minLength={10} maxLength={2000} rows={3} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
               </label>
-              <button type="submit" className="btn btn-solid mt-1 w-full justify-center">
-                Send enquiry
-              </button>
-              <p className="text-[0.74rem] leading-relaxed text-cream/50">
-                Enquiries route to <code className="text-cream/70">/api/advertise</code>; in demo mode the endpoint confirms
-                validation but does not store data. Rate card is sent after the category check, not before.
-              </p>
-            </form>
+              </EnquiryForm>
           </Reveal>
         </div>
       </section>

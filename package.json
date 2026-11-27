@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "verify": "node scripts/verify.mjs && node --test scripts/test-guides.mjs scripts/test-publication.mjs && node scripts/test-shop.mjs && node scripts/test-photography.mjs"
+    "verify": "node scripts/verify.mjs && node --test scripts/test-guides.mjs scripts/test-publication.mjs && node scripts/test-shop.mjs && node scripts/test-photography.mjs",
+    "test:cms": "node scripts/test-cms-db.mjs && node --test scripts/test-media-upload.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -20,6 +21,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.6.1",
     "@types/node": "^22.10.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.10",

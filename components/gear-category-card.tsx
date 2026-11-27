@@ -14,7 +14,7 @@ export default function GearCategoryCard({ product }: { product: Product }) {
         <span id={`${product.id}-disclosure`} className="pv-gear-link-label">
           {product.affiliate ? 'Affiliate link · we may earn a commission' : 'Retailer link · untracked'}
         </span>
-        <a className="pv-gear-browse-link" href={product.href} data-track={product.affiliate ? 'tracked' : 'UNTRACKED'} target="_blank"
+        <a className="pv-gear-browse-link" href={product.affiliate ? '/go/guide/'+product.id : product.href} data-track={product.affiliate ? 'tracked' : 'UNTRACKED'} target="_blank"
           rel="sponsored nofollow noopener" aria-describedby={`${product.id}-disclosure shop-disclosure`}>
           <span className="pv-gear-browse-label">Browse {product.category} on {product.merchant}</span>
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0"><path d="M7 17 17 7M7 7h10v10" /></svg>

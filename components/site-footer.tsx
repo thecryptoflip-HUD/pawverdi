@@ -36,8 +36,7 @@ export default function SiteFooter() {
 
         <div className="flex flex-wrap justify-between gap-6 border-t border-white/[0.07] pt-6 text-[0.78rem] leading-relaxed text-cream/60">
           <p className="max-w-[72ch]">
-            {site.name} is reader-supported: we earn a commission when you buy through a marked link, at no extra cost to
-            you. No brand has paid for a mention, a ranking, or a position in a comparison table. Educational content is
+            {site.name} may earn a commission when you buy through a marked affiliate link. We identify sponsored placements wherever they appear. Educational content is
             not veterinary advice — for diagnosis or treatment, see a licensed veterinarian.{' '}
             <Link href="/trust" className="text-cream/80 underline">
               Full editorial and disclosure policy

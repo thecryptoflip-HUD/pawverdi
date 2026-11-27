@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import NewsletterForm from '@/components/newsletter-form';
 import CareIcon from '@/components/care-icon';
@@ -6,6 +7,8 @@ import Hero from '@/components/hero';
 import PetReel from '@/components/pet-reel';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
+import { readPublicEntries } from '@/lib/publication';
+import { collections as petCollections } from '@/lib/discovery';
 import { completeArticles } from '@/lib/content';
 import { petPhoto, petPhotoAlt, guidePhoto } from '@/lib/pet-photography';
 
@@ -23,11 +26,22 @@ const topics = [
   { label:'Cats', glyph:'❀', image:petPhoto('home-topic-5'), href:'/cats', tone:'peach' },
 ];
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  description: 'Explore practical pet care guides, compare gear for six pet categories, and browse disclosed deals and stories from PawVerdi.',
+  alternates: { canonical: '/' },
+};
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  // Optional placements must never prevent the editorial homepage from loading.
+  const featured = (await readPublicEntries(undefined, undefined, true).catch(() => [])).slice(0, 6);
   // Only published, source-linked guides appear as article cards.
   const guides = completeArticles.filter((article) => guidePhoto('home', article.slug)).slice(0, 2);
   return (
     <div className="vibrant-page pv-finished-home">
+      <aside className="pv-announcement" aria-label="Featured guide">
+        <Link href="/journal/hosting-with-pets">Hosting guests? Read our seasonal guide to a quieter home <span aria-hidden="true">→</span></Link>
+      </aside>
       <PetReel />
       <Hero />
 
@@ -49,6 +63,37 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <section className="pv-species-discovery" aria-labelledby="species-heading">
+        <div className="mx-auto max-w-wrap px-5 py-8 sm:px-8">
+          <div className="pv-home-heading">
+            <h2 id="species-heading">Find gear for your pet</h2>
+            <Link href="/discover">Explore all categories <span aria-hidden="true">→</span></Link>
+          </div>
+          <ul className="pv-species-links">
+            {petCollections.map(({ slug, name }) =>
+              <li key={slug}><Link href={`/discover/${slug}`}>{name} <span aria-hidden="true">↗</span></Link></li>)}
+          </ul>
+          <div className="pv-shopping-tools"><Link href="/compare">Compare products</Link><Link href="/deals">Check current deals</Link></div>
+        </div>
+      </section>
+
+      {featured.length > 0 && <section aria-labelledby="featured-collection-title">
+        <div className="mx-auto max-w-wrap px-5 py-8 sm:px-8">
+          <div className="pv-home-heading">
+            <h2 id="featured-collection-title">Featured on PawVerdi</h2>
+            <Link href="/discover/published">All published collections <span aria-hidden="true">→</span></Link>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {featured.map(entry => <article key={entry.id} className="rounded-xl border border-[#cad9c3] p-5">
+              <p className="pb-2 text-sm font-semibold capitalize">{entry.kind === 'campaign' ? 'Advertising campaign' : entry.kind}</p>
+              {entry.disclosure && <p className="pb-2 text-sm font-semibold">{entry.disclosure}</p>}
+              <h3 className="font-serif text-xl"><Link href={`/discover/published/${entry.slug}`} className="underline">{entry.title}</Link></h3>
+              <p className="pt-2">{entry.summary}</p>
+            </article>)}
+          </div>
+        </div>
+      </section>}
 
       <section className="pv-home-topics" aria-labelledby="pv-topic-title">
         <div className="mx-auto max-w-wrap px-5 pb-14 pt-6 sm:px-8">

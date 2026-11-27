@@ -1,3 +1,4 @@
+import { checkIntake } from '@/lib/intake-limit';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { isLive } from '@/lib/supabase';
@@ -19,7 +20,7 @@ export async function POST(request: Request) {
   const contentType = request.headers.get('content-type') ?? '';
   const raw = contentType.includes('application/json')
     ? await request.json().catch(() => null)
-    : Object.fromEntries((await request.formData()).entries());
+    : await request.formData().then(data => Object.fromEntries(data.entries())).catch(() => null);
 
   const parsed = schema.safeParse(raw);
   if (!parsed.success) {
@@ -39,6 +40,9 @@ export async function POST(request: Request) {
     );
   }
 
+  const limited = await checkIntake(request, 'seller-application', parsed.data.email);
+  if (limited) return limited;
+
   const { data, error } = await supabase
     .from('seller_applications')
     // `status` must be a moderation_state value: 'new' | 'triaged' | 'closed'.
@@ -50,7 +54,7 @@ export async function POST(request: Request) {
     .single();
 
   if (error) {
-    return NextResponse.json({ ok: false, error: 'Could not open the application.', detail: error.message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: 'Could not open the application.' }, { status: 500 });
   }
 
   return NextResponse.json({

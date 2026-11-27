@@ -43,6 +43,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <Link href="/shop?species=cat#gear-types" className="btn btn-ghost">
             Shop cat gear
           </Link>
+          <Link href="/discover" className="btn btn-ghost">Explore all six pet collections</Link>
           <Link href="#shop-disclosure" className="pv-hero-disclosure">Affiliate disclosure</Link>
         </div>
       </CinematicHero>
@@ -52,8 +53,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <aside id="shop-disclosure" aria-label="Shop affiliate disclosure" className="pv-shop-disclosure">
             <h3>Affiliate disclosure</h3>
             <p>
-              As an Amazon Associate I earn from qualifying purchases. If you buy through a labelled Amazon link,
-              PawVerdi may earn a commission at no extra cost to you.
+              {products.some((p) => p.affiliate) ? 'As an Amazon Associate I earn from qualifying purchases. If you buy through a labelled Amazon link, PawVerdi may earn a commission at no extra cost to you.' : 'Amazon links in this shortlist are ordinary retailer links without affiliate tracking.'}{' '}
               Chewy links are ordinary retailer links without affiliate tracking.
             </p>
             <Link href="/trust#disclosure">
@@ -124,7 +124,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                     <td className="capitalize text-cream/80">{product.category}</td>
                     <td className="text-cream/80">
                       <a
-                        href={product.href}
+                        href={product.affiliate ? '/go/guide/'+product.id : product.href}
                         data-track={product.affiliate ? 'tracked' : 'UNTRACKED'}
                         target="_blank"
                         rel="sponsored nofollow noopener"
