@@ -6,6 +6,9 @@ const clips = [
   { id: 'lMS29FGqRNY', title: 'Maru and the box', credit: 'mugumogu', end: 18 },
   { id: 'nGeKSiCQkPw', title: 'Ultimate Dog Tease', credit: 'Talking Animals', end: 23 },
   { id: 'teue4UTF5sE', title: 'Dachshund ball hockey', credit: 'Crusoe the Dachshund', end: 15 },
+  { id: 'J---aiyznGQ', title: 'Keyboard Cat', credit: 'Charlie Schmidt', end: 18 },
+  { id: 'pYrOty3N2-4', title: 'Dachshund miners', credit: 'Crusoe the Dachshund', end: 18 },
+  { id: 'XjZLLcARc6Y', title: 'Sliding Cat Maru', credit: 'mugumogu', end: 20 },
 ];
 
 type Player = {
@@ -56,7 +59,7 @@ export default function PetReel() {
     let instance: Player | undefined;
     const fail = () => {
       if (disposed) return;
-      setNotice('Player unavailable. Use the original video link below.');
+      setNotice('Player unavailable. Try the YouTube link.');
       setPlaying(false);
     };
     loadAPI().then(api => {
@@ -86,27 +89,54 @@ export default function PetReel() {
     return () => { disposed = true; player.current = null; instance?.destroy(); container.replaceChildren(); };
   }, [playing]);
 
-  return <section id="pet-reel" aria-labelledby="reel-title" className="pt-24 pb-6">
-    <div className="mx-auto grid max-w-wrap items-center gap-5 px-5 sm:px-8 md:grid-cols-2">
-      <div>
-        <h2 id="reel-title" className="text-3xl font-bold text-emerald-950">The funny pet reel</h2>
-        <p className="my-2">Three clips in 56 seconds. One determined cat and two dogs with other plans.</p>
-        <ol className="divide-y divide-emerald-900/15">{clips.map((c,i)=><li key={c.id}>
-          <button type="button" onClick={()=>pick(i)} aria-current={selected===i} className="flex w-full items-center justify-between gap-4 py-2 text-left text-emerald-950">
-            <strong>{c.title}</strong><small>{c.credit}</small>
-          </button>
-        </li>)}</ol>
-      </div>
-      <div>
-        <div className="relative aspect-video overflow-hidden rounded-2xl bg-emerald-950">
-          <div ref={host} className="absolute inset-0" />
-          {!playing && <button type="button" onClick={()=>pick(selected)} className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-700 p-5 text-white">
-            <span className="font-serif text-3xl">Maru and the box</span>
-            <span className="rounded-full bg-emerald-950 px-5 py-3 font-bold text-white">▶ Play the reel</span>
-          </button>}
+  const current = clips[selected];
+
+  return (
+    <section id="pet-reel" aria-labelledby="reel-title" className="pb-5 pt-20 sm:pt-24">
+      <div className="mx-auto max-w-wrap px-4 sm:px-8">
+        <div className="grid grid-cols-1 gap-3 rounded-2xl border border-emerald-900/15 bg-emerald-50/75 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_minmax(260px,360px)] md:items-start md:gap-x-5">
+          <header className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 md:col-start-1 md:row-start-1">
+            <h2 id="reel-title" className="text-2xl font-bold text-emerald-950">The funny pet reel</h2>
+            <p className="text-sm text-emerald-900">{clips.length} short clips</p>
+          </header>
+
+          <div className="md:col-start-2 md:row-span-2 md:row-start-1">
+            <div className="relative aspect-video min-h-[200px] w-full overflow-hidden rounded-xl bg-emerald-950">
+              <div ref={host} className="absolute inset-0" />
+              {!playing && (
+                <button
+                  type="button"
+                  onClick={() => pick(selected)}
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-emerald-950 via-emerald-800 to-teal-700 p-3 text-white focus-visible:outline focus-visible:-outline-offset-4 focus-visible:outline-white"
+                >
+                  <span className="font-serif text-xl">{current.title}</span>
+                  <span className="rounded-full bg-emerald-950 px-3 py-1.5 text-sm font-semibold">▶ Play the reel</span>
+                </button>
+              )}
+            </div>
+            <p aria-live="polite" className="mt-1.5 text-xs text-emerald-950">
+              {notice && <span>{notice} </span>}
+              {current.credit} · <a className="underline underline-offset-2" href={`https://www.youtube.com/watch?v=${current.id}`}>Watch on YouTube</a>
+            </p>
+          </div>
+
+          <ol className="grid list-none grid-cols-2 gap-1.5 p-0 md:col-start-1 md:row-start-2">
+            {clips.map((clip, i) => (
+              <li key={clip.id}>
+                <button
+                  type="button"
+                  onClick={() => pick(i)}
+                  aria-current={selected === i ? 'true' : undefined}
+                  className="flex h-full w-full items-center justify-between gap-1.5 rounded-lg border border-emerald-900/15 bg-white/70 px-2.5 py-1.5 text-left text-emerald-950 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-emerald-800 aria-[current=true]:border-emerald-800 aria-[current=true]:bg-emerald-100"
+                >
+                  <strong className="break-words text-sm leading-tight">{clip.title}</strong>
+                  <span className="shrink-0 text-xs tabular-nums">{clip.end}s</span>
+                </button>
+              </li>
+            ))}
+          </ol>
         </div>
-        <p aria-live="polite" className="mt-2 text-sm">{notice} {clips[selected].credit} · <a className="underline" href={'https://www.youtube.com/watch?v='+clips[selected].id}>Watch original on YouTube</a></p>
       </div>
-    </div>
-  </section>;
+    </section>
+  );
 }
