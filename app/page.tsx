@@ -3,6 +3,7 @@ import NewsletterForm from '@/components/newsletter-form';
 import CareIcon from '@/components/care-icon';
 import ResourceCard from '@/components/resource-card';
 import Hero from '@/components/hero';
+import PetReel from '@/components/pet-reel';
 import ArticleCard from '@/components/article-card';
 import AdSlot from '@/components/ad-slot';
 import { completeArticles } from '@/lib/content';
@@ -27,6 +28,7 @@ export default function HomePage() {
   const guides = completeArticles.filter((article) => guidePhoto('home', article.slug)).slice(0, 2);
   return (
     <div className="vibrant-page pv-finished-home">
+      <PetReel />
       <Hero />
 
       <section className="pv-home-collections" aria-label="Explore pet care collections">
