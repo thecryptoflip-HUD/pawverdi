@@ -10,7 +10,12 @@ import type { NextConfig } from 'next';
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.youtube.com https://s.ytimg.com",
+  [
+    "script-src 'self' 'unsafe-inline'",
+    // Next's development bundle uses eval-based source maps.
+    ...(process.env.NODE_ENV === 'development' ? ["'unsafe-eval'"] : []),
+    'https://www.googletagmanager.com https://www.youtube.com https://s.ytimg.com',
+  ].join(' '),
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data:",
@@ -27,6 +32,8 @@ const CSP = [
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Serve canonical and sharing metadata in the initial document head for every reader.
+  htmlLimitedBots: /.*/,
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [{ protocol: 'https', hostname: '**.supabase.co' }],

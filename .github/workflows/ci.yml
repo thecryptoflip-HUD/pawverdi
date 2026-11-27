@@ -32,6 +32,12 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Verify publishing, commercial reporting and intake permissions
+        run: |
+          npm run test:cms
+          node scripts/test-intake-db.mjs
+          node scripts/test-commerce-db.mjs
+
       - name: Build
         run: npx next build
 
@@ -48,6 +54,7 @@ jobs:
             echo "server did not start"; tail -50 /tmp/next.log; kill "$SERVER_PID" 2>/dev/null || true; exit 1
           fi
           BASE=http://127.0.0.1:3000 npm run verify
+          BASE=http://127.0.0.1:3000 python3 scripts/test-navigation.py
           status=$?
           kill "$SERVER_PID" 2>/dev/null || true
           exit $status

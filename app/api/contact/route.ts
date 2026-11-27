@@ -1,3 +1,4 @@
+import { checkIntake } from '@/lib/intake-limit';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { isLive } from '@/lib/supabase';
@@ -13,7 +14,7 @@ export async function POST(request: Request) {
   const contentType = request.headers.get('content-type') ?? '';
   const raw = contentType.includes('application/json')
     ? await request.json().catch(() => null)
-    : Object.fromEntries((await request.formData()).entries());
+    : await request.formData().then(data => Object.fromEntries(data.entries())).catch(() => null);
 
   const parsed = schema.safeParse(raw);
   if (!parsed.success) {
@@ -28,9 +29,12 @@ export async function POST(request: Request) {
     );
   }
 
+  const limited = await checkIntake(request, 'contact', parsed.data.email);
+  if (limited) return limited;
+
   const { error } = await supabase.from('contact_messages').insert({ ...parsed.data, status: 'new' });
   if (error) {
-    return NextResponse.json({ ok: false, error: 'Could not record the message.', detail: error.message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: 'Could not record the message.' }, { status: 500 });
   }
   return NextResponse.json({ ok: true, stored: true, mode: 'live', message: 'Message received. We reply within the stated window for that topic.' });
 }

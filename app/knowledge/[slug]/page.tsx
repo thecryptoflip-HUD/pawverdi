@@ -67,6 +67,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <h1 className="display text-[clamp(2rem,4.2vw,3.4rem)] text-[#fcf8f1]">{article.title}</h1>
             <p className="lede mt-6">{article.summary}</p>
             <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/[0.07] pt-5 text-[0.78rem] text-cream/70">
+              <div className="flex gap-2"><dt>Prepared by</dt><dd>PawVerdi editorial</dd></div>
               <div className="flex gap-2"><dt>Updated</dt><dd><time dateTime={article.updated}>{new Date(`${article.updated}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></dd></div>
               {article.guide && <div className="flex gap-2"><dt>Reading time</dt><dd>{article.readingMinutes} minutes</dd></div>}
               <div className="flex gap-2"><dt>Review</dt><dd>{reviewed ? `Veterinary review by ${article.review.reviewer}` : article.guide ? 'Research-based; not vet-reviewed' : 'In preparation'}</dd></div>
@@ -103,7 +104,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </section>
               <section className="mt-8 border-t border-white/10 pt-6 text-[0.85rem] leading-relaxed text-cream/70">
                 <h2 className="mb-2 font-serif text-xl text-cream">Affiliate disclosure</h2>
-                <p>This guide contains no paid retailer links. Merchant links in our <Link href="/shop" className="text-gold underline underline-offset-4">shop</Link> state whether they are affiliate or ordinary retailer links. As an Amazon Associate, PawVerdi earns from qualifying purchases.</p>
+                <p>This guide contains no paid retailer links. Merchant links in our <Link href="/shop" className="text-gold underline underline-offset-4">shop</Link> state whether they are affiliate or ordinary retailer links.{process.env.PAWVERDI_AMAZON_APPROVED === 'true' && ' As an Amazon Associate I earn from qualifying purchases.'}</p>
               </section>
             </>
           ) : (

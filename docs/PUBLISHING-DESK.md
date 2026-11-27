@@ -1,0 +1,18 @@
+# Publishing desk
+
+Apply the project's ordered migrations in the intended Supabase environment after backing it up. Configure the server and public Supabase keys as documented in the root environment example. Provision a staff account through Supabase Auth. A trusted database administrator grants its profile the role of editor, reviewer or admin. A new account starts as a reader.
+
+1. Sign in at `/admin/login`. Enter the title and URL slug for the new draft, then add the summary and body. The title and summary supply the public page's search and sharing metadata.
+2. Select the record type, species, subcategory and optional featured flag. A featured published item can appear on the homepage. Product discoveries, verified deals and booked campaigns support a merchant destination. Check the exact link and its commercial authorization before entering it.
+3. Use the content library to reopen the draft. Save it as **review** when ready. For a deal or campaign, include the merchant, HTTPS destination, disclosure and expiration with a UTC timezone. A reviewer or administrator checks the copy, source, disclosed relationship, end date and destination, then saves it as **published**. Approval records the verification time. A published record appears under `/discover/published`. The commercial views apply their own filters.
+4. To amend a published entry, a reviewer returns it to draft; this takes it offline immediately. Use **archived** to withdraw a publication. A restored archive goes back through review. If a save conflicts, reload and compare the latest revision before reapplying changes.
+5. Open an operations queue to view submissions and update their status. The newsletter queue shows confirmation and unsubscribe timestamps recorded by the system. This interface does not send mail. The audit log is available to administrators. Use the performance view for recorded metrics.
+6. Use the previous and next page links to read older records. The public collection displays 24 entries per page and the administrative lists display 40. Drafts, archives and expired publications remain accessible to staff in the desk.
+
+Run `npm run test:cms` to verify publication permissions and state transitions in an ephemeral PostgreSQL database. A working Supabase project, provisioned test user for each role, and applied schema are required to validate sign-in, cookie refresh, PostgREST and production permissions end to end.
+
+### Media
+
+Apply the private-bucket migration in Supabase. Open a saved draft to attach a Higgsfield image or silent video up to 4 MiB. Enter a concise text description and credit, and confirm the usage rights for the actual file. Supported formats are JPEG, PNG, WebP, MP4 and WebM. Reviewers can preview the private object before publication. Visitors receive media through the publication page while its record is approved and active. Replacing a file on a draft first commits its new revision, then removes the old private object. The desk reports cleanup failures so an administrator can remove the orphan after confirming that no active record references it.
+
+The 4 MiB binary cap leaves room for a multipart form beneath Vercel’s default 4.5 MB request limit. The bucket and application enforce the same file cap. In staging, upload a credited image just below the limit, reopen its draft preview, replace it with a second image, and check both the published visitor route and the old object's removal. Try a file over 4 MiB and check that the original draft and bucket are unchanged. [Vercel request size reference](https://vercel.com/docs/errors/function_payload_too_large)

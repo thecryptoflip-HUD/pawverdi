@@ -3,12 +3,17 @@
  * Production smoke test. Run against a running server:
  *   npm run build && npm start &
  *   npm run verify            # defaults to http://127.0.0.1:3000
- *   BASE=https://pawverdi.com npm run verify
+ *   BASE=http://127.0.0.1:3190 npm run verify
  *
  * Exits non-zero on the first hard failure so CI can gate a release.
  */
 
 const BASE = process.env.BASE || 'http://127.0.0.1:3000';
+
+const baseUrl = new URL(BASE);
+if (baseUrl.protocol !== 'http:' || !['localhost', '127.0.0.1', '[::1]'].includes(baseUrl.hostname)) {
+  throw new Error('The smoke suite submits test records. Use a local test server.');
+}
 
 const pages = [
   ['/', ['Make every day', 'good pet day', 'PawVerdi', 'pv-reference-homehero', 'Popular Pet Care Topics', 'Featured Pet Guides', 'pv-home-subscribe', 'Review Transparency']],

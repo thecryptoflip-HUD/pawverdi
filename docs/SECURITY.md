@@ -66,3 +66,9 @@ An administrator must manually provision a separate test account in Supabase Aut
 4. Sign out and repeat the API requests: expect HTTP 401. `scripts/verify.mjs` also checks unauthenticated access, the absence of `host` in diagnostics, forged session rejection, and the admin cache policy.
 
 For login throttling, use a dedicated test address: submit five incorrect passwords, then confirm the sixth attempt redirects to `/admin/login?error=rate` with `Retry-After`. A valid unblocked account must still sign in; a blocked account must wait for its failures to leave the 15-minute window. Do not use a production administrator account for failure testing.
+
+## Publishing and intake permissions
+
+The publishing desk uses the signed-in visitor's Supabase session for every read and write. Public queries and database policies both filter out drafts, archives and expired records. Staff create drafts. Reviewers and administrators can publish a reviewed entry or archive a publication. Editing published copy requires moving it back to draft. An optimistic revision check rejects stale saves, and database triggers audit publication changes and inquiry status changes. The administrative inbox and the staff audit views require the corresponding role. The schema keeps verified sellers' private contact details and licensing records out of public reads.
+
+The code-backed reference guides continue to follow the repository's existing editorial process. CMS entries display their own title, summary, public disclosure and review timestamp independently. Each approved destination should be checked manually for ownership, accuracy, availability and compensation terms before a reviewer publishes it.

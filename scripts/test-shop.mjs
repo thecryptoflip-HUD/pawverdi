@@ -17,11 +17,18 @@ let child;
 let childOutput = '';
 let passed = 0;
 let failed = 0;
+const amazonApproved = process.env.PAWVERDI_AMAZON_APPROVED === 'true';
 
 async function request(url, timeout = 90_000) {
   return fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(timeout) });
 }
 
+async function resolveRetailer(href) {
+  if (!href.startsWith('/go/')) return new URL(href);
+  const response = await request(new URL(href,base));
+  assert.equal(response.status,302);
+  return new URL(response.headers.get('location'));
+}
 async function stopDev() {
   if (!child || child.exitCode !== null || child.signalCode !== null) return;
   const exited = once(child, 'exit');
@@ -141,18 +148,18 @@ try {
     }
   });
 
-  await check('every row offers a safe category-level retailer link', () => {
+  await check('every row offers a safe category-level retailer link', async () => {
     const targets = [
       ['www.amazon.com', '/s', 'orthopedic dog beds', 'Amazon'],
       ['www.chewy.com', '/b/carriers-106726', null, 'Chewy'],
       ['www.amazon.com', '/s', 'front clip dog harnesses', 'Amazon'],
       ['www.chewy.com', '/b/litter-boxes-413', null, 'Chewy'],
     ];
-    rows.forEach((row, index) => {
+    for (const [index,row] of rows.entries()) {
       const anchors = links(row);
       assert.equal(anchors.length, 1, `Row ${index + 1} needs one real retailer link`);
       const { attrs, label } = anchors[0];
-      const destination = new URL(attrs.href);
+      const destination = await resolveRetailer(attrs.href);
       const [hostname, pathname, query, merchant] = targets[index];
       assert.equal(destination.protocol, 'https:', 'Retailer links must use HTTPS');
       assert.equal(destination.hostname, hostname, 'Use the correct retailer, not a redirect service');
@@ -165,16 +172,16 @@ try {
       for (const token of ['sponsored', 'nofollow', 'noopener']) {
         assert.ok(rel.has(token), `Commercial links require rel=${token}`);
       }
-    });
+    }
   });
 
-  await check('configured Amazon links preserve the tag and tracked label', () => {
+  await check('configured Amazon links preserve the tag and tracked label', async () => {
     for (const index of [0, 2]) {
       const { attrs } = links(rows[index])[0];
-      const destination = new URL(attrs.href);
-      assert.deepEqual(destination.searchParams.getAll('tag'), ['pawverdi-20'], 'Preserve the existing configured Amazon tag');
-      assert.equal(attrs['data-track'], 'tracked');
-      assert.match(text(rows[index]), /\bAffiliate\b/, 'A tracked Amazon link needs an inline affiliate label');
+      const destination = await resolveRetailer(attrs.href);
+      assert.deepEqual(destination.searchParams.getAll('tag'), amazonApproved ? ['pawverdi-20'] : [], 'Only activate the configured tag with current approval');
+      assert.equal(attrs['data-track'], amazonApproved ? 'tracked' : 'UNTRACKED');
+      assert.match(text(rows[index]), amazonApproved ? /\bAffiliate\b/ : /Retailer link/, 'A tracked Amazon link needs an inline affiliate label');
     }
   });
 
@@ -193,8 +200,10 @@ try {
     assert.ok(disclosure, 'Put a reader-facing shop disclosure on this page');
     assert.ok(disclosure.index < main.indexOf('<table'), 'Disclosure must precede the commercial links');
     const copy = text(disclosure[1]);
-    assert.ok(copy.includes('As an Amazon Associate I earn from qualifying purchases.'), 'Use the Amazon Associate disclosure wording');
-    assert.match(copy, /may earn a commission at no extra cost to you/i);
+    if (amazonApproved) {
+      assert.ok(copy.includes('As an Amazon Associate I earn from qualifying purchases.'));
+      assert.match(copy, /may earn a commission at no extra cost to you/i);
+    } else assert.match(copy, /Amazon links in this shortlist are ordinary retailer links/);
     assert.match(copy, /Chewy links are ordinary retailer links without affiliate tracking/i);
     assert.ok(links(main).some(({ attrs }) => attrs.href === '#shop-disclosure'), 'Make the shop disclosure reachable from the hero');
     assert.doesNotMatch(text(main), /(?:affiliate account|earnings|commissions?)\s+(?:is |are |have been )?(?:verified|confirmed|guaranteed)/i);
@@ -249,7 +258,7 @@ try {
       assert.equal(cardLink.attrs.rel, tableLink.attrs.rel);
       assert.equal(cardLink.attrs.target, '_blank');
       assert.match(cardLink.attrs['aria-describedby'], /shop-disclosure/);
-      assert.match(text(card), index % 2 === 0 ? /Affiliate link.*may earn a commission/ : /Retailer link.*untracked/);
+      assert.match(text(card), index % 2 === 0 && amazonApproved ? /Affiliate link.*may earn a commission/ : /Retailer link.*untracked/);
       assert.ok(card.indexOf('pv-gear-link-label') < card.indexOf('<a '), 'The commercial label must precede its link');
       const image = card.match(/<img\b[^>]*src="([^"]+)"[^>]*>/)?.[1];
       assert.ok(image?.startsWith('/brand/garden/gear-'));

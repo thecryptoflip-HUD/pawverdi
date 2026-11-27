@@ -51,6 +51,7 @@ export default async function KnowledgePage({ searchParams }: { searchParams: Pr
 
       <PawVerdiShowcase variant="knowledge" featuredContent={<>
 <section id="guide-search" className="pv-knowledge-results">
+        <div className="mx-auto max-w-wrap px-5 pb-6 sm:px-8"><Link className="underline" href="/journal">Read the pet lifestyle journal</Link></div>
         <div className="mx-auto max-w-wrap px-5 sm:px-8">
           <form action="/knowledge#guide-search" method="get" className="mb-8">
             <label htmlFor="knowledge-search" className="mb-2 block text-[0.82rem] text-cream/70">Search guides</label>

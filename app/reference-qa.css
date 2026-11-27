@@ -287,3 +287,30 @@ body:has(.vibrant-page) .grain { display:none; }
 .pv-hero-disclosure { color:#fffbed; font-size:.75rem; font-weight:700; text-decoration:underline; text-underline-offset:4px; }
 .pv-application-status:empty { display:none; }
 .pv-application-status { padding:12px; border-radius:10px; background:#e5f5e9; color:#07543d !important; font-size:.86rem; line-height:1.5; }
+
+.pv-finished-home .pv-announcement {
+  margin-top:76px; padding:.55rem 1rem; text-align:center; color:#19442f; background:#e4f3dc;
+  font-size:.85rem; font-weight:650;
+}
+.pv-announcement a { text-decoration:underline; text-underline-offset:3px; }
+.pv-finished-home #pet-reel { padding-top:.7rem; }
+.pv-finished-home > .pv-hero-scene { margin-top:0; }
+.pv-species-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr)); gap:.55rem; list-style:none; padding:0; }
+.pv-species-links a { display:flex; align-items:center; justify-content:space-between; min-height:48px; padding:.65rem .9rem; background:#edf3e7; border:1px solid #c6d8c3; border-radius:.65rem; color:#174431; font-weight:700; }
+.pv-species-links a:hover { background:#dfebd7; }
+.pv-shopping-tools { display:flex; flex-wrap:wrap; gap:1.1rem; margin-top:1rem; color:#18523d; font-size:.9rem; }
+.pv-shopping-tools a { text-decoration:underline; text-underline-offset:3px; }
+@media(prefers-reduced-motion:no-preference) {
+  .pv-hero-scene .pv-reference-homehero-image {
+    transform:translate3d(calc(var(--scene-x,0)*-9px),calc(var(--scene-y,0)*-6px),0) scale(1.045);
+    transition:transform .23s ease-out;
+  }
+  .pv-hero-scene .pv-reference-heart { transform:translate(calc(var(--scene-x,0)*14px),calc(var(--scene-y,0)*10px)) rotate(-15deg); transition:transform .3s ease-out; }
+  .pv-hero-scene .pv-reference-star { transform:translate(calc(var(--scene-x,0)*7px),calc(var(--scene-y,0)*5px)); transition:transform .3s ease-out; }
+}
+
+.pv-finished-home .pv-hero-scene .pv-reference-homehero-image { background-image:none; }
+.pv-hero-scene .pv-reference-homehero-image img { width:100%; height:100%; object-fit:cover; object-position:right 12%; }
+@media(max-width:700px) {
+  .pv-hero-scene .pv-reference-homehero-image img { object-position:72% 38%; }
+}

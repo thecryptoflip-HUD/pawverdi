@@ -24,7 +24,7 @@ export interface Product {
  * alone must never turn an ordinary retailer link into an affiliate link.
  */
 const amazonConfig: { approved: boolean; tag: string } = {
-  approved: true,
+  approved: process.env.PAWVERDI_AMAZON_APPROVED === 'true',
   tag: 'pawverdi-20',
 };
 

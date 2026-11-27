@@ -28,7 +28,8 @@ const check = async (label, run) => { await run(); passed++; console.log(`PASS $
 
 await check('all seven pages retain a photograph for every assigned placement', () => {
   pages.forEach((page, index) => {
-    assert.equal(page.backgrounds.length, 1, `${page.route}: expected one visible hero photo`);
+    // The home cover uses a prioritized responsive image. Other page covers use CSS backgrounds.
+    assert.equal(page.backgrounds.length, page.route === '/' ? 0 : 1, `${page.route}: unexpected background photo count`);
     assert.equal(page.all.length, expected[index], `${page.route}: photo count changed`);
   });
   assert.deepEqual(new Set(pages.flatMap(page => page.all)), new Set(Object.values(catalogue).map(photo => photo.src)), 'Rendered images must match the approved placement catalogue');

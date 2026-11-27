@@ -1,8 +1,24 @@
+import {analyticsAllowed,approvedCampaign} from '@/lib/campaign-attribution';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
+  const path=request.nextUrl.pathname;
+  const admin=path==='/admin' || path.startsWith('/admin/') || path==='/api/admin' || path.startsWith('/api/admin/');
+  if(!admin) {
+    if(request.method!=='GET' || path.startsWith('/api/') || path.startsWith('/go/') || !analyticsAllowed(request) ||
+       request.headers.has('next-router-prefetch') || request.headers.get('purpose')==='prefetch') return response;
+    try {
+      const name=await approvedCampaign(request.nextUrl.searchParams.get('utm_campaign'));
+      if(name) {
+        response.cookies.set('pv_campaign',name,{path:'/',sameSite:'lax',secure:request.nextUrl.protocol==='https:'});
+        response.headers.set('Cache-Control','private, no-store');
+        response.headers.append('Vary','Cookie');
+      }
+    } catch { /* Attribution availability must never prevent navigation. */ }
+    return response;
+  }
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   let validated = false;
@@ -42,4 +58,4 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ['/admin/:path*', '/api/admin/:path*'] };
+export const config = { matcher: ['/admin/:path*', '/api/admin/:path*', {source:'/((?!_next/).*)',has:[{type:'query',key:'utm_campaign'}]}] };

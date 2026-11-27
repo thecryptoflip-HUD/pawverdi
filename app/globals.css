@@ -633,8 +633,8 @@ body:has(.vibrant-page) { background:var(--pv-cream); }
 /* PawVerdi navigation and footer aligned to approved reference */
 .pv-header-icon { width:35px; height:35px; display:inline-flex; justify-content:center; align-items:center; color:#07543d; border-radius:50%; }
 .pv-header-icon:hover { background:#e1f7eb; }
-.pv-header-join { background:#ff6659; color:#fff; border-radius:99px; padding:.7rem 1rem; font-weight:800; font-size:.75rem; white-space:nowrap; }
-.pv-header-join:hover { background:#e94e42; }
+.pv-header-join { background:#ff6659; color:#341710; border-radius:99px; padding:.7rem 1rem; font-weight:800; font-size:.75rem; white-space:nowrap; }
+.pv-header-join:hover { background:#ff8c7f; }
 .pv-reference-footer { background:#004d37; }
 .vibrant-page.pv-dog-reference section.pv-dog-trust { background:#d5f7e9; }
 .vibrant-page.pv-dog-reference section.pv-dog-subscribe { background:#ff6863; }

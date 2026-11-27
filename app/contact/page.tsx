@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import EnquiryForm from '@/components/enquiry-form';
 import PageHeader from '@/components/page-header';
 import { site } from '@/lib/site';
 
@@ -25,7 +26,7 @@ export default function ContactPage() {
         intro="Every route below has an owner and a stated response window. Corrections involving animal safety jump the queue."
       />
 
-      <div className="mx-auto max-w-wrap px-5 py-16 sm:px-8">
+      <section aria-label="Contact options" className="mx-auto max-w-wrap px-5 py-16 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[1fr_.8fr]">
           <div>
             <div className="overflow-x-auto">
@@ -64,7 +65,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <form action="/api/contact" method="post" className="grid h-fit gap-4 rounded-2xl border border-white/[0.08] bg-moss/60 p-7">
+          <EnquiryForm action="/api/contact" className="grid h-fit gap-4 rounded-2xl border border-white/[0.08] bg-moss/60 p-7">
             <h2 className="font-serif text-xl text-cream">Send a message</h2>
             <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
               Your email
@@ -82,18 +83,11 @@ export default function ContactPage() {
             </label>
             <label className="flex flex-col gap-2 text-[0.7rem] uppercase tracking-[0.18em] text-cream/60">
               Message
-              <textarea required name="message" rows={5} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
+              <textarea required name="message" minLength={10} maxLength={4000} rows={5} className="rounded-xl border border-white/15 bg-void/60 px-4 py-3 text-base normal-case tracking-normal text-cream focus:border-amber focus:outline-none" />
             </label>
-            <button type="submit" className="btn btn-solid w-full justify-center">
-              Send
-            </button>
-            <p className="text-[0.72rem] leading-relaxed text-cream/45">
-              Routed to <code className="text-cream/70">/api/contact</code>. In demo mode the endpoint validates and reports
-              that nothing was stored — it will not pretend to deliver mail.
-            </p>
-          </form>
+            </EnquiryForm>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

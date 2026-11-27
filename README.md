@@ -1,10 +1,12 @@
 # PawVerdi
 
-A pet knowledge and marketplace platform for dog and cat owners — education, verified listings, product recommendations, labelled advertising.
+A pet knowledge, publishing and shopping platform for pet owners — education, verified listings, product recommendations, labelled advertising.
 
-**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · Framer Motion · Supabase/PostgreSQL
+**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · Supabase/PostgreSQL
 
 ---
+
+See [the release handoff](docs/RELEASE-HANDOFF.md) for review scope, verification and launch requirements. On Windows, extract the entire project, install Node.js 22 LTS, and double-click **Start-PawVerdi.cmd** to build and run it locally.
 
 ## Quick start
 
@@ -13,11 +15,11 @@ npm install
 npm run dev          # http://localhost:3000
 ```
 
-No environment variables are required to run. Without Supabase credentials the app runs in **demo mode**: all reads come from `lib/content.ts`, writes are validated but not stored, and the UI says so on every form and in the admin header.
+No environment variables are required to run. Without Supabase credentials the app runs in **demo mode**: public pages use the bundled editorial and shopping catalogues, writes are validated but not stored, and the UI says so on submission.
 
 ```bash
-npm run build && npm start     # production build (44 prerendered routes)
-npm run verify                 # smoke test: 16 pages + 4 API behaviours + security headers
+npm run build && npm start     # production build
+npm run verify                 # smoke test: application, API and asset checks
 npm run typecheck              # tsc --noEmit
 ```
 

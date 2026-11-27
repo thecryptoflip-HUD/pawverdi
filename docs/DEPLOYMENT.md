@@ -6,15 +6,15 @@ Nothing here deploys automatically, and nothing should be published until the ch
 
 1. Create a project at supabase.com (region closest to your audience — for a UK/US audience, `eu-west-2` or `us-east-1`).
 2. Copy three values from **Settings → API**: Project URL, `anon` key, `service_role` key.
-3. Apply the schema — either:
+3. Apply all migrations in filename order to the intended staging project first. For example:
 
    ```bash
    npm i -g supabase
    supabase link --project-ref <ref>
-   supabase db push            # runs supabase/migrations/0001_init.sql
+   supabase db push            # applies pending migrations
    ```
 
-   or paste `supabase/migrations/0001_init.sql` into the SQL editor and run it once.
+   or execute every file in `supabase/migrations/` in filename order against a new staging database. Track which migrations have already run.
 
 4. Create your own user (**Authentication → Users → Add user**), then promote yourself:
 
@@ -41,8 +41,7 @@ Nothing here deploys automatically, and nothing should be published until the ch
    NEXT_PUBLIC_SITE_URL=https://pawverdi.com
    ```
 
-   The privileged key must be a **server** variable (no `NEXT_PUBLIC_` prefix), and
-   must not be marked *Sensitive* on Vercel if the public pair needs it at build time.
+   The privileged key must be a **server** variable (no `NEXT_PUBLIC_` prefix),. Keep it in the host’s secret store.
    `lib/supabase-admin.ts` accepts either name and resolves them in this order:
    `SUPABASE_SERVICE_ROLE_KEY` → `SUPABASE_SECRET_KEY` → `SUPABASE_SERVICE_KEY`.
    Both key generations map to the `service_role` Postgres role and bypass RLS, so no
@@ -59,43 +58,18 @@ npm start            # binds 3000, behind nginx or Caddy
 
 Put TLS in front of it (Caddy: two lines). The app sets its own security headers, but HSTS belongs on the proxy.
 
-## 3. DNS
+## 3. Domain and release
 
-For a GitHub-Pages-style static host this used to be A records; for a Next.js app you point the apex at the host instead:
+GitHub and Vercel are the established production path. Keep preview and production configuration separate. Check the hosting dashboard for current domain ownership and DNS targets before proposing any domain change.
 
-| Record | Name | Value |
-| --- | --- | --- |
-| A | `@` | the IP your host gives you (Vercel: `76.76.21.21`) |
-| CNAME | `www` | `cname.vercel-dns.com` |
+## 4. Verification
 
-Remove the old GitHub Pages A records for the apex, or the two will fight and the domain will serve whichever resolves first.
-
-## 4. Post-deploy verification
+Run the local regression suite against an isolated build. The suite includes form submissions, so use a disposable test environment. Do not point it at the public website. For the local production build, run:
 
 ```bash
-BASE=https://pawverdi.com npm run verify
+npm ci
+npm run build
+bash scripts/verify-production.sh
 ```
 
-Expect `21/21 checks passed`. Then check by hand:
-
-- [ ] `/api/health` reports `"mode":"live"` (not `demo`).
-- [ ] Submitting the newsletter form stores a row in `newsletter_subscribers`.
-- [ ] A seller application appears in `seller_applications` with `status='new'`.
-- [ ] Publishing an article with `review_status='unreviewed'` is **rejected** by the database (test in SQL editor).
-- [ ] Publishing a listing for an unverified seller is **rejected**.
-- [ ] Lighthouse on `/`: performance ≥ 90 mobile, accessibility ≥ 95.
-- [ ] `/sitemap.xml` lists every article; `/robots.txt` blocks `/admin`.
-- [ ] A page loads with JavaScript disabled and the headline is still readable.
-
-## 5. Pre-publication checklist (blocking)
-
-This build is **not** ready for public launch until these are true:
-
-- [ ] Real editorial content replaces the seed summaries (`articles.body`).
-- [ ] A licensed veterinarian is contracted for clinical review; reviewer names recorded in `articles.reviewer_name`.
-- [ ] Seller verification process has a named human owner and a documented evidence standard.
-- [ ] Animal-sale legal review for every jurisdiction you intend to list in (UK: Animal Welfare (Licensing of Activities Involving Animals) Regulations 2018; US: state-level breeder licensing; plus local advertising rules).
-- [ ] Privacy policy and terms of service drafted by someone qualified, referencing your actual data processor (Supabase) and lawful basis.
-- [ ] Advertising terms include the refusal list and the non-removable sponsor label.
-- [ ] Cookie/consent posture decided (this build sets no analytics cookies; adding any changes this).
-- [ ] Logo, photography and film either licensed or generated for you — `public/brand/*` currently holds AI-generated assets made for this project.
+Review the build-specific [release handoff](RELEASE-HANDOFF.md), including staging persistence, authenticated review and affiliate checks. Use read-only availability and page checks to confirm a future production deployment. Only confirmed, published material belongs in the sitemap.
