@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import BreedSpotlight from '@/components/breed-spotlight';
 import CinematicHero from '@/components/cinematic-hero';
 import Reveal from '@/components/reveal';
 import ReferenceDetails from '@/components/reference-details';
@@ -40,6 +41,8 @@ export default function CatsPage() {
           </Link>
         </div>
       </CinematicHero>
+
+      <BreedSpotlight species="cat" />
 
       <PawVerdiShowcase variant="cat">
         <ReferenceDetails title="Cat breed reference">
