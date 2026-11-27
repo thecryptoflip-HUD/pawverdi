@@ -94,14 +94,14 @@ export default function PetReel() {
   return (
     <section id="pet-reel" aria-labelledby="reel-title" className="pb-5 pt-20 sm:pt-24">
       <div className="mx-auto max-w-wrap px-4 sm:px-8">
-        <div className="grid gap-3 rounded-2xl border border-emerald-900/15 bg-emerald-50/75 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_minmax(260px,360px)] md:items-start md:gap-x-5">
+        <div className="grid grid-cols-1 gap-3 rounded-2xl border border-emerald-900/15 bg-emerald-50/75 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_minmax(260px,360px)] md:items-start md:gap-x-5">
           <header className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 md:col-start-1 md:row-start-1">
             <h2 id="reel-title" className="text-2xl font-bold text-emerald-950">The funny pet reel</h2>
             <p className="text-sm text-emerald-900">{clips.length} short clips</p>
           </header>
 
           <div className="md:col-start-2 md:row-span-2 md:row-start-1">
-            <div className="relative aspect-video min-h-[200px] overflow-hidden rounded-xl bg-emerald-950">
+            <div className="relative aspect-video min-h-[200px] w-full overflow-hidden rounded-xl bg-emerald-950">
               <div ref={host} className="absolute inset-0" />
               {!playing && (
                 <button
