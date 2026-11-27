@@ -488,6 +488,7 @@ body {
 body:has(.vibrant-page) { background:var(--pv-cream); }
 .vibrant-page { min-height:70vh; background:var(--pv-cream); color:#153f31; }
 .vibrant-page section:not(.hero):not(.cine) { background-color:#fffaf2; color:#153f31; }
+.vibrant-page section#pet-reel { background-color:#073e30; }
 .vibrant-page section.welcome-paths { background:linear-gradient(140deg,#fffaf0,#e7f8ed 55%,#fff1dc); }
 .vibrant-page section:not(.hero):not(.cine) [class*="text-cream"],
 .vibrant-page section:not(.hero):not(.cine) [class*="text-[#fcf8f1]"] { color:#153f31 !important; }

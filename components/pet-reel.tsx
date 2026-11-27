@@ -92,42 +92,42 @@ export default function PetReel() {
   const current = clips[selected];
 
   return (
-    <section id="pet-reel" aria-labelledby="reel-title" className="pb-5 pt-20 sm:pt-24">
+    <section id="pet-reel" aria-labelledby="reel-title" className="scroll-mt-[76px] bg-[#073e30] pb-2 pt-[84px]">
       <div className="mx-auto max-w-wrap px-4 sm:px-8">
-        <div className="grid grid-cols-1 gap-3 rounded-2xl border border-emerald-900/15 bg-emerald-50/75 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_minmax(260px,360px)] md:items-start md:gap-x-5">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-[minmax(0,1fr)_minmax(260px,320px)] md:grid-rows-[auto_1fr] md:items-start md:gap-x-4">
           <header className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 md:col-start-1 md:row-start-1">
-            <h2 id="reel-title" className="text-2xl font-bold text-emerald-950">The funny pet reel</h2>
-            <p className="text-sm text-emerald-900">{clips.length} short clips</p>
+            <h2 id="reel-title" className="text-xl font-bold leading-tight text-white">The funny pet reel</h2>
+            <p className="text-xs text-emerald-100">{clips.length} short clips</p>
           </header>
 
           <div className="md:col-start-2 md:row-span-2 md:row-start-1">
-            <div className="relative aspect-video min-h-[200px] w-full overflow-hidden rounded-xl bg-emerald-950">
+            <div className={`relative w-full overflow-hidden rounded-lg bg-emerald-950 ${playing ? "min-h-[200px] aspect-video" : "h-20 md:h-32"}`}>
               <div ref={host} className="absolute inset-0" />
               {!playing && (
                 <button
                   type="button"
                   onClick={() => pick(selected)}
-                  className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-emerald-950 via-emerald-800 to-teal-700 p-3 text-white focus-visible:outline focus-visible:-outline-offset-4 focus-visible:outline-white"
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-emerald-950 via-emerald-800 to-teal-700 p-3 text-white focus-visible:outline focus-visible:-outline-offset-4 focus-visible:outline-white"
                 >
                   <span className="font-serif text-xl">{current.title}</span>
                   <span className="rounded-full bg-emerald-950 px-3 py-1.5 text-sm font-semibold">▶ Play the reel</span>
                 </button>
               )}
             </div>
-            <p aria-live="polite" className="mt-1.5 text-xs text-emerald-950">
+            <p aria-live="polite" className="mt-1 text-xs text-emerald-100">
               {notice && <span>{notice} </span>}
               {current.credit} · <a className="underline underline-offset-2" href={`https://www.youtube.com/watch?v=${current.id}`}>Watch on YouTube</a>
             </p>
           </div>
 
-          <ol className="grid list-none grid-cols-2 gap-1.5 p-0 md:col-start-1 md:row-start-2">
+          <ol className="grid list-none grid-cols-2 gap-1 p-0 md:col-start-1 md:row-start-2 lg:grid-cols-3">
             {clips.map((clip, i) => (
               <li key={clip.id}>
                 <button
                   type="button"
                   onClick={() => pick(i)}
                   aria-current={selected === i ? 'true' : undefined}
-                  className="flex h-full w-full items-center justify-between gap-1.5 rounded-lg border border-emerald-900/15 bg-white/70 px-2.5 py-1.5 text-left text-emerald-950 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-emerald-800 aria-[current=true]:border-emerald-800 aria-[current=true]:bg-emerald-100"
+                  className="flex h-full min-h-11 w-full items-center justify-between gap-1.5 rounded-md border border-emerald-700 bg-emerald-900 px-2 py-1 text-left text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-white aria-[current=true]:border-emerald-300 aria-[current=true]:bg-emerald-800"
                 >
                   <strong className="break-words text-sm leading-tight">{clip.title}</strong>
                   <span className="shrink-0 text-xs tabular-nums">{clip.end}s</span>
