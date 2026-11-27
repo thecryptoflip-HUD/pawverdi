@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
+import Script from 'next/script';
 import './globals.css';
 import './reference-qa.css';
 import SiteHeader from '@/components/site-header';
@@ -79,6 +80,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <Script id="pawverdi-analytics" strategy="afterInteractive">{String.raw`
+          if (location.hostname === 'pawverdi.com' && !/^\/admin(?:\/|$)/.test(location.pathname)) {
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () { window.dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-62K9ZD3ZGP', {
+              allow_google_signals: false,
+              allow_ad_personalization_signals: false
+            });
+            const tag = document.createElement('script');
+            tag.async = true;
+            tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-62K9ZD3ZGP';
+            document.head.appendChild(tag);
+          }
+        `}</Script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }} />
       </body>
