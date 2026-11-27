@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import BreedSpotlight from '@/components/breed-spotlight';
 import NewsletterForm from '@/components/newsletter-form';
 import CareIcon from '@/components/care-icon';
 import ArticleCard from '@/components/article-card';
@@ -103,6 +104,8 @@ export default function DogsPage() {
             </div>
             {featured.length === 0 && <p className="pv-dog-empty">Additional dog guides are in preparation.</p>}
           </section>
+
+          <BreedSpotlight species="dog" />
 
           <ReferenceDetails title="Dog breed reference">
 <section className="pv-dog-breed-reference" id="breed-reference" aria-labelledby="breed-reference-title">
