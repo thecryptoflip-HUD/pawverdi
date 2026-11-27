@@ -100,7 +100,8 @@ export default function PetReel() {
       <div>
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-emerald-950">
           <div ref={host} className="absolute inset-0" />
-          {!playing && <button type="button" onClick={()=>pick(selected)} className="absolute inset-0 flex items-end bg-cover bg-center p-5" style={{backgroundImage:"url('/brand/home-hero.jpg')"}}>
+          {!playing && <button type="button" onClick={()=>pick(selected)} className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-700 p-5 text-white">
+            <span className="font-serif text-3xl">Maru and the box</span>
             <span className="rounded-full bg-emerald-950 px-5 py-3 font-bold text-white">▶ Play the reel</span>
           </button>}
         </div>
