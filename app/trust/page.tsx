@@ -55,7 +55,8 @@ const blocks = [
     id: 'privacy',
     title: 'Privacy and data',
     points: [
-      'We collect the minimum needed to run the newsletter and seller review: an email address, and for sellers, the documents required by the verification gates.',
+      'We need an email address for newsletter signup and verification documents from sellers.',
+      'We use Google Analytics to understand page visits and how readers find PawVerdi. Google Analytics may use cookies to measure visits. We disable Google signals and ad personalization in our tag.',
       'No third-party advertising pixels. Sponsor reporting is aggregate and does not identify individual readers.',
       'Seller identity documents are stored encrypted, access-logged, and deleted 12 months after a listing is withdrawn, or on request.',
       'You can request deletion of your data at any time; it is actioned within 30 days and confirmed in writing.',

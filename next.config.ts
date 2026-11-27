@@ -6,15 +6,15 @@ import type { NextConfig } from 'next';
  * `script-src` keeps 'unsafe-inline' because the App Router emits an inline
  * bootstrap script into otherwise static pages; a nonce would force every page
  * to render dynamically and lose the CDN cache. Everything else is locked to
- * the origin, so injected third-party or remote scripts are still blocked.
+ * the origin except for the explicit GA4 and Supabase endpoints below.
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://*.supabase.co",
+  "img-src 'self' data: blob: https://*.supabase.co https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co",
+  "connect-src 'self' https://*.supabase.co https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
